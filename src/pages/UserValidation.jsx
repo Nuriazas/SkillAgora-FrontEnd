@@ -14,7 +14,7 @@ const UserValidation = () => {
   const [canResend, setCanResend] = useState(false);
   const [attempts, setAttempts] = useState(0);
   const [rateLimitResetTime, setRateLimitResetTime] = useState(null);
-  
+
   // Referencias para cleanup
   const timerIntervalRef = useRef(null);
   const redirectTimeoutRef = useRef(null);
@@ -58,7 +58,7 @@ const UserValidation = () => {
         clearInterval(timerIntervalRef.current);
       }
     }
-    
+
     return () => {
       if (timerIntervalRef.current) {
         clearInterval(timerIntervalRef.current);
@@ -70,15 +70,15 @@ const UserValidation = () => {
   const checkRateLimit = () => {
     const now = Date.now();
     const requests = JSON.parse(localStorage.getItem('validationRequests') || '[]');
-    const recentRequests = requests.filter(time => now - time < RATE_LIMIT_WINDOW);
-    
+    const recentRequests = requests.filter((time) => now - time < RATE_LIMIT_WINDOW);
+
     if (recentRequests.length >= MAX_REQUESTS_PER_WINDOW) {
       const oldestRequest = Math.min(...recentRequests);
       const resetTime = oldestRequest + RATE_LIMIT_WINDOW;
       setRateLimitResetTime(resetTime);
       return false;
     }
-    
+
     // Actualizar el registro de requests
     recentRequests.push(now);
     localStorage.setItem('validationRequests', JSON.stringify(recentRequests));
@@ -98,9 +98,15 @@ const UserValidation = () => {
           // Simular diferentes respuestas del servidor
           const random = Math.random();
           if (email === 'blocked@example.com') {
-            reject({ type: 'ACCOUNT_BLOCKED', message: 'Esta cuenta ha sido bloqueada temporalmente' });
+            reject({
+              type: 'ACCOUNT_BLOCKED',
+              message: 'Esta cuenta ha sido bloqueada temporalmente',
+            });
           } else if (email === 'notfound@example.com') {
-            reject({ type: 'EMAIL_NOT_FOUND', message: 'El correo electrónico no está registrado' });
+            reject({
+              type: 'EMAIL_NOT_FOUND',
+              message: 'El correo electrónico no está registrado',
+            });
           } else if (random < 0.1) {
             reject({ type: 'SERVER_ERROR', message: 'Error del servidor. Intenta más tarde' });
           } else {
@@ -113,7 +119,10 @@ const UserValidation = () => {
           } else if (code === '111111') {
             reject({ type: 'EXPIRED_CODE', message: 'El código ha expirado. Solicita uno nuevo' });
           } else if (code === '222222') {
-            reject({ type: 'TOO_MANY_ATTEMPTS', message: 'Demasiados intentos. Espera 15 minutos' });
+            reject({
+              type: 'TOO_MANY_ATTEMPTS',
+              message: 'Demasiados intentos. Espera 15 minutos',
+            });
           } else if (random < 0.1) {
             reject({ type: 'SERVER_ERROR', message: 'Error del servidor. Intenta más tarde' });
           } else {
@@ -180,19 +189,19 @@ const UserValidation = () => {
     try {
       await simulateServerResponse('code', '', code);
       setMessage('¡Validación exitosa! Redirigiendo...');
-      
+
       // Limpiar el timeout anterior si existe
       if (redirectTimeoutRef.current) {
         clearTimeout(redirectTimeoutRef.current);
       }
-      
+
       redirectTimeoutRef.current = setTimeout(() => {
         navigate('/login', {
           state: { message: '¡Validación exitosa! Por favor inicia sesión.' },
         });
       }, 2000);
     } catch (err) {
-      setAttempts(prev => prev + 1);
+      setAttempts((prev) => prev + 1);
       handleServerError(err);
     } finally {
       setLoading(false);
@@ -328,7 +337,7 @@ const UserValidation = () => {
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                 placeholder="ejemplo@correo.com"
                 required
-                aria-describedby={error ? "email-error" : undefined}
+                aria-describedby={error ? 'email-error' : undefined}
               />
             </div>
             <button
@@ -358,7 +367,7 @@ const UserValidation = () => {
                 placeholder="000000"
                 required
                 maxLength={6}
-                aria-describedby={error ? "code-error" : undefined}
+                aria-describedby={error ? 'code-error' : undefined}
               />
               <div className="text-xs text-gray-500 mt-1">
                 Intentos restantes: {MAX_ATTEMPTS - attempts}

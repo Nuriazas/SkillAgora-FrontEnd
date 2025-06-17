@@ -5,12 +5,13 @@ export const API_CONFIG = {
     REFRESH_TOKEN: '/users/refresh-token',
     LOGOUT: '/users/logout',
     PROFILE: '/users/profile',
-    SEND_VALIDATION: '/api/auth/send-validation',
-    VERIFY_VALIDATION: '/api/auth/verify-validation',
-    RESEND_VALIDATION: '/api/auth/resend-validation',
+    SEND_VALIDATION: '/users/send-validation',
+    VERIFY_VALIDATION: '/users/verify-validation',
+    RESEND_VALIDATION: '/users/resend-validation',
   },
   HEADERS: {
     'Content-Type': 'application/json',
+    Accept: 'application/json',
   },
 };
 

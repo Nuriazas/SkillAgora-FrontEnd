@@ -1,18 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-
+import { Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import PrivateRoute from './Components/PrivateRoute';
+import Validacion from './pages/Validacion';
+import Login from './pages/Login';
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 
 function App() {
-  
-
   return (
-    <>
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <h1 className="text-4xl font-bold text-blue-600">¡Hola Tailwind + React + Vite!</h1>
-    </div>
-    </>
-  )
+    <AuthProvider>
+      <div className="App">
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/validacion" element={<Validacion />} />
+          <Route
+            path="/home"
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;

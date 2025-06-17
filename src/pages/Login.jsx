@@ -1,80 +1,99 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { testConnection } from '../services/api';
 
-const Login = () => {
+function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
   const [emailError, setEmailError] = useState('');
-  const [passwordStrength, setPasswordStrength] = useState(0);
+  const [passwordError, setPasswordError] = useState('');
+  const [generalError, setGeneralError] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
-  const { loginWithApi, loading, error, isAuthenticated, clearError } = useAuth();
+  const { loginWithApi, error: authError, loading } = useAuth();
+  const [apiError, setApiError] = useState('');
 
-  // Redirige si ya está autenticado
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/', { replace: true });
+    // Probar la conexión con el backend cuando se monte el componente
+    const checkConnection = async () => {
+      try {
+        console.log('Probando conexión con el backend...');
+        const response = await testConnection();
+        console.log('Conexión exitosa:', response);
+      } catch (error) {
+        console.error('Error al conectar con el backend:', error);
+        setApiError(
+          'No se pudo conectar con el servidor. Por favor, verifica que el backend esté corriendo.'
+        );
+      }
+    };
+
+    checkConnection();
+  }, []);
+
+  // Validación de email en tiempo real
+  useEffect(() => {
+    if (email.length === 0) {
+      setEmailError('');
+      return;
     }
-  }, [isAuthenticated, navigate]);
-
-  // Limpia errores cuando el usuario empieza a escribir
-  useEffect(() => {
-    if (error && (email || password)) {
-      clearError();
-    }
-  }, [email, password, error, clearError]);
-
-  // Validación de email
-  useEffect(() => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (email && !emailRegex.test(email)) {
-      setEmailError('Por favor, introduce un email válido');
+    if (!emailRegex.test(email)) {
+      setEmailError('Introduce un formato de email válido (ej. usuario@dominio.com)');
     } else {
       setEmailError('');
     }
   }, [email]);
 
-  // Validación de fortaleza de contraseña
+  // Validación de contraseña en tiempo real
   useEffect(() => {
-    if (!password) {
-      setPasswordStrength(0);
+    if (password.length === 0) {
+      setPasswordError('');
       return;
     }
 
-    let strength = 0;
-    if (password.length >= 8) strength += 1;
-    if (/[A-Z]/.test(password)) strength += 1;
-    if (/[a-z]/.test(password)) strength += 1;
-    if (/[0-9]/.test(password)) strength += 1;
-    if (/[^A-Za-z0-9]/.test(password)) strength += 1;
-
-    setPasswordStrength(strength);
-  }, [password]);
-
-  const getPasswordStrengthColor = () => {
-    switch (passwordStrength) {
-      case 0: return 'bg-gray-200';
-      case 1: return 'bg-red-500';
-      case 2: return 'bg-orange-500';
-      case 3: return 'bg-yellow-500';
-      case 4: return 'bg-green-500';
-      case 5: return 'bg-emerald-500';
-      default: return 'bg-gray-200';
+    // Validación para 6 caracteres exactos
+    if (password.length !== 6) {
+      setPasswordError('La contraseña debe tener exactamente 6 caracteres');
+    } else {
+      setPasswordError('');
     }
-  };
+  }, [password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!email.trim() || !password.trim() || emailError) {
+    setGeneralError('');
+
+    let formIsValid = true;
+    if (!email) {
+      setEmailError('El email es obligatorio');
+      formIsValid = false;
+    } else if (emailError) {
+      formIsValid = false;
+    }
+
+    if (!password) {
+      setPasswordError('La contraseña es obligatoria');
+      formIsValid = false;
+    } else if (passwordError) {
+      formIsValid = false;
+    }
+
+    if (!formIsValid) {
+      setGeneralError('Por favor, corrige los errores del formulario.');
       return;
     }
 
     try {
-      await loginWithApi(email.trim(), password, rememberMe);
+      const result = await loginWithApi(email, password, rememberMe);
+      if (result.success) {
+        navigate('/home');
+      } else {
+        setGeneralError(result.error || 'Error al iniciar sesión');
+      }
     } catch (error) {
-      console.error('Error en login:', error);
+      setGeneralError('Error al conectar con el servidor');
     }
   };
 
@@ -82,25 +101,21 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Inicia sesión en tu cuenta
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            ¿No tienes una cuenta?{' '}
-            <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
-              Regístrate aquí
-            </Link>
-          </p>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Iniciar Sesión</h2>
         </div>
+        {apiError && (
+          <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+            {apiError}
+          </div>
+        )}
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-              <span className="block sm:inline">{error}</span>
-            </div>
-          )}
+          {generalError && <div className="text-red-500 text-sm text-center">{generalError}</div>}
+          {authError && <div className="text-red-500 text-sm text-center">{authError}</div>}
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
-              <label htmlFor="email" className="sr-only">Email</label>
+              <label htmlFor="email" className="sr-only">
+                Correo electrónico
+              </label>
               <input
                 id="email"
                 name="email"
@@ -108,49 +123,35 @@ const Login = () => {
                 autoComplete="email"
                 required
                 className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
-                  emailError ? 'border-red-300' : 'border-gray-300'
+                  emailError ? 'border-red-500' : 'border-gray-300'
                 } placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
-                placeholder="Email"
+                placeholder="Correo electrónico"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={loading}
               />
-              {emailError && (
-                <p className="mt-1 text-sm text-red-600">{emailError}</p>
-              )}
+              {emailError && <p className="mt-2 text-sm text-red-600">{emailError}</p>}
             </div>
             <div>
-              <label htmlFor="password" className="sr-only">Contraseña</label>
+              <label htmlFor="password" className="sr-only">
+                Contraseña
+              </label>
               <input
                 id="password"
                 name="password"
                 type="password"
                 autoComplete="current-password"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Contraseña"
+                className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
+                  passwordError ? 'border-red-500' : 'border-gray-300'
+                } placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                placeholder="Contraseña (6 dígitos)"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={loading}
+                maxLength={6}
               />
-              {password && (
-                <div className="mt-2">
-                  <div className="h-2 w-full bg-gray-200 rounded-full">
-                    <div
-                      className={`h-2 rounded-full ${getPasswordStrengthColor()}`}
-                      style={{ width: `${(passwordStrength / 5) * 100}%` }}
-                    />
-                  </div>
-                  <p className="mt-1 text-xs text-gray-500">
-                    {passwordStrength === 0 && 'Muy débil'}
-                    {passwordStrength === 1 && 'Débil'}
-                    {passwordStrength === 2 && 'Regular'}
-                    {passwordStrength === 3 && 'Buena'}
-                    {passwordStrength === 4 && 'Fuerte'}
-                    {passwordStrength === 5 && 'Muy fuerte'}
-                  </p>
-                </div>
-              )}
+              {passwordError && <p className="mt-2 text-sm text-red-600">{passwordError}</p>}
             </div>
           </div>
 
@@ -163,14 +164,17 @@ const Login = () => {
                 className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
+                disabled={loading}
               />
               <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                 Recordarme
               </label>
             </div>
-
             <div className="text-sm">
-              <Link to="/forgot-password" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <Link
+                to="/recuperar-password"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
                 ¿Olvidaste tu contraseña?
               </Link>
             </div>
@@ -179,30 +183,25 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              disabled={loading || !email.trim() || !password.trim() || !!emailError}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+              disabled={loading}
             >
-              {loading ? (
-                <span className="flex items-center">
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Iniciando sesión...
-                </span>
-              ) : (
-                'Iniciar sesión'
-              )}
+              {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </button>
           </div>
         </form>
+        <div className="text-center text-sm">
+          ¿No tienes una cuenta?
+          <Link to="/registro" className="font-medium text-indigo-600 hover:text-indigo-500 ml-1">
+            Regístrate
+          </Link>
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default Login;
-
 
 //1.Validación de email automática - Verifica formato correcto en tiempo real
 
