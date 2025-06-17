@@ -6,6 +6,7 @@ html,
 body {
 	margin: 0;
 	padding: 0;
+  background-color: #35343c; 
 }
 
 /* Line clamp utility */
@@ -14,4 +15,21 @@ body {
 	-webkit-line-clamp: 3;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
+}
+
+@layer utilities {
+  @keyframes smooth-pulse {
+    0%, 100% {
+      opacity: 0.4;
+      transform: scale(1) translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.01) translateY(-4px);
+    }
+  }
+
+  .animate-smooth-pulse {
+    animation: smooth-pulse 6s ease-in-out infinite;
+  }
 }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import UserDropdown from "./UserDropDown.jsx";
 import useUserAuth from "../hooks/useUserAuth";
+import { useNavigate } from "react-router";
 
 /**
  * Componente Header principal de la aplicación
@@ -9,7 +10,7 @@ import useUserAuth from "../hooks/useUserAuth";
 const Header = () => {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const { user, loading, logout } = useUserAuth();
-
+	const navigate = useNavigate();
 	// Estado de carga - muestra skeleton mientras se verifica la autenticación
 	if (loading) {
 		return (
@@ -71,13 +72,25 @@ const Header = () => {
 								className="text-gray-300 hover:text-white transition-colors"
 								onClick={() => {
 									// TODO: Implementar navegación a página de login
-									console.log("Navegar a login");
+									navigate("/login")
 								}}
 								aria-label="Iniciar sesión en SkillAgora"
 							>
 								Iniciar Sesión
 							</button>
+							<button 
+								className="text-gray-300 hover:text-white transition-colors"
+								onClick={() => {
+									// TODO: Implementar navegación a página de login
+									navigate("/users/register")
+								}}
+								aria-label="Regístrate en SkillAgora">
+
+								Regístrate
+							</button>
 						</div>
+						
+						
 					)}
 				</div>
 			</div>
