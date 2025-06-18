@@ -2,6 +2,8 @@ import React from "react";
 
 import { Routes, Route } from 'react-router-dom';
 import Validacion from './pages/Validacion';
+import Freelancer from "./pages/Home/FreelancerPage";
+import CreateServicePage from "./pages/CreateService/CreateServicePage";
 import Login from './pages/Login';
 import NotFoundPage from "./components/NotFoundPage.jsx";
 import LandingPage from './pages/LandingPage.jsx';
@@ -26,6 +28,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/users/register" element={<RegisterPage />} />
           <Route path="/validacion" element={<Validacion />} />
+          <Route path="/freelancers" element={<Freelancer />} />
+        <Route path="/services/create" element={<CreateServicePage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       

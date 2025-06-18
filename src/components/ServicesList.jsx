@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ServiceCard from "./ServiceCard";
+import ServiceCard from "./ServiceCard.jsx";
 import ServiceModal from "./serviceModal/ServiceModal.jsx";
 
 /**

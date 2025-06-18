@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import ServiceCarousel from "./ServiceCarousel";
+import ServiceCarousel from "./ServiceCarousel.jsx";
 import ServiceModal from "./serviceModal/ServiceModal.jsx";
-import useServiceCarousel from "../hooks/useServiceCarousel";
+import useServiceCarousel from "../hooks/useServiceCarousel.js";
 
 /**
  * Componente HeroSection - Sección principal de la landing page
