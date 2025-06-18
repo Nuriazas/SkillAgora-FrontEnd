@@ -55,7 +55,7 @@ const ServicesList = ({ services, loading }) => {
 		return (
 			<section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
 				<h3 className="text-2xl font-bold text-white mb-8">
-					Servicios Destacados
+					Todos los Servicios
 				</h3>
 				<div className="text-center py-12">
 					<p className="text-gray-400">No se encontraron servicios</p>
@@ -67,7 +67,7 @@ const ServicesList = ({ services, loading }) => {
 	return (
 		<section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
 			<h3 className="text-2xl font-bold text-white mb-8">
-				Servicios Destacados
+				Todos los Servicios
 			</h3>
 
 			{/* Grid de servicios */}

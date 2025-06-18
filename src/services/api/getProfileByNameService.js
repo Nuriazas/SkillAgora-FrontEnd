@@ -2,7 +2,8 @@ const BASE_URL = "http://localhost:3000";
 
 // Función para obtener usuario del JWT
 export const getCurrentUserFromToken = () => {
-	const token = localStorage.getItem("authToken");
+	// CORREGIDO: usar "token" en lugar de "authToken"
+	const token = localStorage.getItem("token");
 	if (!token) return null;
 
 	try {
@@ -23,7 +24,8 @@ export const getCurrentUserFromToken = () => {
 
 export const getProfileByName = async (name) => {
 	try {
-		const token = localStorage.getItem("authToken");
+		// CORREGIDO: usar "token" en lugar de "authToken"
+		const token = localStorage.getItem("token");
 		const headers = {
 			"Content-Type": "application/json",
 		};

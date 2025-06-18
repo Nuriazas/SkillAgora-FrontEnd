@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ServiceCarousel from "./ServiceCarousel.jsx";
 import ServiceModal from "./serviceModal/ServiceModal.jsx";
 import useServiceCarousel from "../hooks/useServiceCarousel.js";
+import LandingNavigationButtons from "./LandingNavigationButtons.jsx";
 
 /**
  * Componente HeroSection - Sección principal de la landing page
@@ -35,17 +36,6 @@ const HeroSection = () => {
 		setSelectedService(null);
 	};
 
-	// Handlers para los botones CTA
-	const handleExploreServices = () => {
-		// TODO: Implementar navegación a página de servicios
-		console.log("Navegar a servicios");
-	};
-
-	const handleBecomeFreelancer = () => {
-		// TODO: Implementar navegación a registro de freelancer
-		console.log("Navegar a registro freelancer");
-	};
-
 	return (
 		<>
 			<section className="relative py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
@@ -56,54 +46,39 @@ const HeroSection = () => {
 							{/* Título y descripción */}
 							<div className="space-y-6">
 								<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-									Encuentra el{" "}
+									Find the{" "}
 									<span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-										talento perfecto
+										perfect talent
 									</span>{" "}
-									para tu proyecto
+									for your project
 								</h1>
 
 								<p className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-lg">
-									Conecta with freelancers expertos y lleva tus ideas al
-									siguiente nivel con la plataforma más confiable.
+									Connect with expert freelancers and take your ideas to the
+									next level with the most trusted platform.
 								</p>
 							</div>
 
-							{/* Botones de Call-to-Action */}
-							<div className="flex flex-col sm:flex-row gap-4">
-								<button
-									className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-purple-500/25"
-									onClick={handleExploreServices}
-									aria-label="Explorar servicios disponibles"
-								>
-									Explorar Servicios
-								</button>
-								<button
-									className="border border-gray-700 hover:border-gray-600 text-gray-300 hover:text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 hover:bg-gray-800/50"
-									onClick={handleBecomeFreelancer}
-									aria-label="Registrarse como freelancer"
-								>
-									Ser Freelancer
-								</button>
-							</div>
+							{/* Botones de navegación */}
+							<LandingNavigationButtons />
 
 							{/* Estadísticas de la plataforma */}
 							<div className="flex flex-wrap gap-8 pt-8">
 								<div>
 									<div className="text-2xl font-bold text-white">10,000+</div>
 									<div className="text-sm text-gray-400">
-										Proyectos completados
+										Completed Projects
 									</div>
 								</div>
 								<div>
 									<div className="text-2xl font-bold text-white">5,000+</div>
 									<div className="text-sm text-gray-400">
-										Freelancers activos
+										Active Freelancers
 									</div>
 								</div>
 								<div>
 									<div className="text-2xl font-bold text-white">98%</div>
-									<div className="text-sm text-gray-400">Satisfacción</div>
+									<div className="text-sm text-gray-400">Satisfaction Rate</div>
 								</div>
 							</div>
 						</div>

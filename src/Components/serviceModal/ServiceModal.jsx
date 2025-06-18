@@ -1,9 +1,9 @@
 import React from "react";
 import { FiX, FiMapPin, FiClock, FiStar } from "react-icons/fi";
 import { useServiceModalLogic } from "../../hooks/useServiceModalLogic.js";
-import ContactModal from "../../Components/serviceModal/ContactModal.jsx";
-import ConfirmationModal from "../../Components/serviceModal/ConfirmationModal.jsx";
-import ResultModal from "../../Components/serviceModal/ResultModal.jsx"
+import ContactModal from "./ContactModal.jsx";
+import ConfirmationModal from "./ConfirmationModal.jsx";
+import ResultModal from "./ResultModal.jsx";
 
 /**
  * Modal para mostrar detalles completos de un servicio

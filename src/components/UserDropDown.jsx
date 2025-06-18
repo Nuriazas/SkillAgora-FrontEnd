@@ -1,10 +1,17 @@
 import React, { useEffect } from "react";
-import { FiChevronDown } from "react-icons/fi";
+import {
+	FiChevronDown,
+	FiUser,
+	FiBriefcase,
+	FiShoppingBag,
+	FiSettings,
+	FiLogOut,
+} from "react-icons/fi";
 
 /**
  * Dropdown del usuario logueado con opciones de perfil y logout
  */
-const UserDropdown = ({ user, isOpen, onToggle, onLogout }) => {
+const UserDropdown = ({ user, isOpen, onToggle, onLogout, onNavigate }) => {
 	// Cerrar dropdown al hacer click fuera
 	useEffect(() => {
 		const handleClickOutside = (e) => {
@@ -19,43 +26,52 @@ const UserDropdown = ({ user, isOpen, onToggle, onLogout }) => {
 
 	// Handlers para las opciones del menú
 	const handleProfileClick = () => {
-		console.log("Ir a perfil");
-		onToggle();
+		const profileName = user.name || user.fullName || "profile";
+		onNavigate(`/users/profile/${profileName}`);
 	};
 
 	const handleServicesClick = () => {
-		console.log("Ir a mis servicios");
-		onToggle();
+		onNavigate("/services");
 	};
 
 	const handleOrdersClick = () => {
-		console.log("Ir a órdenes");
-		onToggle();
+		onNavigate("/my-orders");
 	};
 
 	const handleSettingsClick = () => {
-		console.log("Ir a configuración");
-		onToggle();
+		onNavigate("/settings");
 	};
+
+	// Determinar el nombre a mostrar
+	const displayName =
+		user.fullName ||
+		`${user.name || ""} ${user.lastName || ""}`.trim() ||
+		"Usuario";
 
 	return (
 		<div className="relative" data-dropdown>
 			<button
 				onClick={onToggle}
-				className="flex items-center space-x-3 p-2 rounded-full hover:bg-gray-800/50 transition-all duration-200"
+				className="flex items-center space-x-3 p-2 rounded-xl hover:bg-gray-800/50 transition-all duration-200 group"
 				aria-expanded={isOpen}
 				aria-haspopup="true"
 			>
 				<img
 					src={user.avatar}
-					alt="Perfil"
-					className="w-8 h-8 rounded-full border-2 border-purple-500/60 ring-2 ring-purple-500/20"
+					alt={`${displayName}'s profile picture`}
+					className="w-8 h-8 rounded-full border-2 border-purple-500/60 ring-2 ring-purple-500/20 group-hover:ring-purple-500/40 transition-all duration-200"
+					onError={(e) => {
+						e.target.src =
+							"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face";
+					}}
 				/>
-				<div className="flex flex-col text-left">
-					<span className="text-sm font-medium text-white">
-						{user.name} {user.lastName}
+				<div className="hidden sm:flex flex-col text-left">
+					<span className="text-sm font-medium text-white group-hover:text-purple-300 transition-colors">
+						{displayName}
 					</span>
-					<span className="text-xs text-gray-400">{user.email}</span>
+					<span className="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">
+						{user.email}
+					</span>
 				</div>
 				<FiChevronDown
 					className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
@@ -65,37 +81,68 @@ const UserDropdown = ({ user, isOpen, onToggle, onLogout }) => {
 			</button>
 
 			{isOpen && (
-				<div className="absolute right-0 mt-2 w-48 bg-gray-800/95 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 py-2 z-50">
-					<button
-						onClick={handleProfileClick}
-						className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 hover:text-white transition-colors"
-					>
-						Mi Perfil
-					</button>
-					<button
-						onClick={handleServicesClick}
-						className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 hover:text-white transition-colors"
-					>
-						Mis Servicios
-					</button>
-					<button
-						onClick={handleOrdersClick}
-						className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 hover:text-white transition-colors"
-					>
-						Órdenes
-					</button>
-					<button
-						onClick={handleSettingsClick}
-						className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 hover:text-white transition-colors"
-					>
-						Configuración
-					</button>
+				<div className="absolute right-0 mt-2 w-52 bg-gray-900/95 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 py-2 z-50 animate-in slide-in-from-top-2 duration-200">
+					{/* Header del dropdown */}
+					<div className="px-4 py-3 border-b border-gray-700/50">
+						<div className="flex items-center space-x-3">
+							<img
+								src={user.avatar}
+								alt={displayName}
+								className="w-10 h-10 rounded-full border-2 border-purple-500/60"
+								onError={(e) => {
+									e.target.src =
+										"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face";
+								}}
+							/>
+							<div>
+								<div className="text-sm font-medium text-white">
+									{displayName}
+								</div>
+								<div className="text-xs text-gray-400">{user.email}</div>
+							</div>
+						</div>
+					</div>
+
+					{/* Opciones del menú */}
+					<div className="py-2">
+						<button
+							onClick={handleProfileClick}
+							className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 hover:text-white transition-colors group"
+						>
+							<FiUser className="w-4 h-4 mr-3 text-gray-400 group-hover:text-purple-400" />
+							My Profile
+						</button>
+						<button
+							onClick={handleServicesClick}
+							className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 hover:text-white transition-colors group"
+						>
+							<FiBriefcase className="w-4 h-4 mr-3 text-gray-400 group-hover:text-blue-400" />
+							My Services
+						</button>
+						<button
+							onClick={handleOrdersClick}
+							className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 hover:text-white transition-colors group"
+						>
+							<FiShoppingBag className="w-4 h-4 mr-3 text-gray-400 group-hover:text-green-400" />
+							Orders
+						</button>
+						<button
+							onClick={handleSettingsClick}
+							className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 hover:text-white transition-colors group"
+						>
+							<FiSettings className="w-4 h-4 mr-3 text-gray-400 group-hover:text-gray-300" />
+							Settings
+						</button>
+					</div>
+
+					{/* Logout */}
 					<hr className="my-2 border-gray-700/50" />
 					<button
 						onClick={onLogout}
-						className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-900/20 hover:text-red-300 transition-colors"
+						className="flex items-center w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-900/20 hover:text-red-300 transition-colors group"
 					>
-						Cerrar Sesión
+						<FiLogOut className="w-4 h-4 mr-3 text-red-400 group-hover:text-red-300" />
+						Sign Out
 					</button>
 				</div>
 			)}

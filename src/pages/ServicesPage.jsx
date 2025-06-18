@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
-import HeroSection from "../components/HeroSection.jsx";
-import SearchFilter from "../components/SearchFilter.jsx";
-import ServicesList from "../components/ServicesList.jsx";
+import SimpleHeroSection from "../components/SimpleHeroSection";
+import SearchFilter from "../components/SearchFilter";
+import ServicesList from "../components/ServicesList";
 import Footer from "../components/Footer";
 import { servicesApi } from "../services/api/api";
 import useServiceFilters from "../hooks/useServiceFilters";
 
-const LandingPage = () => {
+const ServicesPage = () => {
 	const [categories, setCategories] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -27,14 +27,10 @@ const LandingPage = () => {
 	const loadInitialData = async () => {
 		try {
 			setLoading(true);
-			const [servicesResponse, categoriesResponse] = await Promise.all([
-				servicesApi.getFeaturedServices(8),
-				servicesApi.getCategories(),
-			]);
-
+			const categoriesResponse = await servicesApi.getCategories();
 			setCategories(categoriesResponse.data);
 		} catch (err) {
-			setError("Error al cargar los datos");
+			setError("Error loading data");
 			console.error("Error loading initial data:", err);
 		} finally {
 			setLoading(false);
@@ -46,14 +42,14 @@ const LandingPage = () => {
 			<div className="min-h-screen bg-gray-950 flex items-center justify-center">
 				<div className="text-center">
 					<h2 className="text-2xl font-bold text-white mb-4">
-						Oops! Algo salió mal
+						Oops! Something went wrong
 					</h2>
 					<p className="text-gray-400 mb-6">{error}</p>
 					<button
 						onClick={loadInitialData}
 						className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-200"
 					>
-						Intentar de nuevo
+						Try again
 					</button>
 				</div>
 			</div>
@@ -84,7 +80,14 @@ const LandingPage = () => {
 
 			<div className="relative z-10">
 				<Header />
-				<HeroSection />
+
+				<SimpleHeroSection
+					title="Browse All"
+					highlightText="Services"
+					subtitle="Discover amazing services from talented freelancers around the world. Find the perfect solution for your project needs."
+					showStats={false}
+				/>
+
 				<SearchFilter
 					onFiltersChange={handleFiltersChange}
 					onSearch={handleSearch}
@@ -92,11 +95,17 @@ const LandingPage = () => {
 					categories={categories}
 					filters={filters}
 				/>
-				<ServicesList services={filteredServices} loading={loading} />
+
+				<ServicesList
+					services={filteredServices}
+					loading={loading}
+					showTitle={false}
+				/>
+
 				<Footer />
 			</div>
 		</div>
 	);
 };
 
-export default LandingPage;
+export default ServicesPage;
