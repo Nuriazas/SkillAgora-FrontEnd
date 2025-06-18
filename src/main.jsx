@@ -1,20 +1,27 @@
+import React from "react";
 import { StrictMode } from "react";
+import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { createRoot } from "react-dom/client";
 import "./styles/main.css";
 import App from "./App.jsx";
-import i18n from "./i18n/config";
-import { AuthContextProvider } from "./context/AuthContextProvider.jsx";
+import { AuthContextProvider }from "./context/AuthContextProvider.jsx";
 
-// Esperar a que i18n esté listo antes de renderizar
-i18n.init().then(() => {
-  createRoot(document.getElementById("root")).render(
-    <StrictMode>
-      <BrowserRouter>
-        <AuthContextProvider>
-          <App />
-        </AuthContextProvider>
-      </BrowserRouter>
-    </StrictMode>
-  );
-});
+
+const container = document.getElementById("root"); 
+
+if(!container){
+  throw new Error('No se encontró el elemento con id "root" en el DOM')
+    }
+
+
+const root = ReactDOM.createRoot(container);
+
+root.render(
+  <StrictMode>
+    <BrowserRouter>
+      <AuthContextProvider>
+        <App />
+      </AuthContextProvider>
+    </BrowserRouter>
+  </StrictMode>,
+);
