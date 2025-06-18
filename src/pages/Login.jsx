@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContextProvider.jsx";
-import ApiService from "../services/users/loginUserService.js"; // importa tu servicio real de login
+import ApiService from "../services/users/LoginUserService.js";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
