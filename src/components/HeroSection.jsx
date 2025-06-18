@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ServiceCarousel from "./ServiceCarousel";
-import ServiceModal from "./ServiceModal";
+import ServiceModal from "./serviceModal/ServiceModal";
 import useServiceCarousel from "../hooks/useServiceCarousel";
 
 /**

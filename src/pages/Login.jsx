@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContextProvider.jsx";
-import ApiService from "../services/users/loginUserService.js"; // importa tu servicio real de login
+import ApiService from "../services/users/LoginUserService.js"; // importa tu servicio real de login
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
@@ -19,7 +19,7 @@ const LoginPage = () => {
 
     try {
       const data = await ApiService.login(email, password); // Aquí usas tu ApiService
-      setToken(data.token); // guardamos token en contexto y localStorage (por useEffect en AuthContextProvider)
+      setToken(data.data.token); // guardamos token en contexto y localStorage (por useEffect en AuthContextProvider)
       setLoading(false);
       navigate("/"); // rediriges a la página principal u otra
     } catch (e) {
