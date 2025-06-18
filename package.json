@@ -49,6 +49,8 @@
     "glob-parent": "^6.0.2",
     "globals": "^16.2.0",
     "has-flag": "^4.0.0",
+    "i18next": "^25.2.1",
+    "i18next-browser-languagedetector": "^8.2.0",
     "ignore": "^5.3.2",
     "import-fresh": "^3.3.1",
     "imurmurhash": "^0.1.4",
@@ -82,6 +84,7 @@
     "punycode": "^2.3.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-i18next": "^15.5.3",
     "react-router": "^7.6.2",
     "react-router-dom": "^7.6.2",
     "resolve-from": "^4.0.0",
@@ -102,7 +105,9 @@
     "yocto-queue": "^0.1.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "repository": {
     "type": "git",
@@ -116,9 +121,10 @@
   },
   "homepage": "https://github.com/Nuriazas/SkillAgora-FrontEnd#readme",
   "devDependencies": {
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.4",
-    "tailwindcss": "^4.1.8",
+    "@vitejs/plugin-react": "^4.5.2",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.0",
     "vite": "^6.3.5"
   }
 }

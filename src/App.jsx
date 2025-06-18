@@ -1,18 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-
+import { Routes, Route } from "react-router-dom";
+import Freelancer from "./pages/Home/FreelancerPage";
+import CreateServicePage from "./pages/CreateService/CreateServicePage";
 
 function App() {
-  
-
   return (
-    <>
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <h1 className="text-4xl font-bold text-blue-600">¡Hola Tailwind + React + Vite!</h1>
+    <div className="min-h-screen bg-lightBackground dark:bg-darkBackground">
+      <Routes>
+        <Route path="/freelancers" element={<Freelancer />} />
+        <Route path="/services/create" element={<CreateServicePage />} />
+      </Routes>
     </div>
-    </>
-  )
+  );
 }
 
-export default App
+export default App;
