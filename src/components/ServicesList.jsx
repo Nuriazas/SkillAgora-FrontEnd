@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ServiceCard from "./ServiceCard";
-import ServiceModal from "./serviceModal/ServiceModal";
+import ServiceModal from "./serviceModal/ServiceModal.jsx";
 
 /**
  * Lista de servicios con skeleton loader y modal de detalles
