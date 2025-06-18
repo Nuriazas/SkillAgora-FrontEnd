@@ -154,19 +154,6 @@ Usa Tailwind CSS extendido con clases como:
 .line-clamp-3          /* Para truncar texto a 3 líneas */
 .animate-smooth-pulse  /* Para efectos suaves en fondos */
 ```
-
----
-
-## 📸 Capturas de Pantalla
-
-> Agrega imágenes en `/screenshots` si deseas mostrar la interfaz visual
-
-```md
-<!-- ![Landing](./screenshots/landing.png) -->
-<!-- ![Login](./screenshots/login.png) -->
-<!-- ![Validación](./screenshots/validation.png) -->
-```
-
 ---
 
 ## Licencia
