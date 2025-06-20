@@ -58,15 +58,18 @@ const LoginPage = () => {
             </button>
           </div>
 
-          <section className="text-center space-y-5 bg-[#070714] rounded-3xl p-12 ">
+          <section className="text-center space-y-1 bg-[#070714] rounded-3xl p-10 ">
             <header>
-              <h2 className="mt-1 bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent h-[40px] text-[25px] font-bold">
+              <h2 className=" bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent h-[40px] text-[25px] font-bold">
                 Sign in
               </h2>
             </header>
 
             {/* Formulario */}
-            <form onSubmit={handleSubmit} className="space-y-5 w-full max-w-ms mx-auto mb-3">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-5 w-full max-w-ms mx-auto mb-3"
+            >
               <input
                 type="email"
                 placeholder="Email"
@@ -85,41 +88,52 @@ const LoginPage = () => {
                 className="w-full px-8 py-4 rounded-lg bg-[#1a1c2d] text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-300
                 text-[15px]"
               />
+              <div className="flex justify-between items-center text-white text-[15px]">
+                <label className="flex items-center gap-1 select-none cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="w-4 h-3 rounded border-gray-400 bg-[#2C2B36] focus:ring-lightCyan"
+                  />
+                  <span>Remember me?</span>
+                </label>
+                <a href="#" className="hover:text-purple-300 transition-colors">
+                  Forgot Password
+                </a>
+              </div>
               <button
                 type="submit"
                 disabled={loading}
                 className={`bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400  
                 hover:from-purple-700 hover:to-blue-700 text-white  rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-purple-500/25 w-full py-2 ${
-             loading
-               ? "bg-[#A7F3D0]  cursor-not-allowed"
-               : "bg-[#A7F3D0]  hover:bg-[#35343c]  cursor-pointer"
-           }`}
+                  loading
+                    ? "bg-[#A7F3D0]  cursor-not-allowed"
+                    : "bg-[#A7F3D0]  hover:bg-[#35343c]  cursor-pointer"
+                }`}
               >
                 {loading ? "Cargando..." : "Sign in"}
               </button>
-              {error && <p className="text-red-500 text-center">{error}</
-              p>}
+              {error && <p className="text-red-500 text-center">{error}</p>}
               <p className="text-center text-white text-[13px] mt-1">
-                        or sign in with other accounts?
-                      </p>
-                      <div className="flex justify-center gap-3 mt-1 text-white text-base cursor-pointer">
-                        <FaGoogle
-                          size={30}
-                          className="hover:text-purple-300 transition-colors"
-                        />
-                        <FaFacebookF
-                          size={30}
-                          className="hover:text-purple-300 transition-colors"
-                        />
-                        <FaInstagram
-                          size={30}
-                          className="hover:text-purple-300 transition-colors"
-                        />
-                        <FaLinkedinIn
-                          size={30}
-                          className="hover:text-purple-300 transition-colors"
-                        />
-                      </div>
+                or sign in with other accounts?
+              </p>
+              <div className="flex justify-center gap-3 mt-1 text-white text-base cursor-pointer">
+                <FaGoogle
+                  size={30}
+                  className="hover:text-purple-300 transition-colors"
+                />
+                <FaFacebookF
+                  size={30}
+                  className="hover:text-purple-300 transition-colors"
+                />
+                <FaInstagram
+                  size={30}
+                  className="hover:text-purple-300 transition-colors"
+                />
+                <FaLinkedinIn
+                  size={30}
+                  className="hover:text-purple-300 transition-colors"
+                />
+              </div>
               <p className="text-center text-white text-[13px] mt-1 ">
                 Don't have an account yet?{" "}
                 <span
@@ -136,6 +150,5 @@ const LoginPage = () => {
     </main>
   );
 };
-
 
 export default LoginPage;

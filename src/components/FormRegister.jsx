@@ -11,7 +11,7 @@ const FormRegister = ({ form, handleChange, loading }) => {
   const navigate = useNavigate();
   return (
     <>
-      <div className="space-y-2 w-full max-w-xs mx-auto">
+      <div className="space-y-3 w-full max-w-ms mx-auto">
         <div>
           {/* <label htmlFor="name" className="block mb-1 text-white font-semibold text-xs">
             First Name
@@ -23,7 +23,8 @@ const FormRegister = ({ form, handleChange, loading }) => {
             placeholder="First Name"
             value={form.name}
             onChange={handleChange}
-            className="w-full px-1 py-[2px] rounded-lg bg-[#2C2B36] tect-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-ligthCyan text-[7px]"
+            className="w-full px-8 py-4 rounded-lg bg-[#1a1c2d] text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-300
+                text-[15px]"
             required
             aria-required="true"
           />
@@ -39,7 +40,8 @@ const FormRegister = ({ form, handleChange, loading }) => {
             placeholder="Last Name"
             value={form.lastName}
             onChange={handleChange}
-            className="w-full px-1 py-[2px]1 rounded-lg bg-[#2C2B36] text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-lightCyan text-[7px]"
+            className="w-full px-8 py-4 rounded-lg bg-[#1a1c2d] text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-300
+                text-[15px]"
             required
             aria-required="true"
           />
@@ -55,7 +57,8 @@ const FormRegister = ({ form, handleChange, loading }) => {
             placeholder="Email"
             value={form.email}
             onChange={handleChange}
-            className="w-full px-1 py-[2px] rounded-lg bg-[#2C2B36] text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-lightCyan text-[7px]"
+            className="w-full px-8 py-4 rounded-lg bg-[#1a1c2d] text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-300
+                text-[15px]"
             required
             aria-required="true"
           />
@@ -71,47 +74,41 @@ const FormRegister = ({ form, handleChange, loading }) => {
             placeholder="Password"
             value={form.password}
             onChange={handleChange}
-            className="w-full px-1 py-[2px] rounded-lg bg-[#2C2B36] text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-lightCyan text-[7px]"
+            className="w-full px-8 py-4 rounded-lg bg-[#1a1c2d] text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-300
+                text-[15px]"
             required
             aria-required="true"
           />
         </div>
 
         {/* Remember me + Forgot */}
-        <div className="flex justify-between items-center text-white text-[7px]">
-          <label className="flex items-center gap-1 select-none cursor-pointer">
-            <input type="checkbox" className="w-2 h-3 rounded border-gray-400 bg-[#2C2B36] focus:ring-lightCyan" />
-            <span>Remember me?</span>
-          </label>
-          <a href="#" className="hover:text-lightCyan transition-colors">
-            Forgot Password
-          </a>
-        </div>
+        
 
         <button
           type="submit"
-          className="w-full bg-lightCyan text-[#064E3B] font-bold py-1 rounded-lg hover:bg-[#94e2cd] transition-colors disabled:opacity-60 disabled:cursor-not-allowed text-xs"
+          className="bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400  text-[15px]
+                hover:from-purple-700 hover:to-blue-700 text-white  rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-purple-500/25 w-full py-2"
           aria-label="Sign up"
           disabled={loading}
         >
           {loading ? <Spinner /> : "Sign up"}
         </button>
 
-        <p className="text-center text-white text-[7px] mt-1">
+        <p className="text-center text-white text-[15px] mt-1">
           or sign in with other accounts?
         </p>
         <div className="flex justify-center gap-3 mt-1 text-white text-base cursor-pointer">
-          <FaGoogle className="hover:text-lightCyan transition-colors" />
-          <FaFacebookF className="hover:text-lightCyan transition-colors" />
-          <FaInstagram className="hover:text-lightCyan transition-colors" />
-          <FaLinkedinIn className="hover:text-lightCyan transition-colors" />
+          <FaGoogle size={30}className="hover:text-purple-300 transition-colors" />
+          <FaFacebookF size={30} className="hover:text-purple-300 transition-colors" />
+          <FaInstagram size={30}className="hover:text-purple-300 transition-colors" />
+          <FaLinkedinIn size={30}className="hover:text-purple-300 transition-colors" />
         </div>
 
-        <p className="text-center text-white text-[7px] mt-1">
+        <p className="text-center text-white text-[15px] mt-1">
           Already have an account?{" "}
           <span 
             onClick={() =>navigate("/login")}
-          className="text-lightCyan hover:underline">
+          className="text-purple-300 hover:underline">
       
             Click here to sign in.
           
