@@ -1,6 +1,6 @@
 import React from "react";
 import { FiStar, FiMapPin, FiUser, FiDollarSign } from "react-icons/fi";
-
+import DefaultAvatar from "../../assets/defaultAvatar.jpeg";
 /**
  * Componente FreelancerCard - Tarjeta individual para mostrar un freelancer
  * Estilo consistente con ServiceCard
@@ -11,7 +11,7 @@ const FreelancerCard = ({ freelancer, onClick }) => {
 		"https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face";
 
 	// Usar avatar del freelancer o imagen por defecto
-	const avatarUrl = freelancer?.avatar || defaultAvatar;
+	const avatarUrl = freelancer?.avatar || DefaultAvatar;
 
 	// Handler para click con validación
 	const handleClick = () => {
@@ -22,7 +22,7 @@ const FreelancerCard = ({ freelancer, onClick }) => {
 
 	// Handler para errores de carga de imagen
 	const handleImageError = (e) => {
-		e.target.src = defaultAvatar;
+		e.target.src = DefaultAvatar;
 	};
 
 	// Formatear precio con validación
