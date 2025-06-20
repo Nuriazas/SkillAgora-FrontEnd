@@ -6,7 +6,7 @@ html,
 body {
 	margin: 0;
 	padding: 0;
-  background-color: #35343c; 
+  background-color: #070714; 
 }
 
 /* Line clamp utility */
@@ -33,3 +33,18 @@ body {
     animation: smooth-pulse 6s ease-in-out infinite;
   }
 }
+
+@layer utilities {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus, 
+  input:-webkit-autofill:active {
+    box-shadow: 0 0 0px 1000px #1a1c2d inset !important;
+    -webkit-text-fill-color: white !important;
+    caret-color: white;
+    transition: background-color 9999s ease-in-out 0s;
+  }
+}
+
+
+

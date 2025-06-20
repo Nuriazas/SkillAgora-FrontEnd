@@ -6,7 +6,7 @@ import { AuthContext } from "../context/AuthContextProvider.jsx";
 
 import { useNavigate } from "react-router-dom";
 import { Background } from "../components/background.jsx";
-
+import Header from "../components/Header.jsx";
 import Spinner from "../components/Spinner.jsx";
 
 const RegisterPage = () => {
@@ -57,7 +57,8 @@ const RegisterPage = () => {
   };
 
   return (
-    <>
+    <> 
+    
       <main className="relative min-h-screen overflow-hidden">
         <Background />
         {(error || message) && (
@@ -69,23 +70,28 @@ const RegisterPage = () => {
           </div>
         )}
 
-        <section className=" relative z-10 h-screen flex items-start justify-center  px-4 pt-4">
+        <section className=" relative z-10 h-screen flex items-center justify-center  px-4 pt-4">
           {/* Tarjeta centrada */}
-          <article className="bg-[#2C2B36] p-3 rounded-3xl shadow-2xl w-[250px] h-[350px] mx-auto my-12 overflow-hidden flex flex-col justify-between text-xs">
+          <article className="bg-[#1a1c2d] p-3 rounded-3xl shadow-2xl w-[500px] h-[700px] mx-auto my-12 overflow-hidden flex flex-col justify-between text-xs">
             {/* Header */}
-            <h1 className="text-white text-xl font-bold text-center tracking-wide mt-1 mx-4 mb-4">
-              <span className="mr-2">⚒</span>SkillAgora
-            </h1>
-            <section className="text-center space-y-1 bg-[#35343c] rounded-3xl">
+            <div className="w-full flex justify-center  min-h-[60px] w-full  ">
+							<button
+								onClick={() => navigate("/")}
+								className="text-[60px] font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent hover:scale-105 transition-transform duration-200 w-[400px] h-[100px] "
+							>
+								SkillAgora
+							</button>
+						</div>
+            <section className="text-center space-y-5 bg-[#070714] rounded-3xl">
               <header>
-                <h2 className=" m-2 text-white text-sm font-semibold">
+                <h2 className=" mt-8 bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent h-[40px] text-[25px] font-bold ">
                   Register
                 </h2>
               </header>
 
               {/* Contenido del formulario */}
-              <div className="mx-6 mt-4 space-y-4">
-                <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="mx-6 mt-4 space-y-4 min-h-[425px]">
+                <form onSubmit={handleSubmit} className="space-y-">
                   <FormRegister form={form} handleChange={handleChange} />
                 </form>
               </div>

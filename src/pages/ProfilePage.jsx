@@ -6,6 +6,7 @@ import Footer from "../components/Footer.jsx";
 import ServiceEditModal from "../components/serviceModal/ServiceEditModal.jsx";
 import { AuthContext } from "../context/AuthContextProvider.jsx";
 import { userApi } from "../services/api/api";
+import DefaultAvatar from "../assets/defaultAvatar.jpeg"
 import {
 	FiMail,
 	FiMapPin,
@@ -150,13 +151,14 @@ const ProfilePage = () => {
 									<img
 										src={
 											profileData?.avatar ||
-											"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+											DefaultAvatar
 										}
 										alt={`${profileData?.name}'s avatar`}
 										className="w-32 h-32 rounded-full object-cover border-4 border-purple-500/50 shadow-2xl"
 										onError={(e) => {
-											e.target.src =
-												"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face";
+											
+											e.target.onerror = null;
+											e.target.src = DefaultAvatar;
 										}}
 									/>
 

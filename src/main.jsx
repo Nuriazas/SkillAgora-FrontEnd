@@ -7,6 +7,7 @@ import App from "./App.jsx";
 import { AuthContextProvider }from "./context/AuthContextProvider.jsx";
 
 
+
 const container = document.getElementById("root"); 
 
 if(!container){
