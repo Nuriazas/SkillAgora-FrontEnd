@@ -8,14 +8,13 @@ export const API_CONFIG = {
     SEND_VALIDATION: '/users/send-validation',
     VERIFY_VALIDATION: '/users/verify-validation',
     RESEND_VALIDATION: '/users/resend-validation',
+
+    // NUEVOS ENDPOINTS DE RECUPERACIÓN
+    FORGOT_PASSWORD: '/users/forgot-password',
+    RESET_PASSWORD: '/users/reset-password',
   },
   HEADERS: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
 };
-
-export const getAuthHeader = (token) => ({
-  ...API_CONFIG.HEADERS,
-  Authorization: `Bearer ${token}`,
-});
