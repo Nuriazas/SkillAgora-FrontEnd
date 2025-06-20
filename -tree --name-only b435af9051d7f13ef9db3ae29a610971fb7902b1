@@ -1,0 +1,55 @@
+[33mcommit b435af9051d7f13ef9db3ae29a610971fb7902b1[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Carmen <cvieher@gmail.com>
+Date:   Fri Jun 20 18:21:43 2025 +0200
+
+    unir carpetas Components y components
+
+[33mcommit 1c91eb917aec8854c025099bb316e4668dcbf76b[m
+Author: Jordi Roigé <rfjordirf@gmail.com>
+Date:   Wed Jun 18 17:02:14 2025 +0200
+
+    Crea manejo de contacto y contratacion de servicios des de services y des de freelancers, corrige proyecto general
+
+[33mcommit 4e5c9907f96064f390c6bab4a977d054e2e03f57[m
+Merge: 51e1929 cc9f0a5
+Author: Jordi Roigé <rfjordirf@gmail.com>
+Date:   Wed Jun 18 13:16:33 2025 +0200
+
+    Remove node_modules from repo and add to .gitignore
+
+[33mcommit 51e19293f961348a82b49620242108d8cd310d9b[m
+Author: Jordi Roigé <rfjordirf@gmail.com>
+Date:   Wed Jun 18 13:06:20 2025 +0200
+
+    Corrige imports etc
+
+[33mcommit c0728719aef09e09f58e0349b30b337b553c1988[m
+Merge: 810bb1e 4bba707
+Author: Kevin Fernández <kevinrapela@gmail.com>
+Date:   Wed Jun 18 05:13:39 2025 +0200
+
+    Mergeando
+
+[33mcommit 810bb1e4d6f99eee1a72c2108e5212bce32b9fad[m
+Author: Kevin Fernández <kevinrapela@gmail.com>
+Date:   Wed Jun 18 04:52:21 2025 +0200
+
+    mergeo
+
+[33mcommit 150dd28791d405f6f80c48edf95f9e75180210a0[m[33m ([m[1;31morigin/jordi[m[33m)[m
+Author: Jordi Roigé <rfjordirf@gmail.com>
+Date:   Wed Jun 18 04:20:34 2025 +0200
+
+    Crea los servicios sendContactRequest y createOrderService y crea los modales para manejar el contacto y contratar la orden
+
+[33mcommit 5c4a1b72f9ff882d68221c0fb450ced4c4a2e727[m
+Author: Carmen <cvieher@gmail.com>
+Date:   Wed Jun 18 01:25:07 2025 +0200
+
+    Modifica el Header.jsx
+
+[33mcommit 226aa938f7dd04bf4647cbb66aa7492579b2fd5a[m
+Author: Jordi Roigé <rfjordirf@gmail.com>
+Date:   Tue Jun 17 22:07:45 2025 +0200
+
+    Crea el landing (Header con Profile Dropdown, HeroSection, SearchBar con filtros, la lista de servicios y su modal con detalle
