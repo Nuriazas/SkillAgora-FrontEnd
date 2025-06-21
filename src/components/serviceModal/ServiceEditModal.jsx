@@ -1,6 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { FiX, FiSave, FiLoader } from "react-icons/fi";
 import { AuthContext } from "../../context/AuthContextProvider";
+import { getServiceById } from "../../services/api/getServiceById.js";
+
+
 
 const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 	const { token } = useContext(AuthContext);
@@ -14,8 +17,11 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 		place: "",
 	});
 
+
 	useEffect(() => {
 		if (isOpen && service) {
+			console.log("🧪 Recibido en Modal:", JSON.stringify(service, null, 2));
+
 			setFormData({
 				title: service.title || "",
 				description: service.description || "",
@@ -25,6 +31,7 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 			});
 			loadCategories();
 		}
+		console.log("Service recibido en modal:", service);
 	}, [isOpen, service]);
 
 	const loadCategories = async () => {
@@ -32,7 +39,7 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 			const response = await fetch("http://localhost:3000/services/categories");
 			const data = await response.json();
 			if (data.success) {
-				setCategories(data.data);
+				setCategories(data.service);
 			}
 		} catch (error) {
 			console.error("Error loading categories:", error);
@@ -43,7 +50,27 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 		const { name, value } = e.target;
 		setFormData((prev) => ({ ...prev, [name]: value }));
 	};
+	
+	
+	const handleSave = async () => {
+    try {
+    const response = await apiUpdateService(serviceData); 
+    if (response.success) {
+      onUpdate(response.data);  
+      onClose();               
+    }
 
+      if (response.success) {
+        onUpdate(response.data); 
+        onClose();              
+      } else {
+        alert("Error al actualizar el servicio");
+      }
+    } catch (error) {
+      alert("Error al actualizar el servicio");
+      console.error(error);
+    }
+  };
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -53,7 +80,7 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 		}
 
 		// Verificamos que tengamos el servicio y su ID
-		if (!service || !service.id) {
+		if (!service || !service.service_id) {
 			alert("Error: No se encontró el ID del servicio");
 			return;
 		}
@@ -69,7 +96,7 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 			};
 
 			const response = await fetch(
-				`http://localhost:3000/service/update/${service.id}`, // Usamos service.id directamente
+				`http://localhost:3000/service/update/${service.service_id}`, // Usamos service.id directamente
 				{
 					method: "PUT",
 					headers: {
@@ -81,11 +108,12 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 			);
 
 			const data = await response.json();
-
+			console.log(data);
+			
 			if (response.ok || data.success) {
 				onUpdate({
 					...service,
-					...dataToSend,
+					...data.result,
 				});
 				onClose();
 			} else {

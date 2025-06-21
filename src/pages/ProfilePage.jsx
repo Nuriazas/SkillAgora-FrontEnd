@@ -21,6 +21,8 @@ import {
 const ProfilePage = () => {
   const { name } = useParams();
   const { userLogged } = useContext(AuthContext);
+
+
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -28,7 +30,7 @@ const ProfilePage = () => {
   const [selectedService, setSelectedService] = useState(null);
 
   // Verificar si es el perfil del usuario actual
-  const isOwnProfile = userLogged?.name === name;
+  const isOwnProfile = React.useMemo(() => userLogged?.name === name, [userLogged, name]);
 
   useEffect(() => {
     loadProfile();
@@ -59,13 +61,14 @@ const ProfilePage = () => {
   };
 
   // Handler para actualizar servicio después de la edición
-  const handleServiceUpdate = (updatedService) => {
+  const handleServiceUpdate = async (updatedService) => {
     setProfileData((prev) => ({
       ...prev,
       services: prev.services.map((service) =>
-        service.id === updatedService.id ? updatedService : service
+        service.service_id === updatedService.service_id ? updatedService : service
       ),
     }));
+    await loadProfile();
   };
 
   if (error) {
@@ -240,8 +243,8 @@ const ProfilePage = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {profileData.services.map((service, index) => (
                       <div
-                        key={service.id || index}
-                        className={`bg-gray-800/50 rounded-xl p-6 border border-gray-700/30 transition-all duration-300 ${
+                        key={service.service_id || index}
+                        className={`group bg-gray-800/50 rounded-xl p-6 border border-gray-700/30 transition-all duration-300 ${
                           isOwnProfile
                             ? "hover:bg-gray-700/50 hover:border-purple-500/50 cursor-pointer hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/20"
                             : ""

@@ -116,6 +116,11 @@ const ServiceModal = ({ service, onClose }) => {
             <h2 id="modal-title" className="text-2xl font-bold text-white mb-4">
               {serviceDetails.title}
             </h2>
+            {service.category_name && (
+              <div className="text-xs text-gray-400 font-semibold mb-1">
+                {service.category_name}
+              </div>
+            )}
 
             <p className="text-gray-400 mb-6 leading-relaxed">
               {serviceDetails.description}
