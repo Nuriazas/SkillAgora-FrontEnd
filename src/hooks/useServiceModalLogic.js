@@ -24,10 +24,10 @@ export const useServiceModalLogic = (service, onClose) => {
 	// Cargar detalles completos del servicio si es necesario
 	useEffect(() => {
 		const loadServiceDetails = async () => {
-			if (!service.user_id && service.id) {
+			if (!service.user_id && service.service_id) {
 				try {
 					setLoadingDetails(true);
-					const response = await servicesApi.getServiceById(service.id);
+					const response = await servicesApi.getServiceById(service.service_id);
 					if (response.success) {
 						setServiceDetails(response.data);
 					}
@@ -135,8 +135,9 @@ export const useServiceModalLogic = (service, onClose) => {
 
 	// Handler para contratar servicio
 	const handleHireService = () => {
+		console.log("serviceDetails en handleHireService:", serviceDetails);
 		const token = localStorage.getItem("token");
-
+		const serviceId = serviceDetails.service_id || serviceDetails.id;
 		// Validar token
 		if (!token || token === "null" || token === "undefined") {
 			setResultData({
@@ -150,7 +151,7 @@ export const useServiceModalLogic = (service, onClose) => {
 		}
 
 		// Validar serviceId
-		if (!serviceDetails.id) {
+		if (!serviceId) {
 			setResultData({
 				type: "error",
 				title: "Error",
@@ -168,10 +169,13 @@ export const useServiceModalLogic = (service, onClose) => {
 
 	// Handler para confirmar la contratación
 	const handleConfirmHire = async () => {
+		
 		try {
 			setIsCreatingOrder(true);
 			const token = localStorage.getItem("token");
-			const serviceId = serviceDetails.id;
+			const serviceId = serviceDetails.service_id || serviceDetails.id;
+			console.log("serviceDetails al contratar:", serviceDetails);
+
 
 			console.log("🛒 Intentando contratar servicio:", serviceId);
 

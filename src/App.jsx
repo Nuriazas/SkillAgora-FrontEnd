@@ -15,6 +15,7 @@ import Spinner from "./components/Spinner.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
 import HelpCenterPage from "./pages/HelpCenterPage.jsx";
+import OrdersPage from "./pages/NotificationPage.jsx";
 
 function SpinnerPage() {
   return (
@@ -25,7 +26,10 @@ function SpinnerPage() {
 }
 
 function App() {
+    
   return (
+    <>
+    
     <ErrorBoundary>
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -40,8 +44,11 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/help" element={<HelpCenterPage />} />
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="/notifications/contacts" element={<OrdersPage />} />
+
       </Routes>
     </ErrorBoundary>
+    </>
   );
 }
 

@@ -37,7 +37,7 @@ const UserDropdown = ({ user, isOpen, onToggle, onLogout, onNavigate }) => {
   };
 
   const handleOrdersClick = () => {
-    onNavigate("/my-orders");
+    onNavigate("/notifications/contacts");
   };
 
   const handleSettingsClick = () => {

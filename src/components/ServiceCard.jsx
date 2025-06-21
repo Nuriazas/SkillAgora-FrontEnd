@@ -85,7 +85,7 @@ const ServiceCard = ({ service, onClick }) => {
             className="w-6 h-6 rounded-full object-cover border-2 border-purple-500"
             onError={(e) => {
               e.target.onerror = null; // para evitar loop infinito
-              e.target.src = defaultAvatar;
+              e.target.src = DefaultAvatar;
             }}
           />
           <span className="text-xs text-gray-400 font-medium">
