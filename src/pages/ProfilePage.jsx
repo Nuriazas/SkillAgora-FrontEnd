@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import SimpleHeroSection from "../components/SimpleHeroSection.jsx";
@@ -36,6 +37,7 @@ const ProfilePage = () => {
     () => userLogged?.name === name,
     [userLogged, name]
   );
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadProfile();
@@ -202,10 +204,14 @@ const ProfilePage = () => {
                         {profileData?.name} {profileData?.lastName}
                       </h1>
                       {isOwnProfile && (
-                        <button className="p-2 text-gray-400 hover:text-white transition-colors">
-                          <FiEdit className="w-5 h-5" />
-                        </button>
-                      )}
+  <button
+    className="p-2 text-gray-400 hover:text-white transition-colors"
+    onClick={() => navigate("/edit-profile")}
+  >
+    <FiEdit className="w-5 h-5" />
+  </button>
+)}
+
                     </div>
 
                     <div className="space-y-3 mb-6">

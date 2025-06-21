@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header.jsx";
 import SimpleHeroSection from "../components/SimpleHeroSection.jsx";
+import FreelancerSearchFilter from "../components/FreelancerSearchFilter.jsx";
 import { FreelancerCard } from "../components/FreelancersList/FreelancerCard.jsx";
 import { FreelancerModal } from "../components/FreelancersList/FreelancerModal.jsx";
 import { FreelancerPagination } from "../components/FreelancersList/FreelancerPagination.jsx";
@@ -10,65 +11,77 @@ import { freelancerService } from "../services/getAllFreelancersService.js";
 const ITEMS_PER_PAGE = 6;
 
 const FreelancerPage = () => {
-	const [searchTerm, setSearchTerm] = useState("");
-	const [sortBy, setSortBy] = useState("rating");
-	const [filterSpecialty, setFilterSpecialty] = useState("");
+	// Estados para filtros centralizados
+	const [filters, setFilters] = useState({
+		search: "",
+		minRating: "",
+		maxRating: "",
+		minPrice: "",
+		maxPrice: "",
+		minServices: "",
+		location: "",
+		sortBy: "rating",
+		sortOrder: "desc"
+	});
+	
 	const [currentPage, setCurrentPage] = useState(1);
+	
+	// Estados de la UI
 	const [selectedFreelancer, setSelectedFreelancer] = useState(null);
 	const [viewMode, setViewMode] = useState("grid");
 	const [isLoading, setIsLoading] = useState(false);
 	const [freelancers, setFreelancers] = useState([]);
 	const [error, setError] = useState(null);
-	const [specialties, setSpecialties] = useState([]);
+	const [paginationInfo, setPaginationInfo] = useState(null);
 
-	useEffect(() => {
-		const loadFreelancers = async () => {
-			setIsLoading(true);
-			try {
-				const data = await freelancerService.getAll();
-				setFreelancers(data);
-				// Extraer especialidades únicas de los freelancers
-				const uniqueSpecialties = [...new Set(data.map((f) => f.specialty))];
-				setSpecialties(uniqueSpecialties);
+	// Función para cargar freelancers con filtros del backend
+	const loadFreelancers = async () => {
+		setIsLoading(true);
+		try {
+			// Construir parámetros de query para el backend
+			const params = new URLSearchParams();
+			
+			// Añadir filtros solo si tienen valor
+			if (filters.search) params.append('search', filters.search);
+			if (filters.minRating) params.append('minRating', filters.minRating);
+			if (filters.maxRating) params.append('maxRating', filters.maxRating);
+			if (filters.minPrice) params.append('minPrice', filters.minPrice);
+			if (filters.maxPrice) params.append('maxPrice', filters.maxPrice);
+			if (filters.minServices) params.append('minServices', filters.minServices);
+			if (filters.location) params.append('location', filters.location);
+			if (filters.sortBy) params.append('sortBy', filters.sortBy);
+			if (filters.sortOrder) params.append('sortOrder', filters.sortOrder);
+			params.append('page', currentPage);
+			params.append('limit', ITEMS_PER_PAGE);
+
+			// Llamar al backend con los filtros
+			const response = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/users/freelancers?${params}`);
+			const result = await response.json();
+			
+			if (result.success) {
+				setFreelancers(result.data);
+				setPaginationInfo(result.pagination);
 				setError(null);
-			} catch (err) {
-				setError("Error loading freelancers");
-				console.error("Error:", err);
-			} finally {
-				setIsLoading(false);
+			} else {
+				throw new Error(result.message || 'Error loading freelancers');
 			}
-		};
+		} catch (err) {
+			setError("Error loading freelancers");
+			console.error("Error:", err);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
+	// useEffect para cargar freelancers cuando cambien los filtros
+	useEffect(() => {
 		loadFreelancers();
-	}, []);
+	}, [filters, currentPage]);
 
-	// Filtrar freelancers basado en el término de búsqueda y especialidad
-	const filteredFreelancers = freelancers.filter((freelancer) => {
-		const matchesSearch =
-			freelancer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			freelancer.specialty?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			freelancer.location?.toLowerCase().includes(searchTerm.toLowerCase());
-
-		const matchesSpecialty = filterSpecialty
-			? freelancer.specialty === filterSpecialty
-			: true;
-
-		return matchesSearch && matchesSpecialty;
-	});
-
-	// Ordenar freelancers
-	const sortedFreelancers = [...filteredFreelancers].sort((a, b) => {
-		if (sortBy === "rating") return b.rating - a.rating;
-		if (sortBy === "price") return b.hourly_rate - a.hourly_rate;
-		return 0;
-	});
-
-	// Calcular paginación
-	const totalPages = Math.ceil(sortedFreelancers.length / ITEMS_PER_PAGE);
-	const paginatedFreelancers = sortedFreelancers.slice(
-		(currentPage - 1) * ITEMS_PER_PAGE,
-		currentPage * ITEMS_PER_PAGE
-	);
+	// Reset página cuando cambien los filtros
+	useEffect(() => {
+		setCurrentPage(1);
+	}, [filters]);
 
 	const handleFreelancerClick = async (freelancer) => {
 		try {
@@ -88,10 +101,34 @@ const FreelancerPage = () => {
 		setCurrentPage(newPage);
 	};
 
-	// Rellenar hasta ITEMS_PER_PAGE tarjetas
+	// Manejadores para el componente de filtros
+	const handleFiltersChange = (newFilters) => {
+		setFilters(newFilters);
+	};
+
+	const handleSearch = (searchTerm) => {
+		setFilters(prev => ({ ...prev, search: searchTerm }));
+	};
+
+	const clearFilters = () => {
+		setFilters({
+			search: "",
+			minRating: "",
+			maxRating: "",
+			minPrice: "",
+			maxPrice: "",
+			minServices: "",
+			location: "",
+			sortBy: "rating",
+			sortOrder: "desc"
+		});
+		setCurrentPage(1);
+	};
+
+	// Rellenar hasta ITEMS_PER_PAGE tarjetas para mantener la grilla uniforme
 	const cards = [
-		...paginatedFreelancers,
-		...Array(ITEMS_PER_PAGE - paginatedFreelancers.length).fill(null),
+		...freelancers,
+		...Array(Math.max(0, ITEMS_PER_PAGE - freelancers.length)).fill(null),
 	];
 
 	if (error) {
@@ -145,62 +182,24 @@ const FreelancerPage = () => {
 					showStats={false}
 				/>
 
-				{/* Filtros y búsqueda */}
-				<section className="py-8 px-4 sm:px-6 lg:px-8">
+				{/* Nuevo componente de filtros unificado */}
+				<FreelancerSearchFilter
+					onFiltersChange={handleFiltersChange}
+					onSearch={handleSearch}
+					onClearFilters={clearFilters}
+					filters={filters}
+				/>
+
+				{/* Resultados */}
+				<section className="px-4 sm:px-6 lg:px-8 pb-8">
 					<div className="max-w-7xl mx-auto">
-						<div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 p-6 mb-8">
-							<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-								{/* Búsqueda */}
-								<div>
-									<label className="block text-sm font-medium text-gray-300 mb-2">
-										Search Freelancers
-									</label>
-									<input
-										type="text"
-										placeholder="Search by name, specialty, location..."
-										value={searchTerm}
-										onChange={(e) => setSearchTerm(e.target.value)}
-										className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-									/>
-								</div>
-
-								{/* Filtro por especialidad */}
-								<div>
-									<label className="block text-sm font-medium text-gray-300 mb-2">
-										Specialty
-									</label>
-									<select
-										value={filterSpecialty}
-										onChange={(e) => setFilterSpecialty(e.target.value)}
-										className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-									>
-										<option value="">All Specialties</option>
-										{specialties.map((specialty, index) => (
-											<option key={`specialty-${index}`} value={specialty}>
-												{specialty}
-											</option>
-										))}
-									</select>
-								</div>
-
-								{/* Ordenar por */}
-								<div>
-									<label className="block text-sm font-medium text-gray-300 mb-2">
-										Sort By
-									</label>
-									<select
-										value={sortBy}
-										onChange={(e) => setSortBy(e.target.value)}
-										className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-									>
-										<option value="rating">Rating</option>
-										<option value="price">Hourly Rate</option>
-									</select>
-								</div>
+						{/* Estadísticas de resultados */}
+						{paginationInfo && (
+							<div className="text-gray-400 text-sm mb-4">
+								Showing {freelancers.length} of {paginationInfo.totalResults} freelancers
 							</div>
-						</div>
+						)}
 
-						{/* Resultados */}
 						{isLoading ? (
 							<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
 								{Array(6)
@@ -216,6 +215,18 @@ const FreelancerPage = () => {
 											<div className="h-8 bg-gray-700 rounded"></div>
 										</div>
 									))}
+							</div>
+						) : freelancers.length === 0 ? (
+							<div className="text-center py-12">
+								<div className="text-gray-400 text-lg mb-4">
+									No freelancers found matching your criteria
+								</div>
+								<button
+									onClick={clearFilters}
+									className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-200"
+								>
+									Clear Filters
+								</button>
 							</div>
 						) : (
 							<>
@@ -237,11 +248,11 @@ const FreelancerPage = () => {
 								</div>
 
 								{/* Paginación */}
-								{totalPages > 1 && (
+								{paginationInfo && paginationInfo.totalPages > 1 && (
 									<div className="flex justify-center">
 										<FreelancerPagination
-											currentPage={currentPage}
-											totalPages={totalPages}
+											currentPage={paginationInfo.currentPage}
+											totalPages={paginationInfo.totalPages}
 											onPageChange={handlePageChange}
 										/>
 									</div>

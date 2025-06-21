@@ -26,7 +26,10 @@ const LoginPage = () => {
 
     try {
       const data = await ApiService.login(email, password);
-      setToken(data.data.token);
+
+      setToken(data.data.token); // guarda en contexto
+      localStorage.setItem("authToken", data.data.token); // ✅ guarda en localStorage
+
       setLoading(false);
       navigate("/");
     } catch (e) {
