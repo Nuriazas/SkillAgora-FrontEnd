@@ -3,9 +3,11 @@ import Header from "../components/Header";
 import HeroSection from "../components/HeroSection.jsx";
 import SearchFilter from "../components/SearchFilter.jsx";
 import ServicesList from "../components/ServicesList.jsx";
+import FreelancersList from "../components/FreelancersList/FreelancerList.jsx";
 import Footer from "../components/Footer";
 import { servicesApi } from "../services/api/api";
 import useServiceFilters from "../hooks/useServiceFilters";
+import { useFreelancersList } from "../hooks/useFreelancersList.js";
 
 const LandingPage = () => {
 	const [categories, setCategories] = useState([]);
@@ -19,6 +21,13 @@ const LandingPage = () => {
 		handleSearch,
 		clearFilters,
 	} = useServiceFilters();
+
+	// Hook para freelancers
+	const {
+		freelancers,
+		loading: freelancersLoading,
+		error: freelancersError,
+	} = useFreelancersList();
 
 	useEffect(() => {
 		loadInitialData();
@@ -92,7 +101,22 @@ const LandingPage = () => {
 					categories={categories}
 					filters={filters}
 				/>
-				<ServicesList services={filteredServices} loading={loading} />
+				{/* Mostrar solo 7 servicios + 1 carta de "Ver todos" */}
+				<ServicesList 
+					services={filteredServices} 
+					loading={loading} 
+					limit={7}
+					showViewAll={true}
+					isLandingPage={true}
+				/>
+				{/* Mostrar solo 7 freelancers + 1 carta de "Ver todos" */}
+				<FreelancersList 
+					freelancers={freelancers} 
+					loading={freelancersLoading}
+					limit={7}
+					showViewAll={true}
+					isLandingPage={true}
+				/>
 				<Footer />
 			</div>
 		</div>

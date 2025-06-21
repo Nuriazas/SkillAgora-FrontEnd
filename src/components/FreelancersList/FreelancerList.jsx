@@ -1,30 +1,31 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ServiceCard from "./ServiceCard.jsx";
-import ServiceModal from "./serviceModal/ServiceModal.jsx";
+import { FreelancerCard } from "./FreelancerCard.jsx";
+import { FreelancerModal } from "./FreelancerModal.jsx";
 
 /**
- * Lista de servicios con skeleton loader y modal de detalles
+ * Lista de freelancers con skeleton loader y modal de detalles
+ * Componente consistente con ServicesList para usar en la landing page
  */
-const ServicesList = ({ services, loading, limit = null, showViewAll = false, isLandingPage = false }) => {
-	const [selectedService, setSelectedService] = useState(null);
+const FreelancersList = ({ freelancers, loading, limit = null, showViewAll = false, isLandingPage = false }) => {
+	const [selectedFreelancer, setSelectedFreelancer] = useState(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();
 
-	// Handler para abrir modal de servicio
-	const handleServiceClick = (service) => {
-		setSelectedService(service);
+	// Handler para abrir modal de freelancer
+	const handleFreelancerClick = (freelancer) => {
+		setSelectedFreelancer(freelancer);
 		setIsModalOpen(true);
 	};
 
 	// Handler para cerrar modal
 	const closeModal = () => {
 		setIsModalOpen(false);
-		setSelectedService(null);
+		setSelectedFreelancer(null);
 	};
 
 	// Aplicar límite si se especifica
-	const displayServices = limit ? services?.slice(0, limit) : services;
+	const displayFreelancers = limit ? freelancers?.slice(0, limit) : freelancers;
 
 	// Determinar clases de grid según el contexto
 	const gridClasses = isLandingPage 
@@ -37,7 +38,7 @@ const ServicesList = ({ services, loading, limit = null, showViewAll = false, is
 		return (
 			<section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
 				<h3 className="text-2xl font-bold text-white mb-8">
-					Servicios Destacados
+					Freelancers Destacados
 				</h3>
 				<div className={gridClasses}>
 					{Array.from({ length: skeletonCount }, (_, i) => (
@@ -45,9 +46,12 @@ const ServicesList = ({ services, loading, limit = null, showViewAll = false, is
 							key={i}
 							className="bg-gray-900/80 backdrop-blur-xl rounded-xl shadow-xl border border-gray-800/50 overflow-hidden animate-pulse"
 						>
-							<div className="aspect-[4/3] bg-gray-800"></div>
+							<div className="aspect-[4/3] bg-gradient-to-br from-purple-900/30 to-blue-900/30 flex items-center justify-center">
+								<div className="w-32 h-32 rounded-full bg-gray-800"></div>
+							</div>
 							<div className="p-4">
 								<div className="h-4 bg-gray-800 rounded mb-2"></div>
+								<div className="h-3 bg-gray-800 rounded mb-2"></div>
 								<div className="h-3 bg-gray-800 rounded mb-4"></div>
 								<div className="flex justify-between">
 									<div className="h-3 bg-gray-800 rounded w-16"></div>
@@ -61,15 +65,15 @@ const ServicesList = ({ services, loading, limit = null, showViewAll = false, is
 		);
 	}
 
-	// Estado sin servicios
-	if (!services?.length) {
+	// Estado sin freelancers
+	if (!freelancers?.length) {
 		return (
 			<section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
 				<h3 className="text-2xl font-bold text-white mb-8">
-					Todos los Servicios
+					Todos los Freelancers
 				</h3>
 				<div className="text-center py-12">
-					<p className="text-gray-400">No se encontraron servicios</p>
+					<p className="text-gray-400">No se encontraron freelancers</p>
 				</div>
 			</section>
 		);
@@ -78,43 +82,43 @@ const ServicesList = ({ services, loading, limit = null, showViewAll = false, is
 	return (
 		<section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
 			<h3 className="text-2xl font-bold text-white mb-8">
-				{limit ? "Servicios Destacados" : "Todos los Servicios"}
+				{limit ? "Freelancers Destacados" : "Todos los Freelancers"}
 			</h3>
 
-			{/* Grid de servicios */}
+			{/* Grid de freelancers */}
 			<div className={gridClasses}>
-				{displayServices.map((service) => (
-					<ServiceCard
-						key={service.id}
-						service={service}
-						onClick={() => handleServiceClick(service)}
+				{displayFreelancers.map((freelancer) => (
+					<FreelancerCard
+						key={freelancer.id}
+						freelancer={freelancer}
+						onClick={() => handleFreelancerClick(freelancer)}
 					/>
 				))}
 				
 				{/* Carta de "Ver todos" si está habilitada */}
 				{showViewAll && (
 					<div
-						onClick={() => navigate('/services')}
+						onClick={() => navigate('/freelancers')}
 						className="bg-gray-900/80 backdrop-blur-xl rounded-xl shadow-xl border border-gray-800/50 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 cursor-pointer hover:-translate-y-2 group overflow-hidden flex items-center justify-center min-h-[300px]"
 						role="button"
 						tabIndex={0}
-						aria-label="Ver todos los servicios"
+						aria-label="Ver todos los freelancers"
 						onKeyDown={(e) => {
 							if (e.key === "Enter" || e.key === " ") {
 								e.preventDefault();
-								navigate('/services');
+								navigate('/freelancers');
 							}
 						}}
 					>
 						<div className="text-center p-6">
 							<div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-								<span className="text-2xl">📋</span>
+								<span className="text-2xl">👥</span>
 							</div>
 							<h4 className="font-semibold text-white mb-2 group-hover:text-purple-300 transition-colors">
-								Ver Todos los Servicios
+								Ver Todos los Freelancers
 							</h4>
 							<p className="text-sm text-gray-400">
-								Explora nuestra colección completa de servicios
+								Descubre todos nuestros profesionales talentosos
 							</p>
 						</div>
 					</div>
@@ -122,11 +126,11 @@ const ServicesList = ({ services, loading, limit = null, showViewAll = false, is
 			</div>
 
 			{/* Modal de detalles */}
-			{isModalOpen && selectedService && (
-				<ServiceModal service={selectedService} onClose={closeModal} />
+			{isModalOpen && selectedFreelancer && (
+				<FreelancerModal freelancer={selectedFreelancer} onClose={closeModal} />
 			)}
 		</section>
 	);
 };
 
-export default ServicesList;
+export default FreelancersList;
