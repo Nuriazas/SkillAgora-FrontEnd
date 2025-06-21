@@ -11,6 +11,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import Spinner from "./components/Spinner.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx"; // 👈 AÑADIDO
 
 function SpinnerPage() {
 	return (
@@ -32,6 +33,7 @@ function App() {
 				<Route path="/services" element={<ServicesPage />} />
 				<Route path="/services/create" element={<CreateServicePage />} />
 				<Route path="/users/profile/:name" element={<ProfilePage />} />
+				<Route path="/forgot-password" element={<ForgotPassword />} /> {/* 👈 NUEVA RUTA */}
 				<Route path="*" element={<NotFoundPage />} />
 			</Routes>
 		</ErrorBoundary>
@@ -39,3 +41,4 @@ function App() {
 }
 
 export default App;
+
