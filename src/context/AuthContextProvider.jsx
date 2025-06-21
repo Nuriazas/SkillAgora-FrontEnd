@@ -18,7 +18,6 @@ const AuthContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		const getDataUserLogged = async () => {
-			// Solo hacer la petición si hay token
 			if (!token) {
 				setUserLogged(null);
 				return;
@@ -29,7 +28,6 @@ const AuthContextProvider = ({ children }) => {
 				setUserLogged(data);
 			} catch (error) {
 				console.log("Error al obtener datos del usuario:", error);
-				// Si hay error de autenticación, limpiar token
 				if (
 					error.message?.includes("401") ||
 					error.message?.includes("Unauthorized")
@@ -50,7 +48,15 @@ const AuthContextProvider = ({ children }) => {
 	};
 
 	return (
-		<AuthContext.Provider value={{ token, setToken, userLogged, logout }}>
+		<AuthContext.Provider
+			value={{
+				token,
+				setToken,
+				userLogged,
+				setUserLogged, // ✅ agregado aquí
+				logout,
+			}}
+		>
 			{children}
 		</AuthContext.Provider>
 	);
