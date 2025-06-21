@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import SimpleHeroSection from "../components/SimpleHeroSection.jsx";
@@ -7,6 +8,7 @@ import ServiceEditModal from "../components/serviceModal/ServiceEditModal.jsx";
 import { AuthContext } from "../context/AuthContextProvider.jsx";
 import { userApi } from "../services/api/api";
 import DefaultAvatar from "../assets/defaultAvatar.jpeg";
+import Spinner from "../components/Spinner.jsx";
 import {
   FiMail,
   FiMapPin,
@@ -22,15 +24,20 @@ const ProfilePage = () => {
   const { name } = useParams();
   const { userLogged } = useContext(AuthContext);
 
-
+  const [loadingMore, setLoadingMore] = useState(false);
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
+  const [visibleServicesCount, setVisibleServicesCount] = useState(6);
 
   // Verificar si es el perfil del usuario actual
-  const isOwnProfile = React.useMemo(() => userLogged?.name === name, [userLogged, name]);
+  const isOwnProfile = React.useMemo(
+    () => userLogged?.name === name,
+    [userLogged, name]
+  );
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadProfile();
@@ -53,6 +60,33 @@ const ProfilePage = () => {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    if (!profileData || !profileData.services) return;
+    
+
+    const handleScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 100 &&
+        visibleServicesCount < profileData.services.length &&
+        !loadingMore
+      ) {
+        setLoadingMore(true);
+        setTimeout(() => {
+          setVisibleServicesCount((prev) => {
+            const newCount = prev + 6;
+            return newCount > profileData.services.length
+              ? profileData.services.length
+              : newCount;
+          });
+          setLoadingMore(false);
+        }, 1000);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [profileData, visibleServicesCount, loadingMore]);
 
   // Handler para abrir modal de edición de servicio
   const handleEditService = (service) => {
@@ -65,7 +99,9 @@ const ProfilePage = () => {
     setProfileData((prev) => ({
       ...prev,
       services: prev.services.map((service) =>
-        service.service_id === updatedService.service_id ? updatedService : service
+        service.service_id === updatedService.service_id
+          ? updatedService
+          : service
       ),
     }));
     await loadProfile();
@@ -168,10 +204,14 @@ const ProfilePage = () => {
                         {profileData?.name} {profileData?.lastName}
                       </h1>
                       {isOwnProfile && (
-                        <button className="p-2 text-gray-400 hover:text-white transition-colors">
-                          <FiEdit className="w-5 h-5" />
-                        </button>
-                      )}
+  <button
+    className="p-2 text-gray-400 hover:text-white transition-colors"
+    onClick={() => navigate("/edit-profile")}
+  >
+    <FiEdit className="w-5 h-5" />
+  </button>
+)}
+
                     </div>
 
                     <div className="space-y-3 mb-6">
@@ -241,71 +281,78 @@ const ProfilePage = () => {
                     {isOwnProfile ? "My Services" : "Services"}
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {profileData.services.map((service, index) => (
-                      <div
-                        key={service.service_id || index}
-                        className={`group bg-gray-800/50 rounded-xl p-6 border border-gray-700/30 transition-all duration-300 ${
-                          isOwnProfile
-                            ? "hover:bg-gray-700/50 hover:border-purple-500/50 cursor-pointer hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/20"
-                            : ""
-                        }`}
-                        onClick={
-                          isOwnProfile
-                            ? () => handleEditService(service)
-                            : undefined
-                        }
-                      >
-                        <div className="flex justify-between items-start mb-3">
-                          <h3 className="text-lg font-semibold text-white flex-1">
-                            {service.title}
-                          </h3>
-                          {isOwnProfile && (
-                            <FiEdit className="w-5 h-5 text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity ml-2" />
-                          )}
-                        </div>
-
-                        <p className="text-gray-400 text-sm mb-4 line-clamp-3">
-                          {service.description}
-                        </p>
-
-                        <div className="space-y-2 mb-4">
-                          <div className="flex items-center gap-2 text-sm text-gray-400">
-                            <FiDollarSign className="w-4 h-4 text-purple-400" />
-                            <span className="text-purple-400 font-bold">
-                              ${service.price}
-                            </span>
+                    {profileData?.services
+                      ?.slice(0, visibleServicesCount)
+                      .map((service, index) => (
+                        <div
+                          key={service.service_id || index}
+                          className={`group bg-gray-800/50 rounded-xl p-6 border border-gray-700/30 transition-all duration-300 ${
+                            isOwnProfile
+                              ? "hover:bg-gray-700/50 hover:border-purple-500/50 cursor-pointer hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/20"
+                              : ""
+                          }`}
+                          onClick={
+                            isOwnProfile
+                              ? () => handleEditService(service)
+                              : undefined
+                          }
+                        >
+                          <div className="flex justify-between items-start mb-3">
+                            <h3 className="text-lg font-semibold text-white flex-1">
+                              {service.title}
+                            </h3>
+                            {isOwnProfile && (
+                              <FiEdit className="w-5 h-5 text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity ml-2" />
+                            )}
                           </div>
 
-                          {service.delivery_time_days && (
+                          <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+                            {service.description}
+                          </p>
+
+                          <div className="space-y-2 mb-4">
                             <div className="flex items-center gap-2 text-sm text-gray-400">
-                              <FiClock className="w-4 h-4 text-blue-400" />
-                              <span>
-                                {service.delivery_time_days} days delivery
+                              <FiDollarSign className="w-4 h-4 text-purple-400" />
+                              <span className="text-purple-400 font-bold">
+                                ${service.price}
                               </span>
                             </div>
-                          )}
 
-                          {service.place && (
-                            <div className="flex items-center gap-2 text-sm text-gray-400">
-                              <FiMapPin className="w-4 h-4 text-green-400" />
-                              <span>{service.place}</span>
-                            </div>
-                          )}
-                        </div>
+                            {service.delivery_time_days && (
+                              <div className="flex items-center gap-2 text-sm text-gray-400">
+                                <FiClock className="w-4 h-4 text-blue-400" />
+                                <span>
+                                  {service.delivery_time_days} days delivery
+                                </span>
+                              </div>
+                            )}
 
-                        <div className="flex justify-between items-center">
-                          <span className="text-xs text-gray-500 bg-gray-700/50 px-2 py-1 rounded">
-                            {service.category_name}
-                          </span>
-                          {isOwnProfile && (
-                            <span className="text-xs text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                              Click to edit
+                            {service.place && (
+                              <div className="flex items-center gap-2 text-sm text-gray-400">
+                                <FiMapPin className="w-4 h-4 text-green-400" />
+                                <span>{service.place}</span>
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="flex justify-between items-center">
+                            <span className="text-xs text-gray-500 bg-gray-700/50 px-2 py-1 rounded">
+                              {service.category_name}
                             </span>
-                          )}
+                            {isOwnProfile && (
+                              <span className="text-xs text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                                Click to edit
+                              </span>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
                   </div>
+                  {loadingMore && (
+                    <div className="mt-6">
+                      <Spinner />
+                    </div>
+                  )}
                 </div>
               )}
 

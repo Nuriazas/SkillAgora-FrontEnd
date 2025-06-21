@@ -9,6 +9,7 @@ import NotFoundPage from "./components/NotFoundPage.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import ServicesPage from "./pages/ServicesPage";
 import ProfilePage from "./pages/ProfilePage";
+import EditProfilePage from "./pages/EditProfilePage"; // ✅ NUEVA LÍNEA
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import Spinner from "./components/Spinner.jsx";
@@ -36,6 +37,7 @@ function App() {
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/services/create" element={<CreateServicePage />} />
         <Route path="/users/profile/:name" element={<ProfilePage />} />
+        <Route path="/edit-profile" element={<EditProfilePage />} /> {/* ✅ RUTA NUEVA */}
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/help" element={<HelpCenterPage />} />
