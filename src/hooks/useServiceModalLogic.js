@@ -61,18 +61,59 @@ export const useServiceModalLogic = (service, onClose) => {
 
 	// Handler para abrir modal de contacto
 	const handleContactSeller = () => {
-		const userId = serviceDetails.user_id;
+		// Debug completo del objeto serviceDetails
+		console.log("🔍 DEBUG COMPLETO DEL SERVICIO:");
+		console.log("🔍 serviceDetails completo:", serviceDetails);
+		console.log("🔍 service original:", service);
+		console.log("🔍 Todas las propiedades de serviceDetails:", Object.keys(serviceDetails));
+		console.log("🔍 Todas las propiedades de service:", Object.keys(service));
+		
+		// Buscar el user_id de manera más exhaustiva - agregamos service.id que sabemos que funciona
+		const userId = serviceDetails.user_id || 
+					   serviceDetails.userId || 
+					   serviceDetails.freelancer_id || 
+					   serviceDetails.freelancer?.id ||
+					   serviceDetails.freelancer?.user_id ||
+					   serviceDetails.provider_id ||
+					   serviceDetails.seller_id ||
+					   serviceDetails.id ||  // Agregado basado en el debug
+					   service.user_id ||
+					   service.userId ||
+					   service.freelancer_id ||
+					   service.provider_id ||
+					   service.seller_id ||
+					   service.id;  // Agregado basado en el debug
 
-		console.log("🔍 Service details completo:", serviceDetails);
 		console.log("🔍 User ID encontrado:", userId);
+		console.log("🔍 Tipo de userId:", typeof userId);
+
+		// Si aún no encontramos el userId, intentemos con propiedades que contengan 'id'
+		if (!userId) {
+			console.log("🔍 Buscando propiedades que contengan 'id':");
+			const serviceKeys = Object.keys(serviceDetails);
+			const idProperties = serviceKeys.filter(key => 
+				key.toLowerCase().includes('id') || 
+				key.toLowerCase().includes('user')
+			);
+			console.log("🔍 Propiedades con 'id' o 'user':", idProperties);
+			
+			idProperties.forEach(prop => {
+				console.log(`🔍 ${prop}:`, serviceDetails[prop]);
+			});
+		}
 
 		if (!userId) {
-			alert(
-				"No se puede contactar con este vendedor. ID de usuario no disponible."
-			);
+			// Mostrar alert más detallado para debug
+			alert(`No se puede contactar con este vendedor. 
+			
+Debug info:
+- serviceDetails keys: ${Object.keys(serviceDetails).join(', ')}
+- service keys: ${Object.keys(service).join(', ')}
+- Revisa la consola para más detalles.`);
 			return;
 		}
 
+		console.log("✅ Abriendo modal de contacto con userId:", userId);
 		setIsContactModalOpen(true);
 	};
 
@@ -80,7 +121,22 @@ export const useServiceModalLogic = (service, onClose) => {
 	const handleSendMessage = async (message) => {
 		try {
 			const token = localStorage.getItem("token");
-			const userId = serviceDetails.user_id;
+			
+			// Buscar userId - ahora sabemos que service.id funciona para abrir el modal
+			const userId = serviceDetails.user_id || 
+						   serviceDetails.userId || 
+						   serviceDetails.freelancer_id || 
+						   serviceDetails.freelancer?.id ||
+						   serviceDetails.freelancer?.user_id ||
+						   serviceDetails.provider_id ||
+						   serviceDetails.seller_id ||
+						   serviceDetails.id ||  // Agregado basado en el debug
+						   service.user_id ||
+						   service.userId ||
+						   service.freelancer_id ||
+						   service.provider_id ||
+						   service.seller_id ||
+						   service.id;  // Agregado basado en el debug
 
 			console.log("🔑 Token RAW:", token);
 			console.log("🔑 Tipo de token:", typeof token);
@@ -126,7 +182,6 @@ export const useServiceModalLogic = (service, onClose) => {
 	};
 
     // Handler para cerrar servicio con ESC
-
     const handleKeyDown = (e) => {
         if (e.key === "Escape") {
             onClose();
@@ -138,6 +193,7 @@ export const useServiceModalLogic = (service, onClose) => {
 		console.log("serviceDetails en handleHireService:", serviceDetails);
 		const token = localStorage.getItem("token");
 		const serviceId = serviceDetails.service_id || serviceDetails.id;
+		
 		// Validar token
 		if (!token || token === "null" || token === "undefined") {
 			setResultData({
@@ -169,13 +225,11 @@ export const useServiceModalLogic = (service, onClose) => {
 
 	// Handler para confirmar la contratación
 	const handleConfirmHire = async () => {
-		
 		try {
 			setIsCreatingOrder(true);
 			const token = localStorage.getItem("token");
 			const serviceId = serviceDetails.service_id || serviceDetails.id;
 			console.log("serviceDetails al contratar:", serviceDetails);
-
 
 			console.log("🛒 Intentando contratar servicio:", serviceId);
 
