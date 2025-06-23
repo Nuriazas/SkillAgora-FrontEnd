@@ -4,29 +4,29 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   const footerSections = [
     {
-      title: "Para Clientes",
+      title: "For Clients",
       links: [
-        { name: "Buscar Servicios", to: "/services" },
-        { name: "Publicar Trabajo", to: "/services/create" },
-        { name: "Mis Órdenes", to: "#" }
-      ]
+        { name: "Find Services", to: "/services" },
+        { name: "Post a Job", to: "/services/create" },
+        { name: "My Orders", to: "#" },
+      ],
     },
     {
-      title: "Para Freelancers",
+      title: "For Freelancers",
       links: [
-        { name: "Crear Servicio", to: "/services/create" },
-        { name: "Buscar Trabajos", to: "/services" },
-        { name: "Mi Perfil", to: "/users/profile/usuario" }
-      ]
+        { name: "Create Service", to: "/services/create" },
+        { name: "Browse Jobs", to: "/services" },
+        { name: "My Profile", to: "/users/profile/usuario" },
+      ],
     },
     {
-      title: "Soporte",
+      title: "Support",
       links: [
-        { name: "Centro de Ayuda", to: "/help" },
-        { name: "Contacto", to: "/contact" },
-        { name: "Términos", to: "/terms" }
-      ]
-    }
+        { name: "Help Center", to: "/help" },
+        { name: "Contact", to: "/contact" },
+        { name: "Terms", to: "/terms" },
+      ],
+    },
   ];
 
   return (
@@ -38,7 +38,7 @@ const Footer = () => {
               SkillAgora
             </h3>
             <p className="text-gray-400 leading-relaxed">
-              La plataforma líder para conectar talento con oportunidades.
+              The leading platform for connecting talent with opportunity.
             </p>
           </div>
 
@@ -51,7 +51,7 @@ const Footer = () => {
                     <Link
                       to={link.to}
                       className="hover:text-purple-400 transition-colors"
-                      aria-label={`Ir a ${link.name}`}
+                      aria-label={`Go to ${link.name}`}
                     >
                       {link.name}
                     </Link>
@@ -64,8 +64,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-800/50 mt-8 pt-8 text-center text-gray-400">
           <p>
-            &copy; {new Date().getFullYear()} SkillAgora. Todos los derechos
-            reservados.
+            &copy; {new Date().getFullYear()} SkillAgora. All rights reserved.
           </p>
         </div>
       </div>
