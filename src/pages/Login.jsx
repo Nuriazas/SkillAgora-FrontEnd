@@ -9,6 +9,7 @@ import {
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
+import PasswordInput from "../components/shared/UI/PasswordInput";
 
 const LoginPage = () => {
   const { setToken } = useContext(AuthContext);
@@ -77,13 +78,10 @@ const LoginPage = () => {
                 required
                 className="w-full px-8 py-4 rounded-lg bg-[#1a1c2d] text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-300 text-[15px]"
               />
-              <input
-                type="password"
-                placeholder="Password"
+              <PasswordInput
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full px-8 py-4 rounded-lg bg-[#1a1c2d] text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-300 text-[15px]"
+                placeholder="Password"
               />
               <div className="flex justify-between items-center text-white text-[15px]">
                 <label className="flex items-center gap-1 select-none cursor-pointer">

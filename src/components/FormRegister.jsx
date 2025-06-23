@@ -4,8 +4,11 @@ import {
   FaFacebookF,
   FaInstagram,
   FaLinkedinIn,
+  FaEye,
+  FaEyeSlash,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import PasswordInput from "./shared/UI/PasswordInput";
 
 const FormRegister = ({ form, handleChange, loading }) => {
   const navigate = useNavigate();
@@ -67,17 +70,11 @@ const FormRegister = ({ form, handleChange, loading }) => {
           {/* <label htmlFor="password" className="block mb-1 text-white font-semibold text-xs">
             Password
           </label> */}
-          <input
-            id="password"
-            type="password"
-            name="password"
-            placeholder="Password"
+          <PasswordInput
             value={form.password}
             onChange={handleChange}
-            className="w-full px-8 py-4 rounded-lg bg-[#1a1c2d] text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-300
-                text-[15px]"
-            required
-            aria-required="true"
+            placeholder="Password"
+            name="password"
           />
         </div>
 
