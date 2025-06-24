@@ -18,6 +18,8 @@ import ContactPage from "./pages/ContactPage.jsx";
 import HelpCenterPage from "./pages/HelpCenterPage.jsx";
 import OrdersPage from "./pages/NotificationPage.jsx";
 import TermsPage from "./pages/TermsPage.jsx";
+import ReviewPage from "./pages/ReviewPage.jsx";
+
 
 function SpinnerPage() {
   return (
@@ -45,7 +47,8 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/help" element={<HelpCenterPage />} />
           <Route path="/notifications/contacts" element={<OrdersPage />} />
-          <Route path="/terms" element={<TermsPage />} /> 
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/review/:service_id" element={<ReviewPage />} /> 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </ErrorBoundary>

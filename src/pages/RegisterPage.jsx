@@ -6,7 +6,7 @@ import { AuthContext } from "../context/AuthContextProvider.jsx";
 
 import { useNavigate } from "react-router-dom";
 import { Background } from "../components/background.jsx";
-import Header from "../components/Header.jsx";
+
 import Spinner from "../components/Spinner.jsx";
 
 const RegisterPage = () => {
@@ -74,7 +74,7 @@ const RegisterPage = () => {
           {/* Tarjeta centrada */}
           <article className="bg-[#1a1c2d] p-3 rounded-3xl shadow-2xl w-[500px] h-[700px] mx-auto my-12 overflow-hidden flex flex-col justify-between text-xs">
             {/* Header */}
-            <div className="w-full flex justify-center  min-h-[60px] w-full  ">
+            <div className=" flex justify-center  min-h-[60px] w-full  ">
 							<button
 								onClick={() => navigate("/")}
 								className="text-[60px] font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent hover:scale-105 transition-transform duration-200 w-[400px] h-[100px] "

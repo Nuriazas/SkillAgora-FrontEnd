@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
@@ -30,7 +30,8 @@ const ProfilePage = () => {
   const [error, setError] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
-  const [visibleServicesCount, setVisibleServicesCount] = useState(6);
+  // const [visibleServicesCount, setVisibleServicesCount] = useState(6);
+  const servicesContainerRef = useRef();
 
   // Verificar si es el perfil del usuario actual
   const isOwnProfile = React.useMemo(
@@ -60,33 +61,32 @@ const ProfilePage = () => {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    if (!profileData || !profileData.services) return;
-    
+  // useEffect(() => {
+  //   if (!profileData || !profileData.services) return;
 
-    const handleScroll = () => {
-      if (
-        window.innerHeight + window.scrollY >=
-          document.documentElement.scrollHeight - 100 &&
-        visibleServicesCount < profileData.services.length &&
-        !loadingMore
-      ) {
-        setLoadingMore(true);
-        setTimeout(() => {
-          setVisibleServicesCount((prev) => {
-            const newCount = prev + 6;
-            return newCount > profileData.services.length
-              ? profileData.services.length
-              : newCount;
-          });
-          setLoadingMore(false);
-        }, 1000);
-      }
-    };
+  //   const handleScroll = () => {
+  //     if (
+  //       window.innerHeight + window.scrollY >=
+  //         document.documentElement.scrollHeight - 100 &&
+  //       visibleServicesCount < profileData.services.length &&
+  //       !loadingMore
+  //     ) {
+  //       setLoadingMore(true);
+  //       setTimeout(() => {
+  //         setVisibleServicesCount((prev) => {
+  //           const newCount = prev + 6;
+  //           return newCount > profileData.services.length
+  //             ? profileData.services.length
+  //             : newCount;
+  //         });
+  //         setLoadingMore(false);
+  //       }, 1000);
+  //     }
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [profileData, visibleServicesCount, loadingMore]);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [profileData, visibleServicesCount, loadingMore]);
 
   // Handler para abrir modal de edición de servicio
   const handleEditService = (service) => {
@@ -204,14 +204,13 @@ const ProfilePage = () => {
                         {profileData?.name} {profileData?.lastName}
                       </h1>
                       {isOwnProfile && (
-  <button
-    className="p-2 text-gray-400 hover:text-white transition-colors"
-    onClick={() => navigate("/edit-profile")}
-  >
-    <FiEdit className="w-5 h-5" />
-  </button>
-)}
-
+                        <button
+                          className="p-2 text-gray-400 hover:text-white transition-colors"
+                          onClick={() => navigate("/edit-profile")}
+                        >
+                          <FiEdit className="w-5 h-5" />
+                        </button>
+                      )}
                     </div>
 
                     <div className="space-y-3 mb-6">
@@ -276,83 +275,76 @@ const ProfilePage = () => {
 
               {/* Services Section */}
               {profileData?.services && profileData.services.length > 0 && (
-                <div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 p-8">
+                <div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 p-8 max-h-[500px] overflow-y-auto">
                   <h2 className="text-2xl font-bold text-white mb-6">
                     {isOwnProfile ? "My Services" : "Services"}
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {profileData?.services
-                      ?.slice(0, visibleServicesCount)
-                      .map((service, index) => (
-                        <div
-                          key={service.service_id || index}
-                          className={`group bg-gray-800/50 rounded-xl p-6 border border-gray-700/30 transition-all duration-300 ${
-                            isOwnProfile
-                              ? "hover:bg-gray-700/50 hover:border-purple-500/50 cursor-pointer hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/20"
-                              : ""
-                          }`}
-                          onClick={
-                            isOwnProfile
-                              ? () => handleEditService(service)
-                              : undefined
-                          }
-                        >
-                          <div className="flex justify-between items-start mb-3">
-                            <h3 className="text-lg font-semibold text-white flex-1">
-                              {service.title}
-                            </h3>
-                            {isOwnProfile && (
-                              <FiEdit className="w-5 h-5 text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity ml-2" />
-                            )}
+                    {profileData?.services?.map((service, index) => (
+                      <div
+                        key={service.service_id || index}
+                        className={`group bg-gray-800/50 rounded-xl p-6 border border-gray-700/30 transition-all duration-300 ${
+                          isOwnProfile
+                            ? "hover:bg-gray-700/50 hover:border-purple-500/50 cursor-pointer hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/20"
+                            : ""
+                        }`}
+                        onClick={
+                          isOwnProfile
+                            ? () => handleEditService(service)
+                            : undefined
+                        }
+                      >
+                        <div className="flex justify-between items-start mb-3">
+                          <h3 className="text-lg font-semibold text-white flex-1">
+                            {service.title}
+                          </h3>
+                          {isOwnProfile && (
+                            <FiEdit className="w-5 h-5 text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity ml-2" />
+                          )}
+                        </div>
+
+                        <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+                          {service.description}
+                        </p>
+
+                        <div className="space-y-2 mb-4">
+                          <div className="flex items-center gap-2 text-sm text-gray-400">
+                            <FiDollarSign className="w-4 h-4 text-purple-400" />
+                            <span className="text-purple-400 font-bold">
+                              ${service.price}
+                            </span>
                           </div>
 
-                          <p className="text-gray-400 text-sm mb-4 line-clamp-3">
-                            {service.description}
-                          </p>
-
-                          <div className="space-y-2 mb-4">
+                          {service.delivery_time_days && (
                             <div className="flex items-center gap-2 text-sm text-gray-400">
-                              <FiDollarSign className="w-4 h-4 text-purple-400" />
-                              <span className="text-purple-400 font-bold">
-                                ${service.price}
+                              <FiClock className="w-4 h-4 text-blue-400" />
+                              <span>
+                                {service.delivery_time_days} days delivery
                               </span>
                             </div>
+                          )}
 
-                            {service.delivery_time_days && (
-                              <div className="flex items-center gap-2 text-sm text-gray-400">
-                                <FiClock className="w-4 h-4 text-blue-400" />
-                                <span>
-                                  {service.delivery_time_days} days delivery
-                                </span>
-                              </div>
-                            )}
-
-                            {service.place && (
-                              <div className="flex items-center gap-2 text-sm text-gray-400">
-                                <FiMapPin className="w-4 h-4 text-green-400" />
-                                <span>{service.place}</span>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="flex justify-between items-center">
-                            <span className="text-xs text-gray-500 bg-gray-700/50 px-2 py-1 rounded">
-                              {service.category_name}
-                            </span>
-                            {isOwnProfile && (
-                              <span className="text-xs text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                                Click to edit
-                              </span>
-                            )}
-                          </div>
+                          {service.place && (
+                            <div className="flex items-center gap-2 text-sm text-gray-400">
+                              <FiMapPin className="w-4 h-4 text-green-400" />
+                              <span>{service.place}</span>
+                            </div>
+                          )}
                         </div>
-                      ))}
+
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-gray-500 bg-gray-700/50 px-2 py-1 rounded">
+                            {service.category_name}
+                          </span>
+                          {isOwnProfile && (
+                            <span className="text-xs text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                              Click to edit
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  {loadingMore && (
-                    <div className="mt-6">
-                      <Spinner />
-                    </div>
-                  )}
                 </div>
               )}
 
@@ -365,6 +357,52 @@ const ProfilePage = () => {
                   <p className="text-gray-300 leading-relaxed">
                     {profileData.experience}
                   </p>
+                </div>
+              )}
+              {profileData?.reviews && profileData.reviews.length > 0 ? (
+                <div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 p-8 max-h-[400px] overflow-y-auto mt-8">
+                  <h2 className="text-2xl font-bold text-white mb-6">
+                    Reviews
+                  </h2>
+                  <div className="space-y-6">
+                    {profileData.reviews.map((review, index) => (
+                      <div
+                        key={review.id || index}
+                        className="bg-gray-800/50 rounded-xl p-4 border border-gray-700/30"
+                      >
+                        <div className="flex justify-between items-center mb-2">
+                          <h3 className="text-lg font-semibold text-white">
+                            {review.reviewer_name|| "Anonymous"}
+                          </h3>
+                          <div className="flex items-center gap-1 text-yellow-400">
+                            {[...Array(5)].map((_, i) => (
+                              <FiStar
+                                key={i}
+                                className={
+                                  i < review.rating
+                                    ? "opacity-100"
+                                    : "opacity-30"
+                                }
+                              />
+                            ))}
+                          </div>
+                        </div>
+                        <p className="text-gray-400 text-sm">
+                          {review.comment}
+                        </p>
+                        <p className="text-gray-500 text-xs mt-2">
+                          {new Date(review.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 p-8 max-h-[200px] overflow-y-auto mt-8 text-gray-400 text-center">
+                  <h2 className="text-2xl font-bold text-white mb-6">
+                    Reviews
+                  </h2>
+                  <p>No reviews yet.</p>
                 </div>
               )}
             </div>

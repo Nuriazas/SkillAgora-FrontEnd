@@ -5,11 +5,16 @@ import ContactModal from "./ContactModal.jsx";
 import ConfirmationModal from "./ConfirmationModal.jsx";
 import ResultModal from "./ResultModal.jsx";
 import DefaultAvatar from "../../assets/defaultAvatar.jpeg";
+import CreateReviewForm from "../notification/CreateReviewForm.jsx";
+import { useNavigate } from "react-router-dom";
+
 
 /**
  * Modal para mostrar detalles completos de un servicio
  */
 const ServiceModal = ({ service, onClose }) => {
+  const navigate = useNavigate();
+
   const {
     // Estados
     isContactModalOpen,
@@ -33,6 +38,7 @@ const ServiceModal = ({ service, onClose }) => {
     handleKeyDown,
   } = useServiceModalLogic(service, onClose);
 
+  
   const mockImage =
     "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&h=250&fit=crop";
   const mockAvatar =
@@ -139,20 +145,28 @@ const ServiceModal = ({ service, onClose }) => {
                   {serviceDetails.delivery_time_days || "3"} días
                 </span>
               </div>
-              <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 border border-gray-700/30">
-                <div className="flex items-center space-x-2 mb-2">
-                  <FiStar className="w-5 h-5 text-yellow-400" />
-                  <span className="font-medium text-white text-sm">
-                    Valoración
-                  </span>
-                </div>
-                <span className="text-gray-400">
-                  {serviceDetails.rating || "5.0"} (
-                  {serviceDetails.reviews || "0"} reseñas)
-                </span>
+               <div
+              onClick={() => navigate(`/review/${serviceDetails.id}`)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  navigate(`/review/${serviceDetails.id}`);
+                }
+              }}
+              className="cursor-pointer bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 border border-gray-700/30"
+              aria-label="Valorar servicio"
+            >
+              <div className="flex items-center space-x-2 mb-2">
+                <FiStar className="w-5 h-5 text-yellow-400" />
+                <span className="font-medium text-white text-sm">Valoración</span>
               </div>
+              <span className="text-gray-400">
+                {serviceDetails.rating || "5.0"} ({serviceDetails.reviews || "0"} reseñas)
+              </span>
             </div>
-
+            </div>
+            
             {/* Footer con precio y botones */}
             <div className="flex items-center justify-between pt-6 border-t border-gray-800/50">
               <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">

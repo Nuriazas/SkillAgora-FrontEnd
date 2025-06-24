@@ -9,7 +9,7 @@ export const getServiceById = async (id) => {
 			throw new Error(data.message || "Something went wrong");
 		}
 
-		return data.service;
+		return data;
 	} catch (error) {
 		console.error("API Error:", error);
 		throw error;
