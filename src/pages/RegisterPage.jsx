@@ -8,8 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { Background } from "../components/background.jsx";
 import Header from "../components/Header.jsx";
 import Spinner from "../components/Spinner.jsx";
+import { useTranslation } from "react-i18next";
 
 const RegisterPage = () => {
+  const { t } = useTranslation();
   const [form, setForm] = useState({
     name: "",
     lastName: "",
@@ -46,7 +48,7 @@ const RegisterPage = () => {
       const data = await registerUserService(form);
       setToken(data.token);
 
-      setMessage("Registro realizado correctamente");
+      setMessage(t('register.success'));
       setForm({ name: "", lastName: "", password: "" });
       navigate("/");
     } catch (error) {
@@ -85,7 +87,7 @@ const RegisterPage = () => {
             <section className="text-center space-y-5 bg-[#070714] rounded-3xl">
               <header>
                 <h2 className=" mt-8 bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent h-[40px] text-[25px] font-bold ">
-                  Register
+                  {t('register.title')}
                 </h2>
               </header>
 

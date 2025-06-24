@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useTranslation } from "react-i18next";
 
 const ValidateUser = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const [status, setStatus] = useState('idle'); // idle | loading | success | error
@@ -25,14 +27,14 @@ const ValidateUser = () => {
         .post('/api/validate-user', { token }) // Cambia la ruta al endpoint real de tu backend
         .then(() => {
           setStatus('success');
-          setMessage('¡Tu cuenta ha sido validada con éxito! Ya puedes iniciar sesión.');
+          setMessage(t('validateUser.success'));
           setTimeout(() => navigate('/login'), 3000);
         })
         .catch((err) => {
           setStatus('error');
           setMessage(
             err.response?.data?.message ||
-            'El enlace de validación no es válido o ha expirado. Puedes intentar validar con el código manualmente.'
+            t('validateUser.linkError')
           );
           setShowCodeForm(true);
         });
@@ -50,13 +52,13 @@ const ValidateUser = () => {
     try {
       await axios.post('/api/validate-user', { code }); // Cambia la ruta al endpoint real de tu backend
       setStatus('success');
-      setMessage('¡Tu cuenta ha sido validada con éxito! Ya puedes iniciar sesión.');
+      setMessage(t('validateUser.success'));
       setTimeout(() => navigate('/login'), 3000);
     } catch (err) {
       setStatus('error');
       setMessage(
         err.response?.data?.message ||
-        'El código de validación no es válido o ha expirado.'
+        t('validateUser.codeError')
       );
     }
   };
@@ -71,19 +73,19 @@ const ValidateUser = () => {
       background: "#fff",
       boxShadow: "0 2px 8px rgba(0,0,0,0.05)"
     }}>
-      <h2>Validación de usuario</h2>
-      {status === 'loading' && <p>Validando, por favor espera...</p>}
+      <h2>{t('validateUser.title')}</h2>
+      {status === 'loading' && <p>{t('validateUser.validating')}</p>}
       {status === 'success' && <p style={{ color: "green" }}>{message}</p>}
       {status === 'error' && <p style={{ color: "red" }}>{message}</p>}
       {showCodeForm && status !== 'success' && (
         <form onSubmit={handleSubmit} style={{ marginTop: 24 }}>
-          <label htmlFor="code">Introduce tu código de validación:</label>
+          <label htmlFor="code">{t('validateUser.codeLabel')}</label>
           <input
             id="code"
             type="text"
             value={code}
             onChange={(e) => setCode(e.target.value)}
-            placeholder="Código de validación"
+            placeholder={t('validateUser.codePlaceholder')}
             required
             style={{
               display: "block",
@@ -106,12 +108,12 @@ const ValidateUser = () => {
               cursor: "pointer"
             }}
           >
-            Validar
+            {t('validateUser.validateBtn')}
           </button>
         </form>
       )}
       <div style={{ marginTop: 32, fontSize: "0.95em", color: "#888" }}>
-        {status === 'success' ? "Redirigiendo al login..." : "¿Problemas? Revisa tu email o pide un nuevo código de validación."}
+        {status === 'success' ? t('validateUser.redirecting') : t('validateUser.help')}
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         className="disabled:opacity-50 disabled:cursor-not-allowed bg-lightCard dark:bg-darkCard text-lightText dark:text-darkText hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-lightBlue dark:focus:ring-darkBlue"
         aria-label={t("pagination.previous")}
       >
-        ←
+        {t('pagination.previous')}
       </Button>
       <span
         className="px-4 py-2 text-lightText dark:text-darkText"
@@ -40,7 +40,7 @@ export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         className="disabled:opacity-50 disabled:cursor-not-allowed bg-lightCard dark:bg-darkCard text-lightText dark:text-darkText hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-lightBlue dark:focus:ring-darkBlue"
         aria-label={t("pagination.next")}
       >
-        →
+        {t('pagination.next')}
       </Button>
     </nav>
   );

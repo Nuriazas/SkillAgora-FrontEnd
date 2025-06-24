@@ -3,6 +3,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { AuthContext } from "../context/AuthContextProvider";
 import Header from "../components/Header.jsx";
+import { useTranslation } from "react-i18next";
 
 const NotificationPage = () => {
   const { token } = useContext(AuthContext);
@@ -10,6 +11,7 @@ const NotificationPage = () => {
   const [messages, setMessages] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [loadingMessages, setLoadingMessages] = useState(true);
+  const { t } = useTranslation();
 
   const fetchOrders = async () => {
     try {
@@ -60,15 +62,15 @@ const NotificationPage = () => {
 
   const getStatusBadge = (status) => {
     const statusConfig = {
-      completed: { label: "Completado", class: "bg-green-100 text-green-800" },
-      pending: { label: "Pendiente", class: "bg-yellow-100 text-yellow-800" },
-      in_progress: { label: "En progreso", class: "bg-blue-100 text-blue-800" },
-      delivered: { label: "Entregado", class: "bg-purple-100 text-purple-800" },
-      cancelled: { label: "Cancelado", class: "bg-red-100 text-red-800" },
+      completed: { label: t('notificationPage.status.completed'), class: "bg-green-100 text-green-800" },
+      pending: { label: t('notificationPage.status.pending'), class: "bg-yellow-100 text-yellow-800" },
+      in_progress: { label: t('notificationPage.status.inProgress'), class: "bg-blue-100 text-blue-800" },
+      delivered: { label: t('notificationPage.status.delivered'), class: "bg-purple-100 text-purple-800" },
+      cancelled: { label: t('notificationPage.status.cancelled'), class: "bg-red-100 text-red-800" },
     };
 
     const config = statusConfig[status] || {
-      label: status || "Sin estado",
+      label: status ? status : t('notificationPage.status.noStatus'),
       class: "bg-gray-100 text-gray-800",
     };
 
@@ -82,7 +84,7 @@ const NotificationPage = () => {
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return "Sin fecha";
+    if (!dateString) return t('notificationPage.noDate');
     return new Date(dateString).toLocaleString("es-ES", {
       day: "2-digit",
       month: "2-digit",
@@ -121,13 +123,13 @@ const NotificationPage = () => {
         <main className="container mx-auto px-4 py-8">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-white mb-4">
-              Mi{" "}
+              {t('notificationPage.title')}{" "}
               <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Panel
+                {t('notificationPage.panel')}
               </span>
             </h1>
             <p className="text-gray-400 text-lg">
-              Gestiona tus órdenes y mensajes en un solo lugar
+              {t('notificationPage.subtitle')}
             </p>
           </div>
 
@@ -137,11 +139,11 @@ const NotificationPage = () => {
               <div className="p-6 border-b border-gray-800/50">
                 <h2 className="text-2xl font-bold text-white flex items-center gap-2">
                   <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-                  Mensajes ({messages.length})
+                  {t('notificationPage.messages')} ({messages.length})
                   {loadingMessages && (
                     <span className="text-purple-400 text-base">
                       {" "}
-                      - Cargando...
+                      - {t('notificationPage.loading')}
                     </span>
                   )}
                 </h2>
@@ -170,10 +172,10 @@ const NotificationPage = () => {
                       </svg>
                     </div>
                     <p className="text-gray-400 text-lg">
-                      No hay mensajes nuevos
+                      {t('notificationPage.noMessages')}
                     </p>
                     <p className="text-gray-600 text-sm mt-2">
-                      Los mensajes de contacto aparecerán aquí
+                      {t('notificationPage.noMessagesDesc')}
                     </p>
                   </div>
                 ) : (
@@ -194,10 +196,10 @@ const NotificationPage = () => {
                             <h4 className="font-semibold text-white text-base mb-1">
                               {msg.senderName && msg.senderLastName
                                 ? `${msg.senderName} ${msg.senderLastName}`
-                                : "Usuario desconocido"}
+                                : t('notificationPage.unknownUser')}
                             </h4>
                             <p className="text-gray-300 text-sm mb-3 line-clamp-2">
-                              {msg.content || "Sin contenido"}
+                              {msg.content || t('notificationPage.noContent')}
                             </p>
                             <p className="text-gray-500 text-xs">
                               {formatDate(msg.createdAt)}
@@ -216,11 +218,11 @@ const NotificationPage = () => {
               <div className="p-6 border-b border-gray-800/50">
                 <h2 className="text-2xl font-bold text-white flex items-center gap-2">
                   <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                  Mis Órdenes ({orders.length})
+                  {t('notificationPage.orders')} ({orders.length})
                   {loadingOrders && (
                     <span className="text-blue-400 text-base">
                       {" "}
-                      - Cargando...
+                      - {t('notificationPage.loading')}
                     </span>
                   )}
                 </h2>
@@ -249,10 +251,10 @@ const NotificationPage = () => {
                       </svg>
                     </div>
                     <p className="text-gray-400 text-lg">
-                      No hay órdenes por el momento
+                      {t('notificationPage.noOrders')}
                     </p>
                     <p className="text-gray-600 text-sm mt-2">
-                      Tus órdenes aparecerán aquí cuando recibas solicitudes
+                      {t('notificationPage.noOrdersDesc')}
                     </p>
                   </div>
                 ) : (

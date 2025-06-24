@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 /**
  * Modal de resultado (éxito o error) para freelancers
@@ -11,6 +12,7 @@ const FreelancerResultModal = ({
 	message,
 	freelancerData,
 }) => {
+	const { t } = useTranslation();
 	if (!isOpen) return null;
 
 	const isSuccess = type === "success";
@@ -21,7 +23,7 @@ const FreelancerResultModal = ({
 				{/* Header */}
 				<div className="p-6 border-b border-gray-800/50">
 					<h3 className="text-xl font-semibold text-white text-center">
-						{title}
+						{isSuccess ? t('freelancerResultModal.successTitle') : t('freelancerResultModal.errorTitle')}
 					</h3>
 				</div>
 
@@ -37,7 +39,7 @@ const FreelancerResultModal = ({
 						<span className="text-2xl">{isSuccess ? "✅" : "❌"}</span>
 					</div>
 
-					<p className="text-gray-300 mb-4">{message}</p>
+					<p className="text-gray-300 mb-4">{message || (isSuccess ? t('freelancerResultModal.successMsg') : t('freelancerResultModal.errorMsg'))}</p>
 
 					{/* Detalles del freelancer (solo si es éxito) */}
 					{isSuccess && freelancerData && (
@@ -67,7 +69,7 @@ const FreelancerResultModal = ({
 						onClick={onClose}
 						className="w-full px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl transition-all duration-200 font-medium shadow-lg hover:shadow-green-500/25"
 					>
-						Got it
+						{t('freelancerResultModal.close')}
 					</button>
 				</div>
 			</div>

@@ -89,7 +89,7 @@ const CreateServicePage = () => {
             <article className="relative z-20 w-full flex items-center justify-center bg-[#1a1c2d]  rounded-xl">
               <section className="w-full max-w-2xl px-4">
                 <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent mt-8 mb-8 text-center">
-                  {t("Create New Service")}
+                  {t("createService.title")}
                 </h1>
 
                 <form
@@ -98,14 +98,14 @@ const CreateServicePage = () => {
                 >
                   <div>
                     <label className="block text-gray-400  mb-2">
-                      {t("Service title")}
+                      {t("createService.serviceTitle")}
                     </label>
                     <input
                       type="text"
                       name="title"
                       value={formData.title}
                       onChange={handleChange}
-                      placeholder={t("Ex: Frontend Web Development...")}
+                      placeholder={t("createService.serviceTitlePlaceholder")}
                       required
                       className="w-full px-2 py-2 rounded-lg bg-[#1a1c2d] text-white placeholder:text-gray-400  "
                     />
@@ -113,14 +113,14 @@ const CreateServicePage = () => {
 
                   <div>
                     <label className="block text-gray-400  mb-2">
-                      {t("Description")}
+                      {t("createService.description")}
                     </label>
                     <textarea
                       name="description"
                       value={formData.description}
                       onChange={handleChange}
                       className="w-full px-4 py-2 rounded-lg bg-[#1a1c2d]   placeholder:text-gray-400  focus:outline-none focus:ring-2 focus:ring-lightBlue  min-h-[120px] "
-                      placeholder={t("Describe your service in detail...")}
+                      placeholder={t("createService.descriptionPlaceholder")}
                       required
                     />
                   </div>
@@ -128,14 +128,14 @@ const CreateServicePage = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-gray-400  mb-2">
-                        {t("Price (€)")}
+                        {t("createService.pricePerHour")}
                       </label>
                       <input
                         type="number"
                         name="price"
                         value={formData.price}
                         onChange={handleChange}
-                        placeholder={t("Ex: 35")}
+                        placeholder={t("createService.pricePlaceholder")}
                         required
                         className=" w-full px-4 py-2 bg-[#1a1c2d] rounded-lg placeholder-gray-400 text-gray-400"
                       />
@@ -143,22 +143,18 @@ const CreateServicePage = () => {
 
                     <div>
                       <label className="block text-gray-400 dark:text-darkText mb-2">
-                        {t("Category")}
+                        {t("createService.category")}
                       </label>
                       <select
                         name="category_name"
                         value={formData.category_name}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 rounded-lg bg-[#1a1c2d] 
-						text-gray-400 focus:outline-none focus:ring-2 focus:ring-lightBlue "
+                        className="w-full px-4 py-2 rounded-lg bg-[#1a1c2d] text-gray-400 focus:outline-none focus:ring-2 focus:ring-lightBlue "
                         required
                         disabled={loadingCategories}
                       >
-						
                         <option value="" disabled hidden>
-                          {loadingCategories
-                            ? "Cargando categorías..."
-                            : t("Select a category")}
+                          {loadingCategories ? t("common.loading") : t("createService.selectCategory")}
                         </option>
                         {categories.map((category) => (
                           <option key={category.id} value={category.name}>
@@ -171,14 +167,14 @@ const CreateServicePage = () => {
 
                   <div>
                     <label className="block text-gray-400 dark:text-darkText mb-2">
-                      {t("Location")}
+                      {t("createService.location")}
                     </label>
                     <input
                       type="text"
                       name="place"
                       value={formData.place}
                       onChange={handleChange}
-                      placeholder={t("Ex: Madrid, Spain")}
+                      placeholder={t("createService.locationPlaceholder")}
                       required
                       className=" w-full px-2 py-2 rounded-lg bg-[#1a1c2d] text-gray-400 placeholder:text-gray-400 "
                     />
@@ -191,16 +187,14 @@ const CreateServicePage = () => {
                       onClick={() => navigate(-1)}
                       className="bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 hover:from-purple-700 hover:to-blue-700 text-white px-6 py-3 dark:border-gray-700 rounded-lg"
                     >
-                      {t("Cancel")}
+                      {t("createService.cancel")}
                     </button>
                     <button
                       type="submit"
                       disabled={isLoading || loadingCategories}
                       className="bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400  hover:from-purple-700 hover:to-blue-700 text-white  disabled:opacity-50 px-6 py-3 rounded-lg"
                     >
-                      {isLoading
-                        ? t("Creating")
-                        : t("Create")}
+                      {t("createService.create")}
                     </button>
                   </div>
                 </form>

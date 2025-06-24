@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 
 function Validacion() {
+  const { t } = useTranslation();
   const [code, setCode] = useState('');
   const [codeError, setCodeError] = useState('');
   const [timeLeft, setTimeLeft] = useState(295);
@@ -36,11 +38,11 @@ function Validacion() {
       return;
     }
     if (code.length !== 6 || !/^[0-9]+$/.test(code)) {
-      setCodeError('El código debe tener exactamente 6 dígitos numéricos.');
+      setCodeError(t('validacion.code6Digits'));
     } else {
       setCodeError('');
     }
-  }, [code]);
+  }, [code, t]);
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -59,7 +61,7 @@ function Validacion() {
       alert('Nuevo código enviado a: ' + email);
     } catch (error) {
       console.error('Error al reenviar código:', error);
-      setGeneralError('Error al reenviar el código');
+      setGeneralError(t('validacion.errorResending'));
     } finally {
       setIsLoading(false);
     }
@@ -72,7 +74,7 @@ function Validacion() {
     // Validar al enviar el formulario
     let formIsValid = true;
     if (code.length === 0) {
-      setCodeError('El código es obligatorio.');
+      setCodeError(t('validacion.codeRequired'));
       formIsValid = false;
     } else if (codeError) {
       formIsValid = false;
@@ -99,32 +101,32 @@ function Validacion() {
           });
         } else {
           setAttempts((prevAttempts) => prevAttempts - 1);
-          setGeneralError('Código inválido. Inténtalo de nuevo.');
+          setGeneralError(t('validacion.invalidCode'));
         }
       } catch (error) {
         console.error('Error en verificación:', error);
         setAttempts((prevAttempts) => prevAttempts - 1);
-        setGeneralError('Error al verificar el código');
+        setGeneralError(t('validacion.errorVerifying'));
       } finally {
         setIsLoading(false);
       }
     } else {
-      setGeneralError('No quedan intentos. Por favor, solicita un nuevo código.');
+      setGeneralError(t('validacion.noAttempts'));
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-center text-3xl font-bold text-gray-900 mb-6">Ingresa el Código</h2>
+        <h2 className="text-center text-3xl font-bold text-gray-900 mb-6">{t('validacion.enterCode')}</h2>
 
         <div
           className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4"
           role="alert"
         >
-          <p className="font-bold">Código enviado a:</p>
+          <p className="font-bold">{t('validacion.codeSentTo')}</p>
           <p>{email}</p>
-          <p className="text-sm mt-2">Para pruebas, usa cualquier código que termine en '123'</p>
+          <p className="text-sm mt-2">{t('validacion.testHint')}</p>
         </div>
 
         {generalError && (
@@ -136,7 +138,7 @@ function Validacion() {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="verification-code" className="block text-sm font-medium text-gray-700">
-              Código de Verificación
+              {t('validacion.codeLabel')}
             </label>
             <input
               id="verification-code"
@@ -156,8 +158,8 @@ function Validacion() {
           </div>
 
           <div className="text-sm text-gray-500">
-            <p>Intentos restantes: {attempts}</p>
-            <p>El código expirará en {formatTime(timeLeft)}</p>
+            <p>{t('validacion.attempts', { attempts })}</p>
+            <p>{t('validacion.codeExpires', { time: formatTime(timeLeft) })}</p>
           </div>
 
           <div>
@@ -166,7 +168,7 @@ function Validacion() {
               disabled={isLoading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300"
             >
-              {isLoading ? 'Verificando...' : 'Verificar Código'}
+              {isLoading ? t('validacion.verifying') : t('validacion.verifyCode')}
             </button>
           </div>
 
@@ -177,13 +179,13 @@ function Validacion() {
               disabled={isLoading || timeLeft > 0}
               className="text-sm text-blue-600 hover:text-blue-500 disabled:text-gray-400"
             >
-              Reenviar código
+              {t('validacion.resendCode')}
             </button>
           </div>
         </form>
         <div className="mt-6 text-center">
           <Link to="/" className="font-medium text-blue-600 hover:text-blue-500">
-            &larr; Cambiar correo electrónico
+            &larr; {t('validacion.changeEmail')}
           </Link>
         </div>
       </div>

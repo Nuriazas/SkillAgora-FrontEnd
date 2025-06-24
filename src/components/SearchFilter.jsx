@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FiSearch } from "react-icons/fi";
 import FilterControls from "./FIlterControls.jsx"; // Fixed import typo
+import { useTranslation } from "react-i18next";
 
 /**
  * Componente de búsqueda y filtrado de servicios
@@ -20,6 +21,7 @@ const SearchFilter = ({
 }) => {
 	// Estado local para la búsqueda (permite typing sin disparar búsquedas constantes)
 	const [localSearch, setLocalSearch] = useState(filters.search || "");
+	const { t } = useTranslation();
 
 	// Sincronizar estado local con filtros externos
 	useEffect(() => {
@@ -83,7 +85,7 @@ const SearchFilter = ({
 						/>
 						<input
 							type="text"
-							placeholder="¿Qué servicio necesitas?"
+							placeholder={t('filterControls.searchPlaceholder')}
 							value={localSearch}
 							onChange={handleSearchInputChange}
 							className="w-full pl-12 pr-4 py-3 bg-gray-800/80 border border-gray-700/50 rounded-xl focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 outline-none text-white placeholder-gray-400 backdrop-blur-sm"

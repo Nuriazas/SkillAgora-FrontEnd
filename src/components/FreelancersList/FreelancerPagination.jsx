@@ -1,10 +1,13 @@
 import React, { useCallback } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 /**
  * Componente de paginación con estilo consistente
  */
 const FreelancerPagination = ({ currentPage, totalPages, onPageChange }) => {
+	const { t } = useTranslation();
+
 	if (totalPages <= 1) return null;
 
 	const handlePreviousPage = useCallback(() => {
@@ -56,7 +59,7 @@ const FreelancerPagination = ({ currentPage, totalPages, onPageChange }) => {
 				aria-label="Previous page"
 			>
 				<FiChevronLeft className="w-4 h-4" />
-				<span className="hidden sm:inline">Previous</span>
+				<span className="hidden sm:inline">{t('freelancerPagination.previous')}</span>
 			</button>
 
 			{/* Números de página */}
@@ -120,7 +123,7 @@ const FreelancerPagination = ({ currentPage, totalPages, onPageChange }) => {
 				className="flex items-center gap-2 px-4 py-2 bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-xl text-gray-300 hover:text-white hover:bg-gray-800/80 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-900/80 disabled:hover:text-gray-300"
 				aria-label="Next page"
 			>
-				<span className="hidden sm:inline">Next</span>
+				<span className="hidden sm:inline">{t('freelancerPagination.next')}</span>
 				<FiChevronRight className="w-4 h-4" />
 			</button>
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FiX, FiSend } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 /**
  * Modal para contactar freelancer
@@ -10,16 +11,17 @@ const FreelancerContactModal = ({
 	freelancer,
 	onSendMessage,
 }) => {
+	const { t } = useTranslation();
 	const [message, setMessage] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		if (isOpen && freelancer) {
 			setMessage(
-				`Hi ${freelancer.name}, I'm interested in working with you on a project.`
+				t('freelancerContactModal.defaultMessage', { name: freelancer.name })
 			);
 		}
-	}, [isOpen, freelancer]);
+	}, [isOpen, freelancer, t]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -54,7 +56,7 @@ const FreelancerContactModal = ({
 				{/* Header */}
 				<div className="flex items-center justify-between p-6 border-b border-gray-800/50">
 					<h3 className="text-xl font-semibold text-white">
-						Contact {freelancer.name}
+						{t('freelancerContactModal.title', { name: freelancer.name })}
 					</h3>
 					<button
 						onClick={onClose}
@@ -69,12 +71,12 @@ const FreelancerContactModal = ({
 				<form onSubmit={handleSubmit} className="p-6">
 					<div className="mb-4">
 						<label className="block text-sm font-medium text-gray-300 mb-2">
-							Message
+							{t('freelancerContactModal.messageLabel')}
 						</label>
 						<textarea
 							value={message}
 							onChange={(e) => setMessage(e.target.value)}
-							placeholder="Write your message here..."
+							placeholder={t('freelancerContactModal.messagePlaceholder')}
 							rows={4}
 							className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent resize-none"
 							disabled={isLoading}
@@ -91,7 +93,7 @@ const FreelancerContactModal = ({
 							className="px-6 py-3 bg-gray-700/80 hover:bg-gray-600/80 text-white rounded-xl transition-all duration-200 font-medium border border-gray-600/50"
 							disabled={isLoading}
 						>
-							Cancel
+							{t('freelancerContactModal.cancel')}
 						</button>
 						<button
 							type="submit"
@@ -101,12 +103,12 @@ const FreelancerContactModal = ({
 							{isLoading ? (
 								<>
 									<div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-									Sending...
+									{t('freelancerContactModal.sending')}
 								</>
 							) : (
 								<>
 									<FiSend className="w-4 h-4" />
-									Send Message
+									{t('freelancerContactModal.sendMessage')}
 								</>
 							)}
 						</button>

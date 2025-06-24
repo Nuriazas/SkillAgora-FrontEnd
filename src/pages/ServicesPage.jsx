@@ -6,9 +6,11 @@ import ServicesList from "../components/ServicesList";
 import Footer from "../components/Footer";
 import { servicesApi } from "../services/api/api";
 import useServiceFilters from "../hooks/useServiceFilters";
+import { useTranslation } from "react-i18next";
 
 // Componente de paginación para servicios (reutilizando la lógica de FreelancerPagination)
 const ServicesPagination = ({ currentPage, totalPages, onPageChange }) => {
+	const { t } = useTranslation();
 	if (totalPages <= 1) return null;
 
 	const handlePreviousPage = () => {
@@ -54,10 +56,10 @@ const ServicesPagination = ({ currentPage, totalPages, onPageChange }) => {
 				onClick={handlePreviousPage}
 				disabled={currentPage === 1}
 				className="flex items-center gap-2 px-4 py-2 bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-xl text-gray-300 hover:text-white hover:bg-gray-800/80 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-900/80 disabled:hover:text-gray-300"
-				aria-label="Previous page"
+				aria-label={t('servicesPage.pagination.previousAria')}
 			>
 				<span>←</span>
-				<span className="hidden sm:inline">Previous</span>
+				<span className="hidden sm:inline">{t('servicesPage.pagination.previous')}</span>
 			</button>
 
 			{/* Números de página */}
@@ -89,7 +91,7 @@ const ServicesPagination = ({ currentPage, totalPages, onPageChange }) => {
 								? "bg-gradient-to-r from-purple-600 to-blue-600 border-purple-500/50 text-white shadow-lg hover:shadow-purple-500/25"
 								: "bg-gray-900/80 border-gray-800/50 text-gray-300 hover:text-white hover:bg-gray-800/80"
 						}`}
-						aria-label={`Go to page ${page}`}
+						aria-label={t('servicesPage.pagination.goToPage', { page })}
 						aria-current={page === currentPage ? "page" : undefined}
 					>
 						{page}
@@ -119,15 +121,15 @@ const ServicesPagination = ({ currentPage, totalPages, onPageChange }) => {
 				onClick={handleNextPage}
 				disabled={currentPage === totalPages}
 				className="flex items-center gap-2 px-4 py-2 bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-xl text-gray-300 hover:text-white hover:bg-gray-800/80 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-900/80 disabled:hover:text-gray-300"
-				aria-label="Next page"
+				aria-label={t('servicesPage.pagination.nextAria')}
 			>
-				<span className="hidden sm:inline">Next</span>
+				<span className="hidden sm:inline">{t('servicesPage.pagination.next')}</span>
 				<span>→</span>
 			</button>
 
 			{/* Info de página */}
 			<div className="ml-4 text-sm text-gray-400">
-				Page {currentPage} of {totalPages}
+				{t('servicesPage.pagination.pageInfo', { currentPage, totalPages })}
 			</div>
 		</nav>
 	);
@@ -136,6 +138,7 @@ const ServicesPagination = ({ currentPage, totalPages, onPageChange }) => {
 const ITEMS_PER_PAGE = 6;
 
 const ServicesPage = () => {
+	const { t } = useTranslation();
 	const [categories, setCategories] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -189,14 +192,14 @@ const ServicesPage = () => {
 			<div className="min-h-screen bg-gray-950 flex items-center justify-center">
 				<div className="text-center">
 					<h2 className="text-2xl font-bold text-white mb-4">
-						Oops! Something went wrong
+						{t('servicesPage.errorTitle')}
 					</h2>
 					<p className="text-gray-400 mb-6">{error}</p>
 					<button
 						onClick={loadInitialData}
 						className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-200"
 					>
-						Try again
+						{t('servicesPage.tryAgain')}
 					</button>
 				</div>
 			</div>
@@ -229,9 +232,9 @@ const ServicesPage = () => {
 				<Header />
 
 				<SimpleHeroSection
-					title="Browse All"
-					highlightText="Services"
-					subtitle="Discover amazing services from talented freelancers around the world. Find the perfect solution for your project needs."
+					title={t('servicesPage.heroTitle')}
+					highlightText={t('servicesPage.heroHighlight')}
+					subtitle={t('servicesPage.heroSubtitle')}
 					showStats={false}
 				/>
 
@@ -247,7 +250,11 @@ const ServicesPage = () => {
 				{!loading && (
 					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
 						<p className="text-gray-400 text-sm">
-							Showing {((currentPage - 1) * ITEMS_PER_PAGE) + 1} to {Math.min(currentPage * ITEMS_PER_PAGE, filteredServices.length)} of {filteredServices.length} services
+							{t('servicesPage.showingResults', {
+								from: ((currentPage - 1) * ITEMS_PER_PAGE) + 1,
+								to: Math.min(currentPage * ITEMS_PER_PAGE, filteredServices.length),
+								total: filteredServices.length
+							})}
 						</p>
 					</div>
 				)}
@@ -257,7 +264,7 @@ const ServicesPage = () => {
 					loading={loading}
 					showTitle={false}
 					limit={ITEMS_PER_PAGE}  // Agregar esta línea
-/>
+				/>
 
 				{/* Paginación */}
 				{!loading && totalPages > 1 && (
