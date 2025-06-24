@@ -577,7 +577,9 @@
         "step2": "Filter by category or location.",
         "step3": "Review ratings before hiring."
       }
-    }
+    },
+    "stillNeedHelp": "Still need help?",
+    "contactSupport": "Contact Support"
   },
   "freelancerPage": {
     "errorTitle": "Oops! Something went wrong",

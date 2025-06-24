@@ -153,13 +153,13 @@ const HelpCenterPage = () => {
         )}
 
         <div className="text-center mt-16">
-          <p className="text-gray-400 mb-2">Still need help?</p>
+          <p className="text-gray-400 mb-2">{t('helpCenter.stillNeedHelp')}</p>
           <Link
             to="/contact"
             className="inline-flex items-center px-5 py-3 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition font-medium"
           >
             <Mail className="mr-2" size={18} />
-            Contact Support
+            {t('helpCenter.contactSupport')}
           </Link>
         </div>
       </div>

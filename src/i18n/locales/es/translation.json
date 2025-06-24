@@ -479,5 +479,150 @@
       "noStatus": "Sin estado"
     },
     "noDate": "Sin fecha"
+  },
+  "helpCenter": {
+    "title": "Centro de ayuda",
+    "subtitle": "La ayuda es el puente entre la duda y la acción.",
+    "searchPlaceholder": "Buscar...",
+    "noResults": "No se han encontrado resultados.",
+    "categoryNames": {
+      "Account": "Cuenta",
+      "Payments": "Pagos",
+      "Services": "Servicios"
+    },
+    "tags": {
+      "New": "Nuevo",
+      "Updated": "Actualizado",
+      "Popular": "Popular"
+    },
+    "categories": [
+      {
+        "category": "Account",
+        "items": [
+          {
+            "title": "helpCenter.account.createAccount.title",
+            "to": "/help/account/create",
+            "content": [
+              "helpCenter.account.createAccount.step1",
+              "helpCenter.account.createAccount.step2",
+              "helpCenter.account.createAccount.step3",
+              "helpCenter.account.createAccount.step4"
+            ],
+            "tag": "New"
+          },
+          {
+            "title": "helpCenter.account.forgotPassword.title",
+            "to": "/help/account/reset-password",
+            "content": [
+              "helpCenter.account.forgotPassword.step1",
+              "helpCenter.account.forgotPassword.step2",
+              "helpCenter.account.forgotPassword.step3",
+              "helpCenter.account.forgotPassword.step4"
+            ],
+            "tag": "Updated"
+          }
+        ]
+      },
+      {
+        "category": "Payments",
+        "items": [
+          {
+            "title": "helpCenter.payments.acceptedMethods.title",
+            "to": "/help/payments/methods",
+            "content": [
+              "helpCenter.payments.acceptedMethods.step1",
+              "helpCenter.payments.acceptedMethods.step2",
+              "helpCenter.payments.acceptedMethods.step3"
+            ],
+            "tag": null
+          },
+          {
+            "title": "helpCenter.payments.requestRefund.title",
+            "to": "/help/payments/refunds",
+            "content": [
+              "helpCenter.payments.requestRefund.step1",
+              "helpCenter.payments.requestRefund.step2",
+              "helpCenter.payments.requestRefund.step3",
+              "helpCenter.payments.requestRefund.step4"
+            ],
+            "tag": "Popular"
+          }
+        ]
+      },
+      {
+        "category": "Services",
+        "items": [
+          {
+            "title": "helpCenter.services.postService.title",
+            "to": "/help/services/post",
+            "content": [
+              "helpCenter.services.postService.step1",
+              "helpCenter.services.postService.step2",
+              "helpCenter.services.postService.step3",
+              "helpCenter.services.postService.step4"
+            ],
+            "tag": null
+          },
+          {
+            "title": "helpCenter.services.searchHire.title",
+            "to": "/help/services/find-hire",
+            "content": [
+              "helpCenter.services.searchHire.step1",
+              "helpCenter.services.searchHire.step2",
+              "helpCenter.services.searchHire.step3"
+            ],
+            "tag": null
+          }
+        ]
+      }
+    ],
+    "account": {
+      "createAccount": {
+        "title": "¿Cómo creo una cuenta?",
+        "step1": "Haz clic en 'Registrarse' en la esquina superior derecha.",
+        "step2": "Introduce tu correo electrónico y una contraseña segura.",
+        "step3": "Confirma tu correo a través del enlace que te enviamos.",
+        "step4": "¡Listo! Ya puedes iniciar sesión."
+      },
+      "forgotPassword": {
+        "title": "¿Olvidaste tu contraseña?",
+        "step1": "Ve a la página de inicio de sesión.",
+        "step2": "Haz clic en '¿Olvidaste tu contraseña?'.",
+        "step3": "Introduce tu correo electrónico registrado.",
+        "step4": "Revisa tu bandeja de entrada para restablecer tu contraseña."
+      }
+    },
+    "payments": {
+      "acceptedMethods": {
+        "title": "Métodos de pago aceptados",
+        "step1": "Tarjetas de crédito o débito.",
+        "step2": "PayPal.",
+        "step3": "Transferencia bancaria (solo empresas)."
+      },
+      "requestRefund": {
+        "title": "¿Cómo solicito un reembolso?",
+        "step1": "Ve a tu historial de pagos.",
+        "step2": "Selecciona la transacción que deseas reembolsar.",
+        "step3": "Haz clic en 'Solicitar reembolso'.",
+        "step4": "El proceso puede tardar entre 3 y 5 días hábiles."
+      }
+    },
+    "services": {
+      "postService": {
+        "title": "Cómo publicar un servicio",
+        "step1": "Inicia sesión en tu cuenta.",
+        "step2": "Haz clic en 'Publicar un servicio'.",
+        "step3": "Rellena los datos requeridos.",
+        "step4": "Guarda y publica."
+      },
+      "searchHire": {
+        "title": "Buscar y contratar",
+        "step1": "Utiliza la barra de búsqueda.",
+        "step2": "Filtra por categoría o ubicación.",
+        "step3": "Revisa las valoraciones antes de contratar."
+      }
+    },
+    "stillNeedHelp": "¿Aún necesitas ayuda?",
+    "contactSupport": "Contactar Soporte"
   }
 } 

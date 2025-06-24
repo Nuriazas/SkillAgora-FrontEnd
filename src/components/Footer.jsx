@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { AuthContext } from "../context/AuthContextProvider";
 
 const Footer = () => {
   const { t } = useTranslation();
+  const { userLogged } = useContext(AuthContext);
   const footerSections = [
     {
       title: t("footer.forClients"),
@@ -18,7 +20,7 @@ const Footer = () => {
       links: [
         { name: t("footer.createService"), to: "/services/create" },
         { name: t("footer.browseJobs"), to: "/services" },
-        { name: t("footer.myProfile"), to: "/users/profile/usuario" },
+        { name: t("footer.myProfile"), to: userLogged ? `/users/profile/${userLogged.name}` : "/login" },
       ],
     },
     {
