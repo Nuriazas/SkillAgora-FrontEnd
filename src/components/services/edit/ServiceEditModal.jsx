@@ -4,9 +4,11 @@ import { AuthContext } from "../../../context/AuthContextProvider.jsx";
 import updateServiceService from "../../../services/services/updateServiceService.js";
 import ServiceEditForm from "./ServiceEditForm";
 import { useServiceEdit } from "../../../hooks/services/useServiceEdit.js";
+import { useTranslation } from "react-i18next";
 
 const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 	const { token } = useContext(AuthContext);
+	const { t } = useTranslation();
 	const {
 		loading,
 		categories,
@@ -20,12 +22,12 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 		e.preventDefault();
 
 		if (!token) {
-			alert("Authentication error: Please log in again");
+			alert(t('serviceEditModal.authError'));
 			return;
 		}
 
 		if (!service || !service.service_id) {
-			alert("Error: No se encontró el ID del servicio");
+			alert(t('serviceEditModal.idError'));
 			return;
 		}
 
@@ -49,10 +51,10 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 				});
 				onClose();
 			} else {
-				throw new Error(data.message || "Error al actualizar el servicio");
+				throw new Error(data.message || t('serviceEditModal.updateError'));
 			}
 		} catch (error) {
-			alert("Error updating service: " + error.message);
+			alert(t('serviceEditModal.updateErrorGeneric', { error: error.message }));
 		}
 	};
 
@@ -62,7 +64,7 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 		<div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
 			<div className="bg-gray-900/95 backdrop-blur-xl rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-800/50 shadow-2xl">
 				<div className="flex items-center justify-between p-6 border-b border-gray-800/50">
-					<h2 className="text-xl font-semibold text-white">Edit Service</h2>
+					<h2 className="text-xl font-semibold text-white">{t('serviceEditModal.editService')}</h2>
 					<button
 						onClick={onClose}
 						className="bg-gray-800/90 hover:bg-gray-700/90 p-2 rounded-full transition-colors"

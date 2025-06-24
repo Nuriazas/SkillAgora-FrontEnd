@@ -62,6 +62,22 @@ export const useFreelancerModalLogic = (freelancer, onClose) => {
 
 		console.log("🔍 Freelancer details completo:", freelancerDetails);
 		console.log("🔍 User ID encontrado:", userId);
+		console.log("🔍 Tipo de userId:", typeof userId);
+
+		// Si aún no encontramos el userId, intentemos con propiedades que contengan 'id'
+		if (!userId) {
+			console.log("🔍 Buscando propiedades que contengan 'id':");
+			const serviceKeys = Object.keys(serviceDetails);
+			const idProperties = serviceKeys.filter(key => 
+				key.toLowerCase().includes('id') || 
+				key.toLowerCase().includes('user')
+			);
+			console.log("🔍 Propiedades con 'id' o 'user':", idProperties);
+			
+			idProperties.forEach(prop => {
+				console.log(`🔍 ${prop}:`, serviceDetails[prop]);
+			});
+		}
 
 		if (!userId) {
 			alert(
@@ -70,6 +86,7 @@ export const useFreelancerModalLogic = (freelancer, onClose) => {
 			return;
 		}
 
+		console.log("✅ Abriendo modal de contacto con userId:", userId);
 		setIsContactModalOpen(true);
 	};
 
@@ -125,17 +142,19 @@ export const useFreelancerModalLogic = (freelancer, onClose) => {
 		}
 	};
 
-	// Handler para cerrar con ESC
-	const handleKeyDown = (e) => {
-		if (e.key === "Escape") {
-			onClose();
-		}
-	};
+    // Handler para cerrar servicio con ESC
+    const handleKeyDown = (e) => {
+        if (e.key === "Escape") {
+            onClose();
+        }
+    };
 
-	// Handler para contratar freelancer
-	const handleHireFreelancer = () => {
+	// Handler para contratar servicio
+	const handleHireService = () => {
+		console.log("serviceDetails en handleHireService:", serviceDetails);
 		const token = localStorage.getItem("token");
-
+		const serviceId = serviceDetails.service_id || serviceDetails.id;
+		
 		// Validar token
 		if (!token || token === "null" || token === "undefined") {
 			setResultData({
@@ -172,11 +191,6 @@ export const useFreelancerModalLogic = (freelancer, onClose) => {
 			const token = localStorage.getItem("token");
 			const freelancerId = freelancerDetails.id;
 
-			console.log("🤝 Intentando contratar freelancer:", freelancerId);
-
-			// Simular contratación de freelancer (ajusta según tu API)
-			// Puedes usar el endpoint de contacto con un mensaje especial de contratación
-			const hiringMessage = `I would like to hire you for a project. My rate budget is $${freelancerDetails.hourly_rate}/hour. Please contact me to discuss the details.`;
 
 			const response = await sendContactRequest(
 				freelancerId,

@@ -3,14 +3,19 @@ import { useServiceModalLogic } from "../../../hooks/services/useServiceModal.js
 import ContactModal from "./ContactModal.jsx";
 import ConfirmationModal from "./ConfirmationModal.jsx";
 import ResultModal from "./ResultModal.jsx";
-import ServiceHeader from "../components/ServiceHeader.jsx"
+import ServiceHeader from "../components/ServiceHeader.jsx";
 import ServiceUserInfo from "../components/ServiceUserInfo.jsx";
 import ServiceContent from "../components/ServiceContent.jsx";
 import ServiceStats from "../components/ServiceStats.jsx";
 import ServiceFooter from "../components/ServiceFooter.jsx";
+import { useTranslation } from "react-i18next";
 
-// Componente principal del modal de servicio
+/**
+ * Modal para mostrar detalles completos de un servicio
+ */
 const ServiceModal = ({ service, onClose }) => {
+  const { t } = useTranslation();
+  
   const hookResult = useServiceModalLogic(service, onClose);
   
   if (!hookResult) {
@@ -19,12 +24,12 @@ const ServiceModal = ({ service, onClose }) => {
       <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
         <div className="bg-gray-900/95 backdrop-blur-xl rounded-2xl max-w-2xl w-full border border-gray-800/50 shadow-2xl p-8">
           <div className="text-white text-center">
-            <div className="text-red-400 mb-2">Error al cargar el servicio</div>
+            <div className="text-red-400 mb-2">{t('serviceModal.error.loadingService')}</div>
             <button 
               onClick={onClose}
               className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
             >
-              Cerrar
+              {t('common.close')}
             </button>
           </div>
         </div>
@@ -51,6 +56,7 @@ const ServiceModal = ({ service, onClose }) => {
     handleKeyDown,
   } = hookResult;
 
+  // Mostrar loading si estamos cargando detalles
   if (loadingDetails) {
     return (
       <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
@@ -58,7 +64,7 @@ const ServiceModal = ({ service, onClose }) => {
           <div className="flex items-center justify-center">
             <div className="w-8 h-8 border-2 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></div>
             <span className="ml-3 text-white">
-              Cargando detalles del servicio...
+              {t("serviceModal.loadingDetails")}
             </span>
           </div>
         </div>
@@ -71,12 +77,12 @@ const ServiceModal = ({ service, onClose }) => {
       <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
         <div className="bg-gray-900/95 backdrop-blur-xl rounded-2xl max-w-2xl w-full border border-gray-800/50 shadow-2xl p-8">
           <div className="text-white text-center">
-            <div className="text-red-400 mb-2">No se pudieron cargar los detalles del servicio</div>
+            <div className="text-red-400 mb-2">{t('serviceModal.error.noDetails')}</div>
             <button 
               onClick={onClose}
               className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
             >
-              Cerrar
+              {t('common.close')}
             </button>
           </div>
         </div>
@@ -122,6 +128,7 @@ const ServiceModal = ({ service, onClose }) => {
               deliveryTimeDays={serviceDetails.delivery_time_days}
               rating={serviceDetails.rating}
               reviews={serviceDetails.reviews}
+              serviceId={serviceDetails.id}
             />
 
             <ServiceFooter
@@ -134,6 +141,7 @@ const ServiceModal = ({ service, onClose }) => {
         </div>
       </div>
 
+      {/* Modales */}
       <ContactModal
         isOpen={isContactModalOpen}
         onClose={() => setIsContactModalOpen(false)}

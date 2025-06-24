@@ -1,11 +1,10 @@
 import React from "react";
 import { FiStar, FiMapPin, FiUser } from "react-icons/fi";
-import DefaultAvatar from "../../../assets/defaultAvatar.jpeg";
-
-// componente ServiceCard para mostrar toda la información del servicio
+import DefaultAvatar from "../assets/defaultAvatar.jpeg";
+import { useTranslation } from "react-i18next";
 
 const ServiceCard = ({ service, onClick }) => {
-
+  const { t } = useTranslation();
   // Imagen por defecto si el servicio no tiene imagen
   const defaultImage =
     "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&h=250&fit=crop";
@@ -39,7 +38,7 @@ const ServiceCard = ({ service, onClick }) => {
       className="bg-gray-900/80 backdrop-blur-xl rounded-xl shadow-xl border border-gray-800/50 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 cursor-pointer hover:-translate-y-2 group overflow-hidden"
       role="button"
       tabIndex={0}
-      aria-label={`Ver detalles del servicio: ${service.title}`}
+      aria-label={t('serviceCard.ariaLabel', { title: service.title })}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -51,7 +50,7 @@ const ServiceCard = ({ service, onClick }) => {
       <div className="aspect-[4/3] bg-gradient-to-br from-purple-900/30 to-blue-900/30 overflow-hidden relative">
         <img
           src={imageUrl}
-          alt={`Imagen del servicio: ${service.title}`}
+          alt={t('serviceCard.imageAlt', { title: service.title })}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
           onError={handleImageError}
           loading="lazy"
@@ -81,7 +80,7 @@ const ServiceCard = ({ service, onClick }) => {
             }}
           />
           <span className="text-xs text-gray-400 font-medium">
-            {service.user_name || "Usuario anónimo"}
+            {service.user_name || t('serviceCard.anonymousUser')}
           </span>
         </div>
 
@@ -112,13 +111,13 @@ const ServiceCard = ({ service, onClick }) => {
               {service.rating ? Number(service.rating).toFixed(1) : "5.0"}
             </span>
             <span className="text-xs text-gray-500">
-              ({service.reviews || "0"} reseñas)
+              {t('serviceCard.reviews', { count: service.reviews || 0 })}
             </span>
           </div>
 
           {/* Precio */}
           <div className="font-bold text-purple-400 text-sm">
-            {formatPrice(service.price)}
+            {t('serviceCard.price', { price: service.price })}
           </div>
         </div>
       </div>

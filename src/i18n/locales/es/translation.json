@@ -1,0 +1,628 @@
+{
+  "header": {
+    "freelancers": "Freelancers",
+    "createService": "Crear Servicio",
+    "administrator": "Skill Agora Administrator",
+    "services": "Servicios",
+    "signIn": "Iniciar sesión",
+    "signUp": "Registrarse",
+    "signInAria": "Iniciar sesión en SkillAgora",
+    "signUpAria": "Registrarse en SkillAgora"
+  },
+  "search": {
+    "placeholder": "Buscar por nombre, especialidad o ubicación...",
+    "allSpecialties": "Todas las especialidades",
+    "sortByRating": "Ordenar por valoración",
+    "sortByPrice": "Ordenar por precio",
+    "searchFreelancers": "Buscar freelancers",
+    "filterBySpecialty": "Filtrar por especialidad",
+    "sortBy": "Ordenar por"
+  },
+  "freelancerCard": {
+    "perHour": "€ / hora",
+    "location": "Ubicación: {{location}}",
+    "rating": "Valoración",
+    "anonymousUser": "Usuario anónimo",
+    "general": "General",
+    "remote": "Remoto",
+    "defaultBio": "Profesional experimentado en {{specialty}} listo para ayudarte con tus proyectos.",
+    "pricePerHour": "$ {{price}}/h",
+    "rate": "$ {{price}}/hora",
+    "contact": "Contactar"
+  },
+  "modal": {
+    "contact": "Contactar",
+    "close": "Cerrar",
+    "location": "Ubicación",
+    "hourlyRate": "Tarifa por hora",
+    "rating": "Valoración"
+  },
+  "createService": {
+    "title": "Crear Nuevo Servicio",
+    "serviceTitle": "Título del Servicio",
+    "serviceTitlePlaceholder": "Ej: Desarrollo Web Frontend...",
+    "description": "Descripción",
+    "descriptionPlaceholder": "Describe tu servicio en detalle...",
+    "pricePerHour": "Precio por Hora (€)",
+    "pricePlaceholder": "Ej: 35",
+    "category": "Categoría",
+    "selectCategory": "Selecciona una categoría",
+    "categories": {
+      "webDev": "Desarrollo Web",
+      "uiUx": "Diseño UI/UX",
+      "backend": "Desarrollo Backend",
+      "devops": "DevOps",
+      "digitalMarketing": "Marketing Digital",
+      "cybersecurity": "Ciberseguridad"
+    },
+    "location": "Ubicación",
+    "locationPlaceholder": "Ej: Madrid, España",
+    "backToFreelancers": "Volver a Freelancers",
+    "cancel": "Cancelar",
+    "create": "Crear"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "view": "Ver",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "all": "Todos",
+    "none": "Ninguno",
+    "select": "Seleccionar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "finish": "Finalizar"
+  },
+  "freelancers": {
+    "specialties": {
+      "frontend": "Desarrollo Web Frontend",
+      "uiUx": "Diseño UI/UX",
+      "backend": "Desarrollo Backend",
+      "devops": "DevOps",
+      "marketing": "Marketing Digital",
+      "cybersecurity": "Ciberseguridad"
+    },
+    "descriptions": {
+      "frontend": "Desarrolladora Frontend con más de 5 años de experiencia en React, Vue y Angular. Especializada en la creación de interfaces modernas, responsivas y accesibles. Experiencia en optimización de rendimiento y SEO.",
+      "uiUx": "Diseñador UI/UX con amplia experiencia en productos digitales y experiencia de usuario. Especializado en investigación de usuarios, wireframing, prototipado y diseño de interfaces intuitivas y atractivas.",
+      "backend": "Desarrollador Backend especializado en Node.js y Python. Experto en arquitecturas microservicios, APIs RESTful y GraphQL. Amplia experiencia en bases de datos SQL y NoSQL.",
+      "devops": "Ingeniero DevOps con experiencia en AWS, Docker y Kubernetes. Especializado en automatización de procesos, CI/CD, monitoreo y seguridad en la nube. Certificado en AWS Solutions Architect.",
+      "marketing": "Especialista en Marketing Digital con enfoque en campañas de Google Ads y estrategias en redes sociales. Experiencia en SEO, email marketing y análisis de datos para optimización de conversiones.",
+      "cybersecurity": "Consultor senior en ciberseguridad con más de 8 años de experiencia. Especializado en auditorías de seguridad, pentesting, análisis de vulnerabilidades y formación en seguridad para empresas."
+    }
+  },
+  "notFound": {
+    "title": "404 - Página no encontrada",
+    "description": "La ruta que estas buscando no existe"
+  },
+  "footer": {
+    "forClients": "Para clientes",
+    "findServices": "Buscar servicios",
+    "postJob": "Publicar un trabajo",
+    "myOrders": "Mis pedidos",
+    "forFreelancers": "Para freelancers",
+    "createService": "Crear servicio",
+    "browseJobs": "Buscar trabajos",
+    "myProfile": "Mi perfil",
+    "support": "Soporte",
+    "helpCenter": "Centro de ayuda",
+    "contact": "Contacto",
+    "terms": "Términos",
+    "description": "La plataforma líder para conectar talento con oportunidades.",
+    "goTo": "Ir a {{name}}",
+    "rights": "Todos los derechos reservados."
+  },
+  "hero": {
+    "title1": "Encuentra el",
+    "title2": "talento perfecto",
+    "title3": "para tu proyecto",
+    "description": "Conecta con freelancers expertos y lleva tus ideas al siguiente nivel con la plataforma más confiable.",
+    "completedProjects": "Proyectos completados",
+    "activeFreelancers": "Freelancers activos",
+    "satisfactionRate": "Tasa de satisfacción"
+  },
+  "resultModal": {
+    "orderDetails": "Detalles de la orden:",
+    "id": "ID",
+    "total": "Total",
+    "status": "Estado",
+    "pending": "Pendiente",
+    "understood": "Entendido"
+  },
+  "contactSuccessModal": {
+    "sent": "¡Mensaje Enviado!",
+    "success": "Tu solicitud de contacto ha sido enviada exitosamente",
+    "sentTo": "Enviado a:",
+    "notify": "Recibirás una notificación cuando {{name}} responda a tu mensaje.",
+    "understood": "Entendido"
+  },
+  "validacion": {
+    "code6Digits": "El código debe tener exactamente 6 dígitos numéricos.",
+    "codeRequired": "El código es obligatorio.",
+    "invalidCode": "Código inválido. Inténtalo de nuevo.",
+    "errorVerifying": "Error al verificar el código.",
+    "noAttempts": "No quedan intentos. Por favor, solicita un nuevo código.",
+    "errorResending": "Error al reenviar el código.",
+    "enterCode": "Ingresa el Código",
+    "codeSentTo": "Código enviado a:",
+    "testHint": "Para pruebas, usa cualquier código que termine en '123'",
+    "codeLabel": "Código de Verificación",
+    "attempts": "Intentos restantes: {{attempts}}",
+    "codeExpires": "El código expirará en {{time}}",
+    "verifying": "Verificando...",
+    "verifyCode": "Verificar Código",
+    "resendCode": "Reenviar código",
+    "changeEmail": "Cambiar correo electrónico"
+  },
+  "register": {
+    "title": "Registro",
+    "success": "Registro realizado correctamente"
+  },
+  "login": {
+    "title": "Iniciar sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "rememberMe": "Recuérdame",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "orOtherAccounts": "o inicia sesión con otras cuentas",
+    "noAccount": "¿No tienes una cuenta aún?",
+    "signUpLink": "Regístrate aquí.",
+    "error": "Error al iniciar sesión",
+    "signIn": "Iniciar sesión"
+  },
+  "home": {
+    "logoutError": "Error al cerrar sesión. Por favor, intente nuevamente.",
+    "user": "Usuario",
+    "userEmail": "usuario@ejemplo.com",
+    "loggingOut": "Cerrando sesión...",
+    "logout": "Cerrar sesión",
+    "close": "Cerrar",
+    "dashboardTitle": "Bienvenido a tu Dashboard",
+    "userInfo": "Información del Usuario",
+    "name": "Nombre",
+    "notAvailable": "No disponible",
+    "email": "Email",
+    "lastLogin": "Último acceso",
+    "recentActivity": "Actividad Reciente",
+    "recentActivityDesc": "Aquí se mostrará la actividad reciente del usuario.",
+    "confirmLogout": "Confirmar cierre de sesión",
+    "confirmLogoutDesc": "¿Estás seguro de que deseas cerrar sesión?",
+    "cancel": "Cancelar",
+    "loggingOutShort": "Cerrando..."
+  },
+  "profile": {
+    "notFound": "Perfil no encontrado",
+    "notFoundTitle": "Perfil no encontrado",
+    "goBack": "Volver",
+    "memberSince": "Miembro desde {{year}}",
+    "rating": "valoración",
+    "viewPortfolio": "Ver Portafolio",
+    "myServices": "Mis Servicios",
+    "services": "Servicios",
+    "daysDelivery": "{{days}} días de entrega",
+    "clickToEdit": "Haz clic para editar",
+    "experience": "Experiencia"
+  },
+  "editProfile": {
+    "errorSaving": "Error al guardar los cambios",
+    "serverError": "Error en el servidor",
+    "title": "Editar tu perfil",
+    "changeAvatar": "Cambiar avatar",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "bio": "Biografía",
+    "language": "Idioma",
+    "portfolioUrl": "URL del portafolio",
+    "saving": "Guardando...",
+    "saveChanges": "Guardar cambios",
+    "cancel": "Cancelar"
+  },
+  "forgotPassword": {
+    "title": "Recuperar contraseña",
+    "checkEmail": "Revisa tu correo. Te hemos enviado un enlace para restablecer tu contraseña.",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "Introduce tu correo electrónico",
+    "sendLink": "Enviar enlace de recuperación",
+    "backToLogin": "Volver al inicio de sesión"
+  },
+  "serviceCard": {
+    "ariaLabel": "Ver detalles del servicio: {{title}}",
+    "imageAlt": "Imagen del servicio: {{title}}",
+    "anonymousUser": "Usuario anónimo",
+    "reviews": "({{count}} reseñas)",
+    "price": "$ {{price}}"
+  },
+  "contactModal": {
+    "defaultMessage": "Hola, estoy interesado en tu servicio: {{title}}",
+    "title": "Contactar con {{name}}",
+    "messageLabel": "Mensaje",
+    "messagePlaceholder": "Escribe tu mensaje aquí...",
+    "cancel": "Cancelar",
+    "sending": "Enviando...",
+    "sendMessage": "Enviar Mensaje"
+  },
+  "freelancerContactModal": {
+    "defaultMessage": "Hola {{name}}, estoy interesado en trabajar contigo en un proyecto.",
+    "title": "Contactar a {{name}}",
+    "messageLabel": "Mensaje",
+    "messagePlaceholder": "Escribe tu mensaje aquí...",
+    "cancel": "Cancelar",
+    "sending": "Enviando...",
+    "sendMessage": "Enviar Mensaje"
+  },
+  "freelancerHireModal": {
+    "title": "Contratar Freelancer",
+    "confirmQuestion": "¿Estás seguro de que deseas contratar a este freelancer?",
+    "pricePerHour": "$ {{price}}/hora",
+    "discuss": "Podrás discutir los detalles y plazos del proyecto con {{name}} después de contratarlo.",
+    "cancel": "Cancelar",
+    "hiring": "Contratando...",
+    "confirmHire": "Confirmar Contratación"
+  },
+  "freelancerList": {
+    "featured": "Freelancers Destacados",
+    "all": "Todos los Freelancers",
+    "noResults": "No se encontraron freelancers",
+    "viewAll": "Ver Todos los Freelancers",
+    "discover": "Descubre todos nuestros profesionales talentosos",
+    "loading": "Cargando freelancers...",
+    "error": "Error al cargar los freelancers."
+  },
+  "freelancerResultModal": {
+    "successTitle": "¡Solicitud enviada!",
+    "errorTitle": "Error",
+    "successMsg": "El freelancer ha recibido tu solicitud. Pronto se pondrá en contacto contigo.",
+    "errorMsg": "Hubo un error al enviar la solicitud. Por favor, inténtalo de nuevo.",
+    "close": "Cerrar"
+  },
+  "pagination": {
+    "previous": "Anterior",
+    "next": "Siguiente"
+  },
+  "filterControls": {
+    "allCategories": "Todas las categorías",
+    "filterByCategory": "Filtrar por categoría",
+    "filterByPrice": "Filtrar por precio",
+    "priceRange": {
+      "": "Cualquier precio",
+      "0-50": "$0 - $50",
+      "50-200": "$50 - $200",
+      "200-500": "$200 - $500",
+      "500-": "Mayor a $500"
+    },
+    "sortResults": "Ordenar resultados",
+    "sortOptions": {
+      "created_at-DESC": "Más recientes",
+      "created_at-ASC": "Más antiguos",
+      "price-ASC": "Menor precio",
+      "price-DESC": "Mayor precio",
+      "rating-DESC": "Mejor valorados",
+      "views-DESC": "Más populares"
+    },
+    "applyFilters": "Aplicar filtros",
+    "clearFilters": "Limpiar filtros",
+    "clearAllFilters": "Limpiar todos los filtros",
+    "category": "Categoría",
+    "location": "Ubicación",
+    "rate": "Tarifa",
+    "clear": "Limpiar",
+    "searchPlaceholder": "¿Qué servicio necesitas?"
+  },
+  "freelancerModal": {
+    "title": "Perfil de Freelancer",
+    "name": "Nombre: {{name}}",
+    "specialty": "Especialidad: {{specialty}}",
+    "location": "Ubicación: {{location}}",
+    "rate": "Tarifa: ${{price}}/hora",
+    "close": "Cerrar"
+  },
+  "freelancerPagination": {
+    "previous": "Anterior",
+    "next": "Siguiente"
+  },
+  "avatar": {
+    "userAvatar": "Avatar de usuario",
+    "profilePicture": "Foto de perfil de {{name}}"
+  },
+  "serviceModal": {
+    "remote": "Remoto",
+    "deliveryTime": "Entrega",
+    "days": "días",
+    "rating": "Valoración",
+    "reviews": "reseñas",
+    "contact": "Contactar",
+    "hireService": "Contratar servicio",
+    "loadingDetails": "Cargando detalles...",
+    "serviceImageAlt": "Imagen del servicio: {{title}}"
+  },
+  "freelancerSearchFilter": {
+    "searchPlaceholder": "Buscar por nombre, bio, ubicación...",
+    "sortBy": "Ordenar por",
+    "sortOptions": {
+      "bestRating": "Mejor valoración",
+      "averagePrice": "Precio medio",
+      "mostServices": "Más servicios",
+      "mostReviews": "Más reseñas",
+      "mostRecent": "Más recientes",
+      "nameAZ": "Nombre A-Z"
+    },
+    "showAdvancedFilters": "Mostrar filtros avanzados",
+    "hideAdvancedFilters": "Ocultar filtros avanzados",
+    "advancedFilters": "Filtros avanzados",
+    "rating": "Valoración",
+    "allRatings": "Todas las valoraciones",
+    "minPrice": "Precio mínimo ($)",
+    "maxPrice": "Precio máximo ($)",
+    "minServices": "Mínimo de servicios",
+    "anyAmount": "Cualquier cantidad",
+    "location": "Ubicación",
+    "order": "Orden",
+    "highToLow": "De mayor a menor",
+    "lowToHigh": "De menor a mayor",
+    "clearAllFilters": "Limpiar todos los filtros"
+  },
+  "serviceEditModal": {
+    "editService": "Editar Servicio",
+    "serviceTitle": "Título del Servicio",
+    "serviceTitlePlaceholder": "Introduce el título del servicio",
+    "description": "Descripción",
+    "descriptionPlaceholder": "Describe tu servicio",
+    "pricePlaceholder": "0.00",
+    "deliveryTimePlaceholder": "3",
+    "locationPlaceholder": "Remoto, Ciudad, etc.",
+    "updateError": "Error al actualizar el servicio.",
+    "authError": "Error de autenticación: Por favor, inicia sesión de nuevo.",
+    "idError": "Error: No se encontró el ID del servicio.",
+    "updateErrorGeneric": "Error al actualizar el servicio: {{error}}"
+  },
+  "confirmationModal": {
+    "title": "Confirmar Contratación",
+    "question": "¿Estás seguro de que quieres contratar este servicio?",
+    "info": "Se creará una orden de compra que podrás gestionar desde tu panel."
+  },
+  "landingNav": {
+    "browseServices": "Explorar Servicios",
+    "browseServicesAria": "Explorar todos los servicios disponibles",
+    "findFreelancers": "Buscar Freelancers",
+    "findFreelancersAria": "Buscar freelancers disponibles",
+    "postService": "Publicar Servicio",
+    "postServiceAria": "Publicar un nuevo servicio",
+    "contactUs": "Contáctanos",
+    "contactUsAria": "Contactar con el equipo de soporte"
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "subtitle": "Elige el método que prefieras para ponerte en contacto con nosotros",
+    "whatsapp": "WhatsApp",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "liveChat": "Chat en vivo",
+    "available": "Disponible de 9:00 a 18:00"
+  },
+  "serviceCarousel": {
+    "noServices": "No hay servicios disponibles",
+    "reload": "Recargar servicios",
+    "prevService": "Servicio anterior",
+    "nextService": "Siguiente servicio",
+    "delivery": "Entrega en {{days}} días",
+    "remote": "Remoto",
+    "priceLabel": "Precio del servicio",
+    "viewFullService": "Ver Servicio Completo",
+    "goToService": "Ir al servicio {{n}}",
+    "anonymousUser": "Usuario anónimo",
+    "defaultUserInitial": "S"
+  },
+  "servicesPage": {
+    "heroTitle": "Descubre los mejores",
+    "heroHighlight": "servicios para tu proyecto",
+    "heroSubtitle": "Explora, filtra y encuentra el servicio ideal para ti.",
+    "showingResults": "Mostrando resultados",
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "previousAria": "Página anterior",
+      "nextAria": "Página siguiente",
+      "goToPage": "Ir a la página {{page}}",
+      "pageInfo": "Página {{currentPage}} de {{totalPages}}"
+    },
+    "errorTitle": "Error al cargar los servicios"
+  },
+  "userDropdown": {
+    "myProfile": "Mi Perfil",
+    "myServices": "Mis Servicios",
+    "orders": "Pedidos",
+    "settings": "Configuración",
+    "signOut": "Cerrar sesión"
+  },
+  "freelancerPage": {
+    "heroTitle": "Encuentra a los",
+    "heroHighlight": "mejores freelancers",
+    "heroSubtitle": "Conecta con profesionales calificados listos para hacer realidad tu visión. Explora freelancers talentosos y encuentra el candidato perfecto para tu proyecto.",
+    "showingResults": "Mostrando freelancers"
+  },
+  "contactPage": {
+    "title": "Contacto",
+    "subtitle": "¿Tienes alguna pregunta o necesitas ayuda? ¡Contáctanos a través de cualquiera de los siguientes medios!",
+    "whatsapp": "WhatsApp",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "liveChat": "Chat en vivo",
+    "available": "Disponible de 9:00 a 18:00"
+  },
+  "notificationPage": {
+    "title": "Notificaciones",
+    "panel": "Panel",
+    "subtitle": "Aquí puedes ver tus mensajes y órdenes recientes.",
+    "messages": "Mensajes",
+    "orders": "Órdenes",
+    "loading": "Cargando...",
+    "noMessages": "No tienes mensajes nuevos.",
+    "noMessagesDesc": "Aquí aparecerán los mensajes de contacto de otros usuarios.",
+    "noOrders": "No tienes órdenes recientes.",
+    "noOrdersDesc": "Aquí aparecerán tus órdenes de servicios contratados.",
+    "unknownUser": "Usuario desconocido",
+    "status": {
+      "completed": "Completado",
+      "pending": "Pendiente",
+      "inProgress": "En progreso",
+      "delivered": "Entregado",
+      "cancelled": "Cancelado",
+      "noStatus": "Sin estado"
+    },
+    "noDate": "Sin fecha"
+  },
+  "helpCenter": {
+    "title": "Centro de ayuda",
+    "subtitle": "La ayuda es el puente entre la duda y la acción.",
+    "searchPlaceholder": "Buscar...",
+    "noResults": "No se han encontrado resultados.",
+    "categoryNames": {
+      "Account": "Cuenta",
+      "Payments": "Pagos",
+      "Services": "Servicios"
+    },
+    "tags": {
+      "New": "Nuevo",
+      "Updated": "Actualizado",
+      "Popular": "Popular"
+    },
+    "categories": [
+      {
+        "category": "Account",
+        "items": [
+          {
+            "title": "helpCenter.account.createAccount.title",
+            "to": "/help/account/create",
+            "content": [
+              "helpCenter.account.createAccount.step1",
+              "helpCenter.account.createAccount.step2",
+              "helpCenter.account.createAccount.step3",
+              "helpCenter.account.createAccount.step4"
+            ],
+            "tag": "New"
+          },
+          {
+            "title": "helpCenter.account.forgotPassword.title",
+            "to": "/help/account/reset-password",
+            "content": [
+              "helpCenter.account.forgotPassword.step1",
+              "helpCenter.account.forgotPassword.step2",
+              "helpCenter.account.forgotPassword.step3",
+              "helpCenter.account.forgotPassword.step4"
+            ],
+            "tag": "Updated"
+          }
+        ]
+      },
+      {
+        "category": "Payments",
+        "items": [
+          {
+            "title": "helpCenter.payments.acceptedMethods.title",
+            "to": "/help/payments/methods",
+            "content": [
+              "helpCenter.payments.acceptedMethods.step1",
+              "helpCenter.payments.acceptedMethods.step2",
+              "helpCenter.payments.acceptedMethods.step3"
+            ],
+            "tag": null
+          },
+          {
+            "title": "helpCenter.payments.requestRefund.title",
+            "to": "/help/payments/refunds",
+            "content": [
+              "helpCenter.payments.requestRefund.step1",
+              "helpCenter.payments.requestRefund.step2",
+              "helpCenter.payments.requestRefund.step3",
+              "helpCenter.payments.requestRefund.step4"
+            ],
+            "tag": "Popular"
+          }
+        ]
+      },
+      {
+        "category": "Services",
+        "items": [
+          {
+            "title": "helpCenter.services.postService.title",
+            "to": "/help/services/post",
+            "content": [
+              "helpCenter.services.postService.step1",
+              "helpCenter.services.postService.step2",
+              "helpCenter.services.postService.step3",
+              "helpCenter.services.postService.step4"
+            ],
+            "tag": null
+          },
+          {
+            "title": "helpCenter.services.searchHire.title",
+            "to": "/help/services/find-hire",
+            "content": [
+              "helpCenter.services.searchHire.step1",
+              "helpCenter.services.searchHire.step2",
+              "helpCenter.services.searchHire.step3"
+            ],
+            "tag": null
+          }
+        ]
+      }
+    ],
+    "account": {
+      "createAccount": {
+        "title": "¿Cómo creo una cuenta?",
+        "step1": "Haz clic en 'Registrarse' en la esquina superior derecha.",
+        "step2": "Introduce tu correo electrónico y una contraseña segura.",
+        "step3": "Confirma tu correo a través del enlace que te enviamos.",
+        "step4": "¡Listo! Ya puedes iniciar sesión."
+      },
+      "forgotPassword": {
+        "title": "¿Olvidaste tu contraseña?",
+        "step1": "Ve a la página de inicio de sesión.",
+        "step2": "Haz clic en '¿Olvidaste tu contraseña?'.",
+        "step3": "Introduce tu correo electrónico registrado.",
+        "step4": "Revisa tu bandeja de entrada para restablecer tu contraseña."
+      }
+    },
+    "payments": {
+      "acceptedMethods": {
+        "title": "Métodos de pago aceptados",
+        "step1": "Tarjetas de crédito o débito.",
+        "step2": "PayPal.",
+        "step3": "Transferencia bancaria (solo empresas)."
+      },
+      "requestRefund": {
+        "title": "¿Cómo solicito un reembolso?",
+        "step1": "Ve a tu historial de pagos.",
+        "step2": "Selecciona la transacción que deseas reembolsar.",
+        "step3": "Haz clic en 'Solicitar reembolso'.",
+        "step4": "El proceso puede tardar entre 3 y 5 días hábiles."
+      }
+    },
+    "services": {
+      "postService": {
+        "title": "Cómo publicar un servicio",
+        "step1": "Inicia sesión en tu cuenta.",
+        "step2": "Haz clic en 'Publicar un servicio'.",
+        "step3": "Rellena los datos requeridos.",
+        "step4": "Guarda y publica."
+      },
+      "searchHire": {
+        "title": "Buscar y contratar",
+        "step1": "Utiliza la barra de búsqueda.",
+        "step2": "Filtra por categoría o ubicación.",
+        "step3": "Revisa las valoraciones antes de contratar."
+      }
+    },
+    "stillNeedHelp": "¿Aún necesitas ayuda?",
+    "contactSupport": "Contactar Soporte"
+  }
+} 

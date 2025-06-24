@@ -17,6 +17,9 @@ import ForgotPassword from "./pages/ForgotPassword.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
 import HelpCenterPage from "./pages/HelpCenterPage.jsx";
 import OrdersPage from "./pages/NotificationPage.jsx";
+import TermsPage from "./pages/TermsPage.jsx";
+import ReviewPage from "./pages/ReviewPage.jsx";
+
 
 function SpinnerPage() {
   return (
@@ -27,31 +30,31 @@ function SpinnerPage() {
 }
 
 function App() {
-    
   return (
     <>
-    
-    <ErrorBoundary>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/users/register" element={<RegisterPage />} />
-        <Route path="/validacion" element={<Validacion />} />
-        <Route path="/freelancers" element={<Freelancer />} />
-        <Route path="/services" element={<ServicesPage />} />
-        <Route path="/services/create" element={<CreateServicePage />} />
-        <Route path="/users/profile/:name" element={<ProfilePage />} />
-        <Route path="/edit-profile" element={<EditProfilePage />} /> {/* ✅ RUTA NUEVA */}
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/help" element={<HelpCenterPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-        <Route path="/notifications/contacts" element={<OrdersPage />} />
-
-      </Routes>
-    </ErrorBoundary>
+      <ErrorBoundary>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/users/register" element={<RegisterPage />} />
+          <Route path="/validacion" element={<Validacion />} />
+          <Route path="/freelancers" element={<Freelancer />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/services/create" element={<CreateServicePage />} />
+          <Route path="/users/profile/:name" element={<ProfilePage />} />
+          <Route path="/edit-profile" element={<EditProfilePage />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/help" element={<HelpCenterPage />} />
+          <Route path="/notifications/contacts" element={<OrdersPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/review/:service_id" element={<ReviewPage />} /> 
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </ErrorBoundary>
     </>
   );
 }
 
 export default App;
+

@@ -7,10 +7,12 @@ import { FreelancerModal } from "../components/FreelancersList/FreelancerModal.j
 import { FreelancerPagination } from "../components/FreelancersList/FreelancerPagination.jsx";
 import Footer from "../components/layout/Footer.jsx";
 import { freelancerService } from "../services/getAllFreelancersService.js";
+import { useTranslation } from "react-i18next";
 
 const ITEMS_PER_PAGE = 6;
 
 const FreelancerPage = () => {
+	const { t } = useTranslation();
 	// Estados para filtros centralizados
 	const [filters, setFilters] = useState({
 		search: "",
@@ -136,14 +138,14 @@ const FreelancerPage = () => {
 			<div className="min-h-screen bg-gray-950 flex items-center justify-center">
 				<div className="text-center">
 					<h2 className="text-2xl font-bold text-white mb-4">
-						Oops! Something went wrong
+						{t('freelancerPage.errorTitle')}
 					</h2>
 					<p className="text-gray-400 mb-6">{error}</p>
 					<button
 						onClick={() => window.location.reload()}
 						className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-200"
 					>
-						Try again
+						{t('freelancerPage.tryAgain')}
 					</button>
 				</div>
 			</div>
@@ -176,9 +178,9 @@ const FreelancerPage = () => {
 				<Header />
 
 				<SimpleHeroSection
-					title="Find Amazing"
-					highlightText="Freelancers"
-					subtitle="Connect with skilled professionals ready to bring your vision to life. Browse through talented freelancers and find the perfect match for your project."
+					title={t('freelancerPage.heroTitle')}
+					highlightText={t('freelancerPage.heroHighlight')}
+					subtitle={t('freelancerPage.heroSubtitle')}
 					showStats={false}
 				/>
 
@@ -196,7 +198,7 @@ const FreelancerPage = () => {
 						{/* Estadísticas de resultados */}
 						{paginationInfo && (
 							<div className="text-gray-400 text-sm mb-4">
-								Showing {freelancers.length} of {paginationInfo.totalResults} freelancers
+								{t('freelancerPage.showingResults', { count: freelancers.length, total: paginationInfo.totalResults })}
 							</div>
 						)}
 
@@ -219,13 +221,13 @@ const FreelancerPage = () => {
 						) : freelancers.length === 0 ? (
 							<div className="text-center py-12">
 								<div className="text-gray-400 text-lg mb-4">
-									No freelancers found matching your criteria
+									{t('freelancerPage.noResults')}
 								</div>
 								<button
 									onClick={clearFilters}
 									className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-200"
 								>
-									Clear Filters
+									{t('freelancerPage.clearFilters')}
 								</button>
 							</div>
 						) : (

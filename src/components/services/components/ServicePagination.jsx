@@ -1,8 +1,11 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 // Componente de paginación para servicios
 
 const ServicesPagination = ({ currentPage, totalPages, onPageChange }) => {
+	const { t } = useTranslation();
+	
 	if (totalPages <= 1) return null;
 
 	const handlePreviousPage = () => {
@@ -48,10 +51,10 @@ const ServicesPagination = ({ currentPage, totalPages, onPageChange }) => {
 				onClick={handlePreviousPage}
 				disabled={currentPage === 1}
 				className="flex items-center gap-2 px-4 py-2 bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-xl text-gray-300 hover:text-white hover:bg-gray-800/80 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-900/80 disabled:hover:text-gray-300"
-				aria-label="Previous page"
+				aria-label={t('servicesPage.pagination.previousAria')}
 			>
 				<span>←</span>
-				<span className="hidden sm:inline">Previous</span>
+				<span className="hidden sm:inline">{t('servicesPage.pagination.previous')}</span>
 			</button>
 
 			{/* Números de página */}
@@ -83,7 +86,7 @@ const ServicesPagination = ({ currentPage, totalPages, onPageChange }) => {
 								? "bg-gradient-to-r from-purple-600 to-blue-600 border-purple-500/50 text-white shadow-lg hover:shadow-purple-500/25"
 								: "bg-gray-900/80 border-gray-800/50 text-gray-300 hover:text-white hover:bg-gray-800/80"
 						}`}
-						aria-label={`Go to page ${page}`}
+						aria-label={t('servicesPage.pagination.goToPage', { page })}
 						aria-current={page === currentPage ? "page" : undefined}
 					>
 						{page}
@@ -113,15 +116,15 @@ const ServicesPagination = ({ currentPage, totalPages, onPageChange }) => {
 				onClick={handleNextPage}
 				disabled={currentPage === totalPages}
 				className="flex items-center gap-2 px-4 py-2 bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-xl text-gray-300 hover:text-white hover:bg-gray-800/80 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-900/80 disabled:hover:text-gray-300"
-				aria-label="Next page"
+				aria-label={t('servicesPage.pagination.nextAria')}
 			>
-				<span className="hidden sm:inline">Next</span>
+				<span className="hidden sm:inline">{t('servicesPage.pagination.next')}</span>
 				<span>→</span>
 			</button>
 
 			{/* Info de página */}
 			<div className="ml-4 text-sm text-gray-400">
-				Page {currentPage} of {totalPages}
+				{t('servicesPage.pagination.pageInfo', { currentPage, totalPages })}
 			</div>
 		</nav>
 	);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Header from "../components/layout/Header.jsx";
@@ -19,10 +19,12 @@ import {
   FiDollarSign,
   FiClock,
 } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 const ProfilePage = () => {
   const { name } = useParams();
   const { userLogged } = useContext(AuthContext);
+  const { t } = useTranslation();
 
   const [loadingMore, setLoadingMore] = useState(false);
   const [profileData, setProfileData] = useState(null);
@@ -30,7 +32,8 @@ const ProfilePage = () => {
   const [error, setError] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
-  const [visibleServicesCount, setVisibleServicesCount] = useState(6);
+  // const [visibleServicesCount, setVisibleServicesCount] = useState(6);
+  const servicesContainerRef = useRef();
 
   // Verificar si es el perfil del usuario actual
   const isOwnProfile = React.useMemo(
@@ -51,7 +54,7 @@ const ProfilePage = () => {
       if (response.success) {
         setProfileData(response.data);
       } else {
-        setError("Profile not found");
+        setError(t('profile.notFound'));
       }
     } catch (err) {
       setError("Error loading profile");
@@ -60,33 +63,32 @@ const ProfilePage = () => {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    if (!profileData || !profileData.services) return;
-    
+  // useEffect(() => {
+  //   if (!profileData || !profileData.services) return;
 
-    const handleScroll = () => {
-      if (
-        window.innerHeight + window.scrollY >=
-          document.documentElement.scrollHeight - 100 &&
-        visibleServicesCount < profileData.services.length &&
-        !loadingMore
-      ) {
-        setLoadingMore(true);
-        setTimeout(() => {
-          setVisibleServicesCount((prev) => {
-            const newCount = prev + 6;
-            return newCount > profileData.services.length
-              ? profileData.services.length
-              : newCount;
-          });
-          setLoadingMore(false);
-        }, 1000);
-      }
-    };
+  //   const handleScroll = () => {
+  //     if (
+  //       window.innerHeight + window.scrollY >=
+  //         document.documentElement.scrollHeight - 100 &&
+  //       visibleServicesCount < profileData.services.length &&
+  //       !loadingMore
+  //     ) {
+  //       setLoadingMore(true);
+  //       setTimeout(() => {
+  //         setVisibleServicesCount((prev) => {
+  //           const newCount = prev + 6;
+  //           return newCount > profileData.services.length
+  //             ? profileData.services.length
+  //             : newCount;
+  //         });
+  //         setLoadingMore(false);
+  //       }, 1000);
+  //     }
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [profileData, visibleServicesCount, loadingMore]);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [profileData, visibleServicesCount, loadingMore]);
 
   // Handler para abrir modal de edición de servicio
   const handleEditService = (service) => {
@@ -121,14 +123,14 @@ const ProfilePage = () => {
           <div className="flex items-center justify-center min-h-[60vh]">
             <div className="text-center">
               <h2 className="text-2xl font-bold text-white mb-4">
-                Profile Not Found
+                {t('profile.notFoundTitle')}
               </h2>
               <p className="text-gray-400 mb-6">{error}</p>
               <button
                 onClick={() => window.history.back()}
                 className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-200"
               >
-                Go Back
+                {t('profile.goBack')}
               </button>
             </div>
           </div>
@@ -204,14 +206,13 @@ const ProfilePage = () => {
                         {profileData?.name} {profileData?.lastName}
                       </h1>
                       {isOwnProfile && (
-  <button
-    className="p-2 text-gray-400 hover:text-white transition-colors"
-    onClick={() => navigate("/edit-profile")}
-  >
-    <FiEdit className="w-5 h-5" />
-  </button>
-)}
-
+                        <button
+                          className="p-2 text-gray-400 hover:text-white transition-colors"
+                          onClick={() => navigate("/edit-profile")}
+                        >
+                          <FiEdit className="w-5 h-5" />
+                        </button>
+                      )}
                     </div>
 
                     <div className="space-y-3 mb-6">
@@ -237,8 +238,7 @@ const ProfilePage = () => {
                       <div className="flex items-center gap-2 justify-center md:justify-start text-gray-400">
                         <FiCalendar className="w-4 h-4" />
                         <span>
-                          Member since{" "}
-                          {new Date(profileData?.created_at).getFullYear()}
+                          {t('profile.memberSince', { year: new Date(profileData?.created_at).getFullYear() })}
                         </span>
                       </div>
 
@@ -248,7 +248,7 @@ const ProfilePage = () => {
                           <span className="text-white font-medium">
                             {Number(profileData.average_rating).toFixed(1)}
                           </span>
-                          <span className="text-gray-400">rating</span>
+                          <span className="text-gray-400">{t('profile.rating')}</span>
                         </div>
                       )}
                     </div>
@@ -267,7 +267,7 @@ const ProfilePage = () => {
                         className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors"
                       >
                         <FiGlobe className="w-4 h-4" />
-                        View Portfolio
+                        {t('profile.viewPortfolio')}
                       </a>
                     )}
                   </div>
@@ -276,64 +276,62 @@ const ProfilePage = () => {
 
               {/* Services Section */}
               {profileData?.services && profileData.services.length > 0 && (
-                <div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 p-8">
+                <div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 p-8 max-h-[500px] overflow-y-auto">
                   <h2 className="text-2xl font-bold text-white mb-6">
-                    {isOwnProfile ? "My Services" : "Services"}
+                    {isOwnProfile ? t('profile.myServices') : t('profile.services')}
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {profileData?.services
-                      ?.slice(0, visibleServicesCount)
-                      .map((service, index) => (
-                        <div
-                          key={service.service_id || index}
-                          className={`group bg-gray-800/50 rounded-xl p-6 border border-gray-700/30 transition-all duration-300 ${
-                            isOwnProfile
-                              ? "hover:bg-gray-700/50 hover:border-purple-500/50 cursor-pointer hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/20"
-                              : ""
-                          }`}
-                          onClick={
-                            isOwnProfile
-                              ? () => handleEditService(service)
-                              : undefined
-                          }
-                        >
-                          <div className="flex justify-between items-start mb-3">
-                            <h3 className="text-lg font-semibold text-white flex-1">
-                              {service.title}
-                            </h3>
-                            {isOwnProfile && (
-                              <FiEdit className="w-5 h-5 text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity ml-2" />
-                            )}
+                    {profileData?.services?.map((service, index) => (
+                      <div
+                        key={service.service_id || index}
+                        className={`group bg-gray-800/50 rounded-xl p-6 border border-gray-700/30 transition-all duration-300 ${
+                          isOwnProfile
+                            ? "hover:bg-gray-700/50 hover:border-purple-500/50 cursor-pointer hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/20"
+                            : ""
+                        }`}
+                        onClick={
+                          isOwnProfile
+                            ? () => handleEditService(service)
+                            : undefined
+                        }
+                      >
+                        <div className="flex justify-between items-start mb-3">
+                          <h3 className="text-lg font-semibold text-white flex-1">
+                            {service.title}
+                          </h3>
+                          {isOwnProfile && (
+                            <FiEdit className="w-5 h-5 text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity ml-2" />
+                          )}
+                        </div>
+
+                        <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+                          {service.description}
+                        </p>
+
+                        <div className="space-y-2 mb-4">
+                          <div className="flex items-center gap-2 text-sm text-gray-400">
+                            <FiDollarSign className="w-4 h-4 text-purple-400" />
+                            <span className="text-purple-400 font-bold">
+                              ${service.price}
+                            </span>
                           </div>
-
-                          <p className="text-gray-400 text-sm mb-4 line-clamp-3">
-                            {service.description}
-                          </p>
-
-                          <div className="space-y-2 mb-4">
-                            <div className="flex items-center gap-2 text-sm text-gray-400">
-                              <FiDollarSign className="w-4 h-4 text-purple-400" />
-                              <span className="text-purple-400 font-bold">
-                                ${service.price}
-                              </span>
-                            </div>
 
                             {service.delivery_time_days && (
                               <div className="flex items-center gap-2 text-sm text-gray-400">
                                 <FiClock className="w-4 h-4 text-blue-400" />
                                 <span>
-                                  {service.delivery_time_days} days delivery
+                                  {t('profile.daysDelivery', { days: service.delivery_time_days })}
                                 </span>
                               </div>
                             )}
 
-                            {service.place && (
-                              <div className="flex items-center gap-2 text-sm text-gray-400">
-                                <FiMapPin className="w-4 h-4 text-green-400" />
-                                <span>{service.place}</span>
-                              </div>
-                            )}
-                          </div>
+                          {service.place && (
+                            <div className="flex items-center gap-2 text-sm text-gray-400">
+                              <FiMapPin className="w-4 h-4 text-green-400" />
+                              <span>{service.place}</span>
+                            </div>
+                          )}
+                        </div>
 
                           <div className="flex justify-between items-center">
                             <span className="text-xs text-gray-500 bg-gray-700/50 px-2 py-1 rounded">
@@ -341,18 +339,13 @@ const ProfilePage = () => {
                             </span>
                             {isOwnProfile && (
                               <span className="text-xs text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                                Click to edit
+                                {t('profile.clickToEdit')}
                               </span>
                             )}
                           </div>
                         </div>
                       ))}
                   </div>
-                  {loadingMore && (
-                    <div className="mt-6">
-                      <Spinner />
-                    </div>
-                  )}
                 </div>
               )}
 
@@ -360,11 +353,57 @@ const ProfilePage = () => {
               {profileData?.experience && (
                 <div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 p-8">
                   <h2 className="text-2xl font-bold text-white mb-6">
-                    Experience
+                    {t('profile.experience')}
                   </h2>
                   <p className="text-gray-300 leading-relaxed">
                     {profileData.experience}
                   </p>
+                </div>
+              )}
+              {profileData?.reviews && profileData.reviews.length > 0 ? (
+                <div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 p-8 max-h-[400px] overflow-y-auto mt-8">
+                  <h2 className="text-2xl font-bold text-white mb-6">
+                    Reviews
+                  </h2>
+                  <div className="space-y-6">
+                    {profileData.reviews.map((review, index) => (
+                      <div
+                        key={review.id || index}
+                        className="bg-gray-800/50 rounded-xl p-4 border border-gray-700/30"
+                      >
+                        <div className="flex justify-between items-center mb-2">
+                          <h3 className="text-lg font-semibold text-white">
+                            {review.reviewer_name|| "Anonymous"}
+                          </h3>
+                          <div className="flex items-center gap-1 text-yellow-400">
+                            {[...Array(5)].map((_, i) => (
+                              <FiStar
+                                key={i}
+                                className={
+                                  i < review.rating
+                                    ? "opacity-100"
+                                    : "opacity-30"
+                                }
+                              />
+                            ))}
+                          </div>
+                        </div>
+                        <p className="text-gray-400 text-sm">
+                          {review.comment}
+                        </p>
+                        <p className="text-gray-500 text-xs mt-2">
+                          {new Date(review.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 p-8 max-h-[200px] overflow-y-auto mt-8 text-gray-400 text-center">
+                  <h2 className="text-2xl font-bold text-white mb-6">
+                    Reviews
+                  </h2>
+                  <p>No reviews yet.</p>
                 </div>
               )}
             </div>

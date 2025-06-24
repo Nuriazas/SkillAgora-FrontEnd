@@ -8,12 +8,19 @@ import {
   FiLogOut,
 } from "react-icons/fi";
 // import DefaultAvatar from "../assets/defaultAvatar.jpeg";
+<<<<<<< HEAD:src/components/shared/navigation/UserDropDown.jsx
 import UseAvatar from "../../UseAvatar.jsx";
+=======
+import UseAvatar from "./UseAvatar.jsx";
+import { useTranslation } from "react-i18next";
+>>>>>>> 175a05442e0d57b481b0778e9e16bbdcd12d85bd:src/components/UserDropDown.jsx
 
 /**
  * Dropdown del usuario logueado con opciones de perfil y logout
  */
 const UserDropdown = ({ user, isOpen, onToggle, onLogout, onNavigate }) => {
+  const { t } = useTranslation();
+
   // Cerrar dropdown al hacer click fuera
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -60,7 +67,7 @@ const UserDropdown = ({ user, isOpen, onToggle, onLogout, onNavigate }) => {
       >
         <UseAvatar
           src={user.avatar || DefaultAvatar}
-          alt={`${displayName}'s profile picture`}
+          alt={t('avatar.profilePicture', { name: displayName })}
           className="w-8 h-8 rounded-full border-2 border-purple-500/60 ring-2 ring-purple-500/20 group-hover:ring-purple-500/40 transition-all duration-200"
           
         />
@@ -86,7 +93,7 @@ const UserDropdown = ({ user, isOpen, onToggle, onLogout, onNavigate }) => {
             <div className="flex items-center space-x-3">
               <UseAvatar
                 src={user.avatar || DefaultAvatar}
-                alt={displayName}
+                alt={t('avatar.profilePicture', { name: displayName })}
                 className="w-10 h-10 rounded-full border-2 border-purple-500/60"
                 
               />
@@ -106,28 +113,28 @@ const UserDropdown = ({ user, isOpen, onToggle, onLogout, onNavigate }) => {
               className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 hover:text-white transition-colors group"
             >
               <FiUser className="w-4 h-4 mr-3 text-gray-400 group-hover:text-purple-400" />
-              My Profile
+              {t('userDropdown.myProfile')}
             </button>
             <button
               onClick={handleServicesClick}
               className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 hover:text-white transition-colors group"
             >
               <FiBriefcase className="w-4 h-4 mr-3 text-gray-400 group-hover:text-blue-400" />
-              My Services
+              {t('userDropdown.myServices')}
             </button>
             <button
               onClick={handleOrdersClick}
               className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 hover:text-white transition-colors group"
             >
               <FiShoppingBag className="w-4 h-4 mr-3 text-gray-400 group-hover:text-green-400" />
-              Orders
+              {t('userDropdown.orders')}
             </button>
             <button
               onClick={handleSettingsClick}
               className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 hover:text-white transition-colors group"
             >
               <FiSettings className="w-4 h-4 mr-3 text-gray-400 group-hover:text-gray-300" />
-              Settings
+              {t('userDropdown.settings')}
             </button>
           </div>
 
@@ -138,7 +145,7 @@ const UserDropdown = ({ user, isOpen, onToggle, onLogout, onNavigate }) => {
             className="flex items-center w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-900/20 hover:text-red-300 transition-colors group"
           >
             <FiLogOut className="w-4 h-4 mr-3 text-red-400 group-hover:text-red-300" />
-            Sign Out
+            {t('userDropdown.signOut')}
           </button>
         </div>
       )}

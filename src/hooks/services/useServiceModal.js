@@ -5,6 +5,7 @@ import { servicesApi } from "../../services/api/api.js";
 import { getServiceById } from "../../services/services/getServiceByIdService.js";
 
 // Hook para manejar toda la lógica del modal de servicio
+// Todavia por modularizar
 
 export const useServiceModalLogic = (service, onClose) => {
 	// Estados del modal

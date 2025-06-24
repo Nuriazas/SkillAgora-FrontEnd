@@ -64,14 +64,14 @@ const ServicesPage = () => {
 			<div className="min-h-screen bg-gray-950 flex items-center justify-center">
 				<div className="text-center">
 					<h2 className="text-2xl font-bold text-white mb-4">
-						Oops! Something went wrong
+						{t('servicesPage.errorTitle')}
 					</h2>
 					<p className="text-gray-400 mb-6">{error}</p>
 					<button
 						onClick={loadInitialData}
 						className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-200"
 					>
-						Try again
+						{t('servicesPage.tryAgain')}
 					</button>
 				</div>
 			</div>
@@ -104,9 +104,9 @@ const ServicesPage = () => {
 				<Header />
 
 				<SimpleHeroSection
-					title="Browse All"
-					highlightText="Services"
-					subtitle="Discover amazing services from talented freelancers around the world. Find the perfect solution for your project needs."
+					title={t('servicesPage.heroTitle')}
+					highlightText={t('servicesPage.heroHighlight')}
+					subtitle={t('servicesPage.heroSubtitle')}
 					showStats={false}
 				/>
 
@@ -122,7 +122,11 @@ const ServicesPage = () => {
 				{!loading && (	// Si no está cargando, muestra la información de resultados
 					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
 						<p className="text-gray-400 text-sm">
-							Showing {((currentPage - 1) * ITEMS_PER_PAGE) + 1} to {Math.min(currentPage * ITEMS_PER_PAGE, filteredServices.length)} of {filteredServices.length} services
+							{t('servicesPage.showingResults', {
+								from: ((currentPage - 1) * ITEMS_PER_PAGE) + 1,
+								to: Math.min(currentPage * ITEMS_PER_PAGE, filteredServices.length),
+								total: filteredServices.length
+							})}
 						</p>
 					</div>
 				)}

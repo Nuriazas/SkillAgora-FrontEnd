@@ -1,5 +1,6 @@
 import React from 'react';
 import { FiSave, FiLoader } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 import FormField from './FormField';
 import CategorySelect from './CategorySelect';
 
@@ -12,32 +13,34 @@ const ServiceEditForm = ({
 	onChange, 
 	onClose 
 }) => {
+	const { t } = useTranslation();
+
 	return (
 		<form onSubmit={onSubmit} className="p-6 space-y-6">
 			<FormField
-				label="Service Title"
+				label={t('serviceEditModal.serviceTitle')}
 				name="title"
 				type="text"
 				value={formData.title}
 				onChange={onChange}
 				required
-				placeholder="Enter service title"
+				placeholder={t('serviceEditModal.serviceTitlePlaceholder')}
 			/>
 
 			<FormField
-				label="Description"
+				label={t('serviceEditModal.description')}
 				name="description"
 				type="textarea"
 				value={formData.description}
 				onChange={onChange}
 				required
 				rows={4}
-				placeholder="Describe your service"
+				placeholder={t('serviceEditModal.descriptionPlaceholder')}
 			/>
 
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<FormField
-					label="Price ($)"
+					label={t('serviceEditModal.price')}
 					name="price"
 					type="number"
 					value={formData.price}
@@ -45,27 +48,27 @@ const ServiceEditForm = ({
 					required
 					min="0"
 					step="0.01"
-					placeholder="0.00"
+					placeholder={t('serviceEditModal.pricePlaceholder')}
 				/>
 
 				<FormField
-					label="Delivery Time (days)"
+					label={t('serviceEditModal.deliveryTime')}
 					name="delivery_time_days"
 					type="number"
 					value={formData.delivery_time_days}
 					onChange={onChange}
 					min="1"
-					placeholder="3"
+					placeholder={t('serviceEditModal.deliveryTimePlaceholder')}
 				/>
 			</div>
 
 			<FormField
-				label="Location"
+				label={t('serviceEditModal.location')}
 				name="place"
 				type="text"
 				value={formData.place}
 				onChange={onChange}
-				placeholder="Remote, City, etc."
+				placeholder={t('serviceEditModal.locationPlaceholder')}
 			/>
 
 			<CategorySelect
@@ -85,7 +88,7 @@ const ServiceEditForm = ({
 					className="px-6 py-3 bg-gray-700/80 hover:bg-gray-600/80 text-white rounded-xl transition-all duration-200 font-medium border border-gray-600/50"
 					disabled={loading}
 				>
-					Cancel
+					{t('serviceEditModal.cancel')}
 				</button>
 				<button
 					type="submit"
@@ -95,12 +98,12 @@ const ServiceEditForm = ({
 					{loading ? (
 						<>
 							<FiLoader className="w-4 h-4 animate-spin" />
-							Updating...
+							{t('serviceEditModal.updating')}
 						</>
 					) : (
 						<>
 							<FiSave className="w-4 h-4" />
-							Update Service
+							{t('serviceEditModal.updateService')}
 						</>
 					)}
 				</button>

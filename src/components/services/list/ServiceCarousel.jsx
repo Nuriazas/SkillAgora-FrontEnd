@@ -1,5 +1,6 @@
 import React from "react";
 import { FiChevronLeft, FiChevronRight, FiStar, FiClock } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 // Componente ServiceCarousel para mostrar un carousel de servicios
 
@@ -12,9 +13,10 @@ const ServiceCarousel = ({	// Props del componente
 	onGoTo,
 	hasMultiple,
 	onServiceClick,
-}) => {	
-	const limitedServices = services.slice(0, 5);	// Coger los primeros 5 servicios
-	const isCurrentIndexValid = currentIndex < limitedServices.length;	// validar que el indice actual este en el rango de servicios
+}) => {
+	const { t } = useTranslation();
+	const limitedServices = services.slice(0, 5);
+	const isCurrentIndexValid = currentIndex < limitedServices.length;
 	const displayService = isCurrentIndexValid
 		? limitedServices[currentIndex]	// Si el índice actual es válido, mostrar el servicio correspondiente
 		: limitedServices[0];	// Si no, mostrar el primer servicio de la lista
@@ -23,9 +25,9 @@ const ServiceCarousel = ({	// Props del componente
 	if (!displayService) {
 		return (
 			<div className="bg-white rounded-2xl shadow-2xl p-8 relative z-10 text-center">
-				<div className="text-gray-500 mb-4">No hay servicios disponibles</div>
+				<div className="text-gray-500 mb-4">{t('serviceCarousel.noServices')}</div>
 				<button className="text-purple-600 hover:text-purple-700 font-semibold">
-					Recargar servicios
+					{t('serviceCarousel.reload')}
 				</button>
 			</div>
 		);
@@ -40,14 +42,14 @@ const ServiceCarousel = ({	// Props del componente
 					<button
 						onClick={onPrev}
 						className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200 z-20"
-						aria-label="Servicio anterior"
+						aria-label={t('serviceCarousel.prevService')}
 					>
 						<FiChevronLeft className="w-5 h-5 text-gray-600" />
 					</button>
 					<button
 						onClick={onNext}
 						className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200 z-20"
-						aria-label="Siguiente servicio"
+						aria-label={t('serviceCarousel.nextService')}
 					>
 						<FiChevronRight className="w-5 h-5 text-gray-600" />
 					</button>
@@ -59,12 +61,12 @@ const ServiceCarousel = ({	// Props del componente
 				<div className="flex items-center space-x-3">
 					<div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
 						<span className="text-white font-bold text-sm">
-							{displayService.user_name?.charAt(0) || "S"}
+							{displayService.user_name?.charAt(0) || t('serviceCarousel.defaultUserInitial')}
 						</span>
 					</div>
 					<div>
 						<div className="font-semibold text-gray-900">
-							{displayService.user_name}
+							{displayService.user_name || t('serviceCarousel.anonymousUser')}
 						</div>
 						<div className="text-sm text-gray-500">
 							{displayService.category_name}
@@ -95,12 +97,12 @@ const ServiceCarousel = ({	// Props del componente
 					<div className="flex items-center space-x-2 text-sm text-gray-500">
 						<FiClock className="w-4 h-4" />
 						<span>
-							Entrega en {displayService.delivery_time_days || 3} días
+							{t('serviceCarousel.delivery', { days: displayService.delivery_time_days || 3 })}
 						</span>
 					</div>
 					<div className="flex items-center space-x-2 text-sm text-gray-500">
 						<span className="w-4 h-4 flex items-center justify-center">📍</span>
-						<span>{displayService.place || "Remoto"}</span>
+						<span>{displayService.place || t('serviceCarousel.remote')}</span>
 					</div>
 				</div>
 			</div>
@@ -109,7 +111,7 @@ const ServiceCarousel = ({	// Props del componente
 			<div className="bg-gray-50 rounded-xl p-4 mb-6">
 				<div className="flex justify-between items-center">
 					<span className="font-semibold text-gray-900">
-						Precio del servicio
+						{t('serviceCarousel.priceLabel')}
 					</span>
 					<span className="text-2xl font-bold text-purple-600">
 						${displayService.price}
@@ -122,7 +124,7 @@ const ServiceCarousel = ({	// Props del componente
 				onClick={() => onServiceClick(displayService)}
 				className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-xl font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-200"
 			>
-				Ver Servicio Completo
+				{t('serviceCarousel.viewFullService')}
 			</button>
 
 			{/* Indicadores */}
@@ -135,7 +137,7 @@ const ServiceCarousel = ({	// Props del componente
 							className={`w-2 h-2 rounded-full transition-colors duration-200 ${
 								index === currentIndex ? "bg-purple-600" : "bg-gray-300"
 							}`}
-							aria-label={`Ir al servicio ${index + 1}`}
+							aria-label={t('serviceCarousel.goToService', { n: index + 1 })}
 						/>
 					))}
 				</div>

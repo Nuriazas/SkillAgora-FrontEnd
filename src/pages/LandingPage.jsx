@@ -8,8 +8,10 @@ import Footer from "../components/layout/Footer.jsx";
 import { servicesApi } from "../services/api/api";
 import useServiceFilters from "../hooks/services/useServiceFilters.js";
 import { useFreelancersList } from "../hooks/freelancers/useFreelancersList.js";
+import { useTranslation } from "react-i18next";
 
 const LandingPage = () => {
+	const { t } = useTranslation();
 	const [categories, setCategories] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -55,14 +57,14 @@ const LandingPage = () => {
 			<div className="min-h-screen bg-gray-950 flex items-center justify-center">
 				<div className="text-center">
 					<h2 className="text-2xl font-bold text-white mb-4">
-						Oops! Algo salió mal
+						{t('landingPage.errorTitle')}
 					</h2>
 					<p className="text-gray-400 mb-6">{error}</p>
 					<button
 						onClick={loadInitialData}
 						className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-200"
 					>
-						Intentar de nuevo
+						{t('landingPage.tryAgain')}
 					</button>
 				</div>
 			</div>

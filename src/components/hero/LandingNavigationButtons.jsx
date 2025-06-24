@@ -1,29 +1,41 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // componente para los botones de navegación en la página de inicio
 
 const LandingNavigationButtons = () => {
+	const { t } = useTranslation();
 	const navigate = useNavigate();
 
 	const navigationButtons = [
 		{
-			label: "Browse Services",
+			label: t('landingNav.browseServices'),
 			path: "/services",
 			variant: "primary",
-			ariaLabel: "Browse available services",
+			ariaLabel: t('landingNav.browseServicesAria'),
 		},
 		{
-			label: "Find Freelancers",
+			label: t('landingNav.findFreelancers'),
 			path: "/freelancers",
 			variant: "secondary",
-			ariaLabel: "Find freelance professionals",
+			ariaLabel: t('landingNav.findFreelancersAria'),
 		},
 		{
+<<<<<<< HEAD:src/components/hero/LandingNavigationButtons.jsx
 			label: "Contact Us",
+=======
+			label: t('landingNav.postJob'),
+			path: "/jobs/create",
+			variant: "secondary",
+			ariaLabel: t('landingNav.postJobAria'),
+		},
+		{
+			label: t('landingNav.contactUs'),
+>>>>>>> 175a05442e0d57b481b0778e9e16bbdcd12d85bd:src/pages/LandingNavigationButton.jsx
 			path: "/contact",
 			variant: "secondary",
-			ariaLabel: "Contact support",
+			ariaLabel: t('landingNav.contactUsAria'),
 		},
 	];
 	// Función para manejar la navegación al hacer clic en un botón

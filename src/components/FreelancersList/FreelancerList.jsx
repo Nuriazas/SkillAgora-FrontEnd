@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FreelancerCard } from "./FreelancerCard.jsx";
 import { FreelancerModal } from "./FreelancerModal.jsx";
+import { useTranslation } from "react-i18next";
 
 /**
  * Lista de freelancers con skeleton loader y modal de detalles
@@ -11,6 +12,7 @@ const FreelancersList = ({ freelancers, loading, limit = null, showViewAll = fal
 	const [selectedFreelancer, setSelectedFreelancer] = useState(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();
+	const { t } = useTranslation();
 
 	// Handler para abrir modal de freelancer
 	const handleFreelancerClick = (freelancer) => {
@@ -38,7 +40,7 @@ const FreelancersList = ({ freelancers, loading, limit = null, showViewAll = fal
 		return (
 			<section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
 				<h3 className="text-2xl font-bold text-white mb-8">
-					Freelancers Destacados
+					{t('freelancerList.featured')}
 				</h3>
 				<div className={gridClasses}>
 					{Array.from({ length: skeletonCount }, (_, i) => (
@@ -70,10 +72,10 @@ const FreelancersList = ({ freelancers, loading, limit = null, showViewAll = fal
 		return (
 			<section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
 				<h3 className="text-2xl font-bold text-white mb-8">
-					Todos los Freelancers
+					{t('freelancerList.all')}
 				</h3>
 				<div className="text-center py-12">
-					<p className="text-gray-400">No se encontraron freelancers</p>
+					<p className="text-gray-400">{t('freelancerList.noResults')}</p>
 				</div>
 			</section>
 		);
@@ -82,7 +84,7 @@ const FreelancersList = ({ freelancers, loading, limit = null, showViewAll = fal
 	return (
 		<section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
 			<h3 className="text-2xl font-bold text-white mb-8">
-				{limit ? "Freelancers Destacados" : "Todos los Freelancers"}
+				{limit ? t('freelancerList.featured') : t('freelancerList.all')}
 			</h3>
 
 			{/* Grid de freelancers */}
@@ -102,7 +104,7 @@ const FreelancersList = ({ freelancers, loading, limit = null, showViewAll = fal
 						className="bg-gray-900/80 backdrop-blur-xl rounded-xl shadow-xl border border-gray-800/50 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 cursor-pointer hover:-translate-y-2 group overflow-hidden flex items-center justify-center min-h-[300px]"
 						role="button"
 						tabIndex={0}
-						aria-label="Ver todos los freelancers"
+						aria-label={t('freelancerList.viewAll')}
 						onKeyDown={(e) => {
 							if (e.key === "Enter" || e.key === " ") {
 								e.preventDefault();
@@ -115,10 +117,10 @@ const FreelancersList = ({ freelancers, loading, limit = null, showViewAll = fal
 								<span className="text-2xl">👥</span>
 							</div>
 							<h4 className="font-semibold text-white mb-2 group-hover:text-purple-300 transition-colors">
-								Ver Todos los Freelancers
+								{t('freelancerList.viewAll')}
 							</h4>
 							<p className="text-sm text-gray-400">
-								Descubre todos nuestros profesionales talentosos
+								{t('freelancerList.discover')}
 							</p>
 						</div>
 					</div>

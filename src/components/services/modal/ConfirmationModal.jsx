@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 // Modal para confirmar la contratación de un servicio
 const ConfirmationModal = ({	// Props del componente
@@ -8,14 +9,15 @@ const ConfirmationModal = ({	// Props del componente
 	onConfirm,
 	loading,
 }) => {
-	if (!isOpen) return null;	// Si el modal no está abierto, no renderizar nada
+	const { t } = useTranslation();
+	if (!isOpen) return null;
 
 	return (	// Renderiza el modal
 		<div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 z-[70]">
 			<div className="bg-gray-900/95 backdrop-blur-xl rounded-2xl max-w-md w-full border border-gray-800/50 shadow-2xl">
 				<div className="p-6 border-b border-gray-800/50">
 					<h3 className="text-xl font-semibold text-white text-center">
-						Confirmar Contratación
+						{t('confirmationModal.title')}
 					</h3>
 				</div>
 
@@ -25,7 +27,7 @@ const ConfirmationModal = ({	// Props del componente
 							<span className="text-2xl">🛒</span>
 						</div>
 						<p className="text-gray-300 mb-4">
-							¿Estás seguro de que quieres contratar este servicio?
+							{t('confirmationModal.question')}
 						</p>
 						<div className="bg-gray-800/50 rounded-xl p-4 mb-4">
 							<h4 className="font-semibold text-white mb-2">{service.title}</h4>
@@ -34,7 +36,7 @@ const ConfirmationModal = ({	// Props del componente
 							</div>
 						</div>
 						<p className="text-sm text-gray-400">
-							Se creará una orden de compra que podrás gestionar desde tu panel.
+							{t('confirmationModal.info')}
 						</p>
 					</div>
 
@@ -44,7 +46,7 @@ const ConfirmationModal = ({	// Props del componente
 							className="flex-1 px-6 py-3 bg-gray-700/80 hover:bg-gray-600/80 text-white rounded-xl transition-all duration-200 font-medium border border-gray-600/50"
 							disabled={loading}
 						>
-							Cancelar
+							{t('confirmationModal.cancel')}
 						</button>
 						<button
 							onClick={onConfirm}
@@ -54,10 +56,10 @@ const ConfirmationModal = ({	// Props del componente
 							{loading ? (
 								<>
 									<div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-									Contratando...
+									{t('confirmationModal.confirming')}
 								</>
 							) : (
-								"Confirmar Contratación"
+								t('confirmationModal.confirm')
 							)}
 						</button>
 					</div>

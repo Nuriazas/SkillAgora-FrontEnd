@@ -9,6 +9,8 @@ import {
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
+import PasswordInput from "../components/shared/UI/PasswordInput";
+import { useTranslation } from "react-i18next";
 
 const LoginPage = () => {
   const { setToken } = useContext(AuthContext);
@@ -18,6 +20,7 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +36,7 @@ const LoginPage = () => {
       setLoading(false);
       navigate("/");
     } catch (e) {
-      setError(e.message || "Error al iniciar sesión");
+      setError(e.message || t('login.error'));
       setLoading(false);
     }
   };
@@ -61,7 +64,7 @@ const LoginPage = () => {
           <section className="text-center space-y-1 bg-[#070714] rounded-3xl p-10">
             <header>
               <h2 className="bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent h-[40px] text-[25px] font-bold">
-                Sign in
+                {t('login.title')}
               </h2>
             </header>
 
@@ -71,19 +74,16 @@ const LoginPage = () => {
             >
               <input
                 type="email"
-                placeholder="Email"
+                placeholder={t('login.email')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full px-8 py-4 rounded-lg bg-[#1a1c2d] text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-300 text-[15px]"
               />
-              <input
-                type="password"
-                placeholder="Password"
+              <PasswordInput
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full px-8 py-4 rounded-lg bg-[#1a1c2d] text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-300 text-[15px]"
+                placeholder={t('login.password')}
               />
               <div className="flex justify-between items-center text-white text-[15px]">
                 <label className="flex items-center gap-1 select-none cursor-pointer">
@@ -91,13 +91,13 @@ const LoginPage = () => {
                     type="checkbox"
                     className="w-4 h-3 rounded border-gray-400 bg-[#2C2B36] focus:ring-lightCyan"
                   />
-                  <span>Remember me?</span>
+                  <span>{t('login.rememberMe')}</span>
                 </label>
                 <Link
                   to="/forgot-password"
                   className="hover:text-purple-300 transition-colors"
                 >
-                  Forgot Password?
+                  {t('login.forgotPassword')}
                 </Link>
               </div>
               <button
@@ -110,11 +110,11 @@ const LoginPage = () => {
                     : "bg-[#A7F3D0] hover:bg-[#35343c] cursor-pointer"
                 }`}
               >
-                {loading ? "Cargando..." : "Sign in"}
+                {loading ? t('common.loading') : t('login.title')}
               </button>
               {error && <p className="text-red-500 text-center">{error}</p>}
               <p className="text-center text-white text-[13px] mt-1">
-                or sign in with other accounts?
+                {t('login.orOtherAccounts')}
               </p>
               <div className="flex justify-center gap-3 mt-1 text-white text-base cursor-pointer">
                 <FaGoogle
@@ -135,12 +135,12 @@ const LoginPage = () => {
                 />
               </div>
               <p className="text-center text-white text-[13px] mt-1">
-                Don't have an account yet?{" "}
+                {t('login.noAccount')}{" "}
                 <span
-                  onClick={() => navigate("/login")}
+                  onClick={() => navigate("/users/register")}
                   className="text-purple-300 hover:underline cursor-pointer"
                 >
-                  Sign up for an account.
+                  {t('login.signUpLink')}
                 </span>
               </p>
             </form>

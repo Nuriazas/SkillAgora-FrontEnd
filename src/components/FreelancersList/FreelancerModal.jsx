@@ -13,14 +13,15 @@ import FreelancerContactModal from "./FreelancerContactModal.jsx";
 import FreelancerHireModal from "./FreelancerHireModal.jsx";
 import FreelancerResultModal from "./FreelancerResultModal.jsx";
 import DefaultAvatar from "../../assets/defaultAvatar.jpeg";
+import { useTranslation } from "react-i18next";
 
 /**
  * Modal para mostrar detalles completos de un freelancer
  * Estilo consistente con ServiceModal
  */
-const FreelancerModal = ({ freelancer, onClose }) => {
-  // Early return si no hay freelancer
-  if (!freelancer) return null;
+const FreelancerModal = ({ isOpen, onClose, freelancer }) => {
+  const { t } = useTranslation();
+  if (!isOpen || !freelancer) return null;
 
   const {
     // Estados
@@ -52,7 +53,7 @@ const FreelancerModal = ({ freelancer, onClose }) => {
           <div className="flex items-center justify-center">
             <div className="w-8 h-8 border-2 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></div>
             <span className="ml-3 text-white">
-              Loading freelancer details...
+              {t('freelancerModal.loadingDetails')}
             </span>
           </div>
         </div>
@@ -64,16 +65,16 @@ const FreelancerModal = ({ freelancer, onClose }) => {
   const details = freelancerDetails || freelancer;
 
   const {
-    name = "Anonymous User",
+    name = t('freelancerModal.anonymousUser'),
     avatar,
-    specialty = "General",
-    location = "Remote",
+    specialty = t('freelancerModal.general'),
+    location = t('freelancerModal.remote'),
     hourly_rate = 0,
     rating = 0,
     bio = "",
     experience = "",
     portfolio_url = "",
-    language = "English",
+    language = t('freelancerModal.english'),
   } = details;
 
   const mockCoverImage =
@@ -119,7 +120,7 @@ const FreelancerModal = ({ freelancer, onClose }) => {
             <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2">
               <img
                 src={avatar || DefaultAvatar}
-                alt={`${name}'s avatar`}
+                alt={t('avatar.profilePicture', { name })}
                 className="w-32 h-32 rounded-full border-4 border-purple-500/50 object-cover shadow-2xl"
                 onError={handleImageError}
               />
@@ -151,7 +152,7 @@ const FreelancerModal = ({ freelancer, onClose }) => {
             {/* Bio */}
             <p className="text-gray-400 mb-6 leading-relaxed text-center">
               {bio ||
-                `Experienced ${specialty.toLowerCase()} professional ready to help with your projects.`}
+                t('freelancerModal.defaultBio', { specialty: specialty.toLowerCase() })}
             </p>
 
             {/* Experience */}
@@ -159,7 +160,7 @@ const FreelancerModal = ({ freelancer, onClose }) => {
               <div className="mb-6">
                 <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
                   <FiBriefcase className="w-4 h-4 text-purple-400" />
-                  Experience
+                  {t('freelancerModal.experience')}
                 </h3>
                 <p className="text-gray-400 text-sm leading-relaxed">
                   {experience}
@@ -172,7 +173,7 @@ const FreelancerModal = ({ freelancer, onClose }) => {
               <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 border border-gray-700/30">
                 <div className="flex items-center space-x-2 mb-2">
                   <FiStar className="w-5 h-5 text-yellow-400" />
-                  <span className="font-medium text-white text-sm">Rating</span>
+                  <span className="font-medium text-white text-sm">{t('freelancerModal.rating')}</span>
                 </div>
                 <span className="text-gray-400">
                   {Number(rating).toFixed(1)} / 5.0
@@ -182,10 +183,10 @@ const FreelancerModal = ({ freelancer, onClose }) => {
                 <div className="flex items-center space-x-2 mb-2">
                   <FiDollarSign className="w-5 h-5 text-purple-400" />
                   <span className="font-medium text-white text-sm">
-                    Hourly Rate
+                    {t('freelancerModal.hourlyRate')}
                   </span>
                 </div>
-                <span className="text-gray-400">${hourly_rate}/hour</span>
+                <span className="text-gray-400">{t('freelancerModal.hourlyRateValue', { value: hourly_rate })}</span>
               </div>
             </div>
 
@@ -199,7 +200,7 @@ const FreelancerModal = ({ freelancer, onClose }) => {
                   className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors text-sm"
                 >
                   <FiBriefcase className="w-4 h-4" />
-                  View Portfolio
+                  {t('freelancerModal.viewPortfolio')}
                 </a>
               </div>
             )}
@@ -207,7 +208,7 @@ const FreelancerModal = ({ freelancer, onClose }) => {
             {/* Footer con precio y botones */}
             <div className="flex items-center justify-between pt-6 border-t border-gray-800/50">
               <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                ${hourly_rate}/hr
+                {t('freelancerModal.hourlyRateShort', { value: hourly_rate })}
               </div>
               <div className="flex gap-3">
                 <button
@@ -215,13 +216,13 @@ const FreelancerModal = ({ freelancer, onClose }) => {
                   className="px-6 py-3 bg-gray-700/80 hover:bg-gray-600/80 text-white rounded-xl transition-all duration-200 font-semibold border border-gray-600/50 flex items-center gap-2"
                 >
                   <FiMail className="w-4 h-4" />
-                  Contact
+                  {t('freelancerModal.contact')}
                 </button>
                 <button
                   onClick={handleHireFreelancer}
                   className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl transition-all duration-200 font-semibold shadow-lg hover:shadow-purple-500/25"
                 >
-                  Hire Freelancer
+                  {t('freelancerModal.hireFreelancer')}
                 </button>
               </div>
             </div>

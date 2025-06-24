@@ -3,12 +3,14 @@ import ServiceCarousel from "../services/list/ServiceCarousel.jsx";
 import ServiceModal from "../services/modal/ServiceModal.jsx";
 import useServiceCarousel from "../../hooks/services/useServiceCarousel.js";
 import LandingNavigationButtons from "./LandingNavigationButtons.jsx";
+import { useTranslation } from "react-i18next";
 
 // componente HeroSection que muestra el título, descripción y carousel de servicios
 
 const HeroSection = () => {
 	const [selectedService, setSelectedService] = useState(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const { t } = useTranslation();
 
 	// Hook personalizado para manejar el carrusel de servicios
 	const {
@@ -44,16 +46,15 @@ const HeroSection = () => {
 							{/* Título y descripción */}
 							<div className="space-y-6">
 								<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-									Find the{" "}
+									{t('hero.title1')}{" "}
 									<span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-										perfect talent
+										{t('hero.title2')}
 									</span>{" "}
-									for your project
+									{t('hero.title3')}
 								</h1>
 
 								<p className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-lg">
-									Connect with expert freelancers and take your ideas to the
-									next level with the most trusted platform.
+									{t('hero.description')}
 								</p>
 							</div>
 
@@ -65,18 +66,18 @@ const HeroSection = () => {
 								<div>
 									<div className="text-2xl font-bold text-white">10,000+</div>
 									<div className="text-sm text-gray-400">
-										Completed Projects
+										{t('hero.completedProjects')}
 									</div>
 								</div>
 								<div>
 									<div className="text-2xl font-bold text-white">5,000+</div>
 									<div className="text-sm text-gray-400">
-										Active Freelancers
+										{t('hero.activeFreelancers')}
 									</div>
 								</div>
 								<div>
 									<div className="text-2xl font-bold text-white">98%</div>
-									<div className="text-sm text-gray-400">Satisfaction Rate</div>
+									<div className="text-sm text-gray-400">{t('hero.satisfactionRate')}</div>
 								</div>
 							</div>
 						</div>
