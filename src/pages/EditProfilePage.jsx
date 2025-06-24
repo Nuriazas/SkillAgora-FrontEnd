@@ -5,10 +5,12 @@ import Footer from "../components/Footer";
 import { AuthContext } from "../context/AuthContextProvider";
 import { userApi } from "../services/api/api";
 import DefaultAvatar from "../assets/defaultAvatar.jpeg";
+import { useTranslation } from "react-i18next";
 
 const EditProfilePage = () => {
   const { userLogged, setUserLogged } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -79,11 +81,11 @@ const EditProfilePage = () => {
         setUserLogged({ ...userLogged, ...updatedData });
         navigate(`/users/profile/${updatedData.name}`);
       } else {
-        alert("Error al guardar los cambios");
+        alert(t('editProfile.errorSaving'));
       }
     } catch (err) {
       console.error("Error updating profile", err);
-      alert("Error en el servidor");
+      alert(t('editProfile.serverError'));
     } finally {
       setSaving(false);
     }
@@ -94,7 +96,7 @@ const EditProfilePage = () => {
       <Header />
 
       <div className="max-w-2xl mx-auto py-10 px-6">
-        <h1 className="text-3xl font-bold mb-6">Edit Your Profile</h1>
+        <h1 className="text-3xl font-bold mb-6">{t('editProfile.title')}</h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="flex flex-col items-center gap-4">
@@ -104,7 +106,7 @@ const EditProfilePage = () => {
               className="w-28 h-28 rounded-full object-cover border-4 border-purple-500 shadow-lg"
             />
             <label className="text-purple-400 hover:underline cursor-pointer">
-              Change Avatar
+              {t('editProfile.changeAvatar')}
               <input
                 type="file"
                 accept="image/*"
@@ -116,7 +118,7 @@ const EditProfilePage = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block mb-1 text-sm text-gray-300">First Name</label>
+              <label className="block mb-1 text-sm text-gray-300">{t('editProfile.firstName')}</label>
               <input
                 type="text"
                 name="name"
@@ -127,7 +129,7 @@ const EditProfilePage = () => {
             </div>
 
             <div>
-              <label className="block mb-1 text-sm text-gray-300">Last Name</label>
+              <label className="block mb-1 text-sm text-gray-300">{t('editProfile.lastName')}</label>
               <input
                 type="text"
                 name="lastName"
@@ -139,7 +141,7 @@ const EditProfilePage = () => {
           </div>
 
           <div>
-            <label className="block mb-1 text-sm text-gray-300">Biography</label>
+            <label className="block mb-1 text-sm text-gray-300">{t('editProfile.bio')}</label>
             <textarea
               name="bio"
               value={formData.bio}
@@ -150,7 +152,7 @@ const EditProfilePage = () => {
           </div>
 
           <div>
-            <label className="block mb-1 text-sm text-gray-300">Language</label>
+            <label className="block mb-1 text-sm text-gray-300">{t('editProfile.language')}</label>
             <input
               type="text"
               name="language"
@@ -161,7 +163,7 @@ const EditProfilePage = () => {
           </div>
 
           <div>
-            <label className="block mb-1 text-sm text-gray-300">Portfolio URL</label>
+            <label className="block mb-1 text-sm text-gray-300">{t('editProfile.portfolioUrl')}</label>
             <input
               type="url"
               name="portfolio_url"
@@ -177,14 +179,14 @@ const EditProfilePage = () => {
               disabled={saving}
               className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded"
             >
-              {saving ? "Saving..." : "Save Changes"}
+              {saving ? t('editProfile.saving') : t('editProfile.saveChanges')}
             </button>
             <button
               type="button"
               onClick={() => navigate(`/users/profile/${userLogged?.name}`)}
               className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded"
             >
-              Cancel
+              {t('editProfile.cancel')}
             </button>
           </div>
         </form>

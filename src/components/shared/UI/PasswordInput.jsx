@@ -24,7 +24,7 @@ const PasswordInput = ({ value, onChange, placeholder = "Contraseña", name = "p
         tabIndex={-1}
         aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
       >
-        {showPassword ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
+        {showPassword ? <FaEye size={22} /> : <FaEyeSlash size={22} />}
       </button>
     </div>
   );

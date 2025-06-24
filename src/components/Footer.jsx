@@ -1,30 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { AuthContext } from "../context/AuthContextProvider";
 
 const Footer = () => {
+  const { t } = useTranslation();
+  const { userLogged } = useContext(AuthContext);
   const footerSections = [
     {
-      title: "For Clients",
+      title: t("footer.forClients"),
       links: [
-        { name: "Find Services", to: "/services" },
-        { name: "Post a Job", to: "/services/create" },
-        { name: "My Orders", to: "#" },
+        { name: t("footer.findServices"), to: "/services" },
+        { name: t("footer.postJob"), to: "/services/create" },
+        { name: t("footer.myOrders"), to: "#" },
       ],
     },
     {
-      title: "For Freelancers",
+      title: t("footer.forFreelancers"),
       links: [
-        { name: "Create Service", to: "/services/create" },
-        { name: "Browse Jobs", to: "/services" },
-        { name: "My Profile", to: "/users/profile/usuario" },
+        { name: t("footer.createService"), to: "/services/create" },
+        { name: t("footer.browseJobs"), to: "/services" },
+        { name: t("footer.myProfile"), to: userLogged ? `/users/profile/${userLogged.name}` : "/login" },
       ],
     },
     {
-      title: "Support",
+      title: t("footer.support"),
       links: [
-        { name: "Help Center", to: "/help" },
-        { name: "Contact", to: "/contact" },
-        { name: "Terms", to: "/terms" },
+        { name: t("footer.helpCenter"), to: "/help" },
+        { name: t("footer.contact"), to: "/contact" },
+        { name: t("footer.terms"), to: "/terms" },
       ],
     },
   ];
@@ -38,7 +42,7 @@ const Footer = () => {
               SkillAgora
             </h3>
             <p className="text-gray-400 leading-relaxed">
-              The leading platform for connecting talent with opportunity.
+              {t("footer.description")}
             </p>
           </div>
 
@@ -51,7 +55,7 @@ const Footer = () => {
                     <Link
                       to={link.to}
                       className="hover:text-purple-400 transition-colors"
-                      aria-label={`Go to ${link.name}`}
+                      aria-label={t("footer.goTo", { name: link.name })}
                     >
                       {link.name}
                     </Link>
@@ -64,7 +68,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-800/50 mt-8 pt-8 text-center text-gray-400">
           <p>
-            &copy; {new Date().getFullYear()} SkillAgora. All rights reserved.
+            &copy; {new Date().getFullYear()} SkillAgora. {t("footer.rights")}
           </p>
         </div>
       </div>

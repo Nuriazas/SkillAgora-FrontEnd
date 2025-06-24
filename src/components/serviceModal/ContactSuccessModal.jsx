@@ -1,10 +1,12 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 /**
  * Modal de éxito para contacto enviado
  */
 const ContactSuccessModal = ({ isOpen, onClose, providerName }) => {
 	if (!isOpen) return null;
+	const { t } = useTranslation();
 
 	return (
 		<div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 z-[70]">
@@ -12,7 +14,7 @@ const ContactSuccessModal = ({ isOpen, onClose, providerName }) => {
 				{/* Header */}
 				<div className="p-6 border-b border-gray-800/50">
 					<h3 className="text-xl font-semibold text-white text-center">
-						¡Mensaje Enviado!
+						{t('contactSuccessModal.sent')}
 					</h3>
 				</div>
 
@@ -23,7 +25,7 @@ const ContactSuccessModal = ({ isOpen, onClose, providerName }) => {
 							<span className="text-2xl">✅</span>
 						</div>
 						<p className="text-gray-300 mb-4">
-							Tu solicitud de contacto ha sido enviada exitosamente
+							{t('contactSuccessModal.success')}
 						</p>
 						<div className="bg-gray-800/50 rounded-xl p-4 mb-4">
 							<h4 className="font-semibold text-white mb-2">Enviado a:</h4>
@@ -32,8 +34,7 @@ const ContactSuccessModal = ({ isOpen, onClose, providerName }) => {
 							</div>
 						</div>
 						<p className="text-sm text-gray-400">
-							Recibirás una notificación cuando {providerName} responda a tu
-							mensaje.
+							{t('contactSuccessModal.notify', { name: providerName })}
 						</p>
 					</div>
 
@@ -42,7 +43,7 @@ const ContactSuccessModal = ({ isOpen, onClose, providerName }) => {
 						onClick={onClose}
 						className="w-full px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl transition-all duration-200 font-medium shadow-lg hover:shadow-green-500/25"
 					>
-						Entendido
+						{t('contactSuccessModal.understood')}
 					</button>
 				</div>
 			</div>

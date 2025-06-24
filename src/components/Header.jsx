@@ -2,6 +2,8 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContextProvider.jsx";
 import UserDropdown from "./UserDropDown.jsx";
+import { LanguageToggle } from "./shared/UI/LanguageToggle/index.jsx";
+import { useTranslation } from "react-i18next";
 
 /**
  * Componente Header principal de la aplicación
@@ -11,6 +13,7 @@ const Header = () => {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const { token, userLogged, logout } = useContext(AuthContext);
 	const navigate = useNavigate();
+	const { t } = useTranslation();
 
 	// Estado de carga - mientras se obtienen datos del usuario
 	if (token && userLogged === null) {
@@ -71,50 +74,55 @@ const Header = () => {
 					</div>
 
 					{/* Navegación central */}
-					<nav className="hidden md:flex items-center space-x-8">
-						<button
-							onClick={() => navigate("/services")}
-							className="text-gray-300 hover:text-white transition-colors duration-200"
-						>
-							Services
-						</button>
-						<button
-							onClick={() => navigate("/freelancers")}
-							className="text-gray-300 hover:text-white transition-colors duration-200"
-						>
-							Freelancers
-						</button>
-					</nav>
+					<div className="flex-1 flex justify-center">
+						<nav className="hidden md:flex items-center space-x-8">
+							<button
+								onClick={() => navigate("/services")}
+								className="text-gray-300 hover:text-white transition-colors duration-200"
+							>
+								{t("header.services", "Services")}
+							</button>
+							<button
+								onClick={() => navigate("/freelancers")}
+								className="text-gray-300 hover:text-white transition-colors duration-200"
+							>
+								{t("header.freelancers", "Freelancers")}
+							</button>
+						</nav>
+					</div>
 
-					{/* Área de autenticación */}
-					{userLogged ? (
-						// Usuario autenticado - mostrar dropdown con datos del perfil
-						<UserDropdown
-							user={userLogged}
-							isOpen={isDropdownOpen}
-							onToggle={handleDropdownToggle}
-							onLogout={handleLogout}
-							onNavigate={handleNavigate}
-						/>
-					) : (
-						// Usuario no autenticado - mostrar botones de login y registro
-						<div className="flex items-center space-x-4">
-							<button
-								className="text-gray-300 hover:text-white transition-colors duration-200 px-4 py-2 rounded-lg hover:bg-gray-800/50"
-								onClick={() => navigate("/login")}
-								aria-label="Iniciar sesión en SkillAgora"
-							>
-								Sign In
-							</button>
-							<button
-								className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-purple-500/25"
-								onClick={() => navigate("/users/register")}
-								aria-label="Registrarse en SkillAgora"
-							>
-								Sign Up
-							</button>
+					{/* Área de autenticación y botón de idioma alineados a la derecha */}
+					<div className="flex items-center space-x-4">
+						{userLogged ? (
+							<UserDropdown
+								user={userLogged}
+								isOpen={isDropdownOpen}
+								onToggle={handleDropdownToggle}
+								onLogout={handleLogout}
+								onNavigate={handleNavigate}
+							/>
+						) : (
+							<div className="flex items-center space-x-4">
+								<button
+									className="text-gray-300 hover:text-white transition-colors duration-200 px-4 py-2 rounded-lg hover:bg-gray-800/50"
+									onClick={() => navigate("/login")}
+									aria-label={t("header.signInAria", "Iniciar sesión en SkillAgora")}
+								>
+									{t("header.signIn", "Sign In")}
+								</button>
+								<button
+									className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-purple-500/25"
+									onClick={() => navigate("/users/register")}
+									aria-label={t("header.signUpAria", "Registrarse en SkillAgora")}
+								>
+									{t("header.signUp", "Sign Up")}
+								</button>
+							</div>
+						)}
+						<div className="pl-4">
+							<LanguageToggle />
 						</div>
-					)}
+					</div>
 				</div>
 			</div>
 		</header>

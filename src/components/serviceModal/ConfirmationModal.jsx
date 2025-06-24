@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 /**
  * Modal de confirmación para contratar servicio
@@ -10,6 +11,7 @@ const ConfirmationModal = ({
 	onConfirm,
 	loading,
 }) => {
+	const { t } = useTranslation();
 	if (!isOpen) return null;
 
 	return (
@@ -18,7 +20,7 @@ const ConfirmationModal = ({
 				{/* Header */}
 				<div className="p-6 border-b border-gray-800/50">
 					<h3 className="text-xl font-semibold text-white text-center">
-						Confirmar Contratación
+						{t('confirmationModal.title')}
 					</h3>
 				</div>
 
@@ -29,7 +31,7 @@ const ConfirmationModal = ({
 							<span className="text-2xl">🛒</span>
 						</div>
 						<p className="text-gray-300 mb-4">
-							¿Estás seguro de que quieres contratar este servicio?
+							{t('confirmationModal.question')}
 						</p>
 						<div className="bg-gray-800/50 rounded-xl p-4 mb-4">
 							<h4 className="font-semibold text-white mb-2">{service.title}</h4>
@@ -38,7 +40,7 @@ const ConfirmationModal = ({
 							</div>
 						</div>
 						<p className="text-sm text-gray-400">
-							Se creará una orden de compra que podrás gestionar desde tu panel.
+							{t('confirmationModal.info')}
 						</p>
 					</div>
 
@@ -49,7 +51,7 @@ const ConfirmationModal = ({
 							className="flex-1 px-6 py-3 bg-gray-700/80 hover:bg-gray-600/80 text-white rounded-xl transition-all duration-200 font-medium border border-gray-600/50"
 							disabled={loading}
 						>
-							Cancelar
+							{t('confirmationModal.cancel')}
 						</button>
 						<button
 							onClick={onConfirm}
@@ -59,10 +61,10 @@ const ConfirmationModal = ({
 							{loading ? (
 								<>
 									<div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-									Contratando...
+									{t('confirmationModal.confirming')}
 								</>
 							) : (
-								"Confirmar Contratación"
+								t('confirmationModal.confirm')
 							)}
 						</button>
 					</div>

@@ -9,8 +9,10 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import PasswordInput from "./shared/UI/PasswordInput";
+import { useTranslation } from "react-i18next";
 
 const FormRegister = ({ form, handleChange, loading }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   return (
     <>
@@ -23,7 +25,7 @@ const FormRegister = ({ form, handleChange, loading }) => {
             id="name"
             type="text"
             name="name"
-            placeholder="First Name"
+            placeholder={t('formRegister.firstName')}
             value={form.name}
             onChange={handleChange}
             className="w-full px-8 py-4 rounded-lg bg-[#1a1c2d] text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-300
@@ -40,7 +42,7 @@ const FormRegister = ({ form, handleChange, loading }) => {
             id="lastName"
             type="text"
             name="lastName"
-            placeholder="Last Name"
+            placeholder={t('formRegister.lastName')}
             value={form.lastName}
             onChange={handleChange}
             className="w-full px-8 py-4 rounded-lg bg-[#1a1c2d] text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-300
@@ -57,7 +59,7 @@ const FormRegister = ({ form, handleChange, loading }) => {
             id="email"
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder={t('formRegister.email')}
             value={form.email}
             onChange={handleChange}
             className="w-full px-8 py-4 rounded-lg bg-[#1a1c2d] text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-300
@@ -73,7 +75,7 @@ const FormRegister = ({ form, handleChange, loading }) => {
           <PasswordInput
             value={form.password}
             onChange={handleChange}
-            placeholder="Password"
+            placeholder={t('formRegister.password')}
             name="password"
           />
         </div>
@@ -85,14 +87,14 @@ const FormRegister = ({ form, handleChange, loading }) => {
           type="submit"
           className="bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400  text-[15px]
                 hover:from-purple-700 hover:to-blue-700 text-white  rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-purple-500/25 w-full py-2"
-          aria-label="Sign up"
+          aria-label={t('formRegister.signUp')}
           disabled={loading}
         >
-          {loading ? <Spinner /> : "Sign up"}
+          {loading ? <Spinner /> : t('formRegister.signUp')}
         </button>
 
         <p className="text-center text-white text-[15px] mt-1">
-          or sign in with other accounts?
+          {t('formRegister.orOtherAccounts')}
         </p>
         <div className="flex justify-center gap-3 mt-1 text-white text-base cursor-pointer">
           <FaGoogle size={30}className="hover:text-purple-300 transition-colors" />
@@ -102,13 +104,11 @@ const FormRegister = ({ form, handleChange, loading }) => {
         </div>
 
         <p className="text-center text-white text-[15px] mt-1">
-          Already have an account?{" "}
+          {t('formRegister.alreadyAccount')}{" "}
           <span 
             onClick={() =>navigate("/login")}
-          className="text-purple-300 hover:underline">
-      
-            Click here to sign in.
-          
+            className="text-purple-300 hover:underline">
+            {t('formRegister.clickToSignIn')}
           </span>
         </p>
       </div>

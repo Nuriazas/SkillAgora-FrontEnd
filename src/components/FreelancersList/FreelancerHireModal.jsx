@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 /**
  * Modal de confirmación para contratar freelancer
@@ -10,6 +11,7 @@ const FreelancerHireModal = ({
 	onConfirm,
 	loading,
 }) => {
+	const { t } = useTranslation();
 	if (!isOpen || !freelancer) return null;
 
 	return (
@@ -18,7 +20,7 @@ const FreelancerHireModal = ({
 				{/* Header */}
 				<div className="p-6 border-b border-gray-800/50">
 					<h3 className="text-xl font-semibold text-white text-center">
-						Hire Freelancer
+						{t('freelancerHireModal.title')}
 					</h3>
 				</div>
 
@@ -26,10 +28,10 @@ const FreelancerHireModal = ({
 				<div className="p-6">
 					<div className="text-center mb-6">
 						<div className="w-16 h-16 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
-							<span className="text-2xl">👤</span>
+							<span className="text-2xl">��</span>
 						</div>
 						<p className="text-gray-300 mb-4">
-							Are you sure you want to hire this freelancer?
+							{t('freelancerHireModal.confirmQuestion')}
 						</p>
 						<div className="bg-gray-800/50 rounded-xl p-4 mb-4">
 							<div className="flex items-center gap-3 mb-2">
@@ -48,12 +50,11 @@ const FreelancerHireModal = ({
 								</div>
 							</div>
 							<div className="text-xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-								${freelancer.hourly_rate}/hour
+								{t('freelancerHireModal.pricePerHour', { price: freelancer.hourly_rate })}
 							</div>
 						</div>
 						<p className="text-sm text-gray-400">
-							You'll be able to discuss project details and timeline with{" "}
-							{freelancer.name} after hiring.
+							{t('freelancerHireModal.discuss', { name: freelancer.name })}
 						</p>
 					</div>
 
@@ -64,7 +65,7 @@ const FreelancerHireModal = ({
 							className="flex-1 px-6 py-3 bg-gray-700/80 hover:bg-gray-600/80 text-white rounded-xl transition-all duration-200 font-medium border border-gray-600/50"
 							disabled={loading}
 						>
-							Cancel
+							{t('freelancerHireModal.cancel')}
 						</button>
 						<button
 							onClick={onConfirm}
@@ -74,10 +75,10 @@ const FreelancerHireModal = ({
 							{loading ? (
 								<>
 									<div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-									Hiring...
+									{t('freelancerHireModal.hiring')}
 								</>
 							) : (
-								"Confirm Hire"
+								t('freelancerHireModal.confirmHire')
 							)}
 						</button>
 					</div>

@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { FiX, FiSave, FiLoader } from "react-icons/fi";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { getServiceById } from "../../services/api/getServiceById.js";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -16,6 +17,7 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 		delivery_time_days: "",
 		place: "",
 	});
+	const { t } = useTranslation();
 
 
 	useEffect(() => {
@@ -64,10 +66,10 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
         onUpdate(response.data); 
         onClose();              
       } else {
-        alert("Error al actualizar el servicio");
+        alert(t('serviceEditModal.updateError'));
       }
     } catch (error) {
-      alert("Error al actualizar el servicio");
+      alert(t('serviceEditModal.updateError'));
       console.error(error);
     }
   };
@@ -75,13 +77,13 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 		e.preventDefault();
 
 		if (!token) {
-			alert("Authentication error: Please log in again");
+			alert(t('serviceEditModal.authError'));
 			return;
 		}
 
 		// Verificamos que tengamos el servicio y su ID
 		if (!service || !service.service_id) {
-			alert("Error: No se encontró el ID del servicio");
+			alert(t('serviceEditModal.idError'));
 			return;
 		}
 
@@ -117,10 +119,10 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 				});
 				onClose();
 			} else {
-				throw new Error(data.message || "Error al actualizar el servicio");
+				throw new Error(data.message || t('serviceEditModal.updateError'));
 			}
 		} catch (error) {
-			alert("Error updating service: " + error.message);
+			alert(t('serviceEditModal.updateErrorGeneric', { error: error.message }));
 		} finally {
 			setLoading(false);
 		}
@@ -133,7 +135,7 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 			<div className="bg-gray-900/95 backdrop-blur-xl rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-800/50 shadow-2xl">
 				{/* Header */}
 				<div className="flex items-center justify-between p-6 border-b border-gray-800/50">
-					<h2 className="text-xl font-semibold text-white">Edit Service</h2>
+					<h2 className="text-xl font-semibold text-white">{t('serviceEditModal.editService')}</h2>
 					<button
 						onClick={onClose}
 						className="bg-gray-800/90 hover:bg-gray-700/90 p-2 rounded-full transition-colors"
@@ -148,7 +150,7 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 					{/* Title */}
 					<div>
 						<label className="block text-sm font-medium text-gray-300 mb-2">
-							Service Title
+							{t('serviceEditModal.serviceTitle')}
 						</label>
 						<input
 							type="text"
@@ -157,14 +159,14 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 							onChange={handleChange}
 							required
 							className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent"
-							placeholder="Enter service title"
+							placeholder={t('serviceEditModal.serviceTitlePlaceholder')}
 						/>
 					</div>
 
 					{/* Description */}
 					<div>
 						<label className="block text-sm font-medium text-gray-300 mb-2">
-							Description
+							{t('serviceEditModal.description')}
 						</label>
 						<textarea
 							name="description"
@@ -173,7 +175,7 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 							required
 							rows={4}
 							className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent resize-none"
-							placeholder="Describe your service"
+							placeholder={t('serviceEditModal.descriptionPlaceholder')}
 						/>
 					</div>
 
@@ -181,7 +183,7 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<div>
 							<label className="block text-sm font-medium text-gray-300 mb-2">
-								Price ($)
+								{t('serviceEditModal.price')}
 							</label>
 							<input
 								type="number"
@@ -192,13 +194,13 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 								min="0"
 								step="0.01"
 								className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent"
-								placeholder="0.00"
+								placeholder={t('serviceEditModal.pricePlaceholder')}
 							/>
 						</div>
 
 						<div>
 							<label className="block text-sm font-medium text-gray-300 mb-2">
-								Delivery Time (days)
+								{t('serviceEditModal.deliveryTime')}
 							</label>
 							<input
 								type="number"
@@ -207,7 +209,7 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 								onChange={handleChange}
 								min="1"
 								className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent"
-								placeholder="3"
+								placeholder={t('serviceEditModal.deliveryTimePlaceholder')}
 							/>
 						</div>
 					</div>
@@ -215,7 +217,7 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 					{/* Location */}
 					<div>
 						<label className="block text-sm font-medium text-gray-300 mb-2">
-							Location
+							{t('serviceEditModal.location')}
 						</label>
 						<input
 							type="text"
@@ -223,7 +225,7 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 							value={formData.place}
 							onChange={handleChange}
 							className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent"
-							placeholder="Remote, City, etc."
+							placeholder={t('serviceEditModal.locationPlaceholder')}
 						/>
 					</div>
 
@@ -240,7 +242,7 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 							className="px-6 py-3 bg-gray-700/80 hover:bg-gray-600/80 text-white rounded-xl transition-all duration-200 font-medium border border-gray-600/50"
 							disabled={loading}
 						>
-							Cancel
+							{t('serviceEditModal.cancel')}
 						</button>
 						<button
 							type="submit"
@@ -250,12 +252,12 @@ const ServiceEditModal = ({ service, isOpen, onClose, onUpdate }) => {
 							{loading ? (
 								<>
 									<FiLoader className="w-4 h-4 animate-spin" />
-									Updating...
+									{t('serviceEditModal.updating')}
 								</>
 							) : (
 								<>
 									<FiSave className="w-4 h-4" />
-									Update Service
+									{t('serviceEditModal.updateService')}
 								</>
 							)}
 						</button>

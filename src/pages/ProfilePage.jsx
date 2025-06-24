@@ -19,10 +19,12 @@ import {
   FiDollarSign,
   FiClock,
 } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 const ProfilePage = () => {
   const { name } = useParams();
   const { userLogged } = useContext(AuthContext);
+  const { t } = useTranslation();
 
   const [loadingMore, setLoadingMore] = useState(false);
   const [profileData, setProfileData] = useState(null);
@@ -52,7 +54,7 @@ const ProfilePage = () => {
       if (response.success) {
         setProfileData(response.data);
       } else {
-        setError("Profile not found");
+        setError(t('profile.notFound'));
       }
     } catch (err) {
       setError("Error loading profile");
@@ -121,14 +123,14 @@ const ProfilePage = () => {
           <div className="flex items-center justify-center min-h-[60vh]">
             <div className="text-center">
               <h2 className="text-2xl font-bold text-white mb-4">
-                Profile Not Found
+                {t('profile.notFoundTitle')}
               </h2>
               <p className="text-gray-400 mb-6">{error}</p>
               <button
                 onClick={() => window.history.back()}
                 className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-200"
               >
-                Go Back
+                {t('profile.goBack')}
               </button>
             </div>
           </div>
@@ -236,8 +238,7 @@ const ProfilePage = () => {
                       <div className="flex items-center gap-2 justify-center md:justify-start text-gray-400">
                         <FiCalendar className="w-4 h-4" />
                         <span>
-                          Member since{" "}
-                          {new Date(profileData?.created_at).getFullYear()}
+                          {t('profile.memberSince', { year: new Date(profileData?.created_at).getFullYear() })}
                         </span>
                       </div>
 
@@ -247,7 +248,7 @@ const ProfilePage = () => {
                           <span className="text-white font-medium">
                             {Number(profileData.average_rating).toFixed(1)}
                           </span>
-                          <span className="text-gray-400">rating</span>
+                          <span className="text-gray-400">{t('profile.rating')}</span>
                         </div>
                       )}
                     </div>
@@ -266,7 +267,7 @@ const ProfilePage = () => {
                         className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors"
                       >
                         <FiGlobe className="w-4 h-4" />
-                        View Portfolio
+                        {t('profile.viewPortfolio')}
                       </a>
                     )}
                   </div>
@@ -277,7 +278,7 @@ const ProfilePage = () => {
               {profileData?.services && profileData.services.length > 0 && (
                 <div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 p-8 max-h-[500px] overflow-y-auto">
                   <h2 className="text-2xl font-bold text-white mb-6">
-                    {isOwnProfile ? "My Services" : "Services"}
+                    {isOwnProfile ? t('profile.myServices') : t('profile.services')}
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {profileData?.services?.map((service, index) => (
@@ -315,14 +316,14 @@ const ProfilePage = () => {
                             </span>
                           </div>
 
-                          {service.delivery_time_days && (
-                            <div className="flex items-center gap-2 text-sm text-gray-400">
-                              <FiClock className="w-4 h-4 text-blue-400" />
-                              <span>
-                                {service.delivery_time_days} days delivery
-                              </span>
-                            </div>
-                          )}
+                            {service.delivery_time_days && (
+                              <div className="flex items-center gap-2 text-sm text-gray-400">
+                                <FiClock className="w-4 h-4 text-blue-400" />
+                                <span>
+                                  {t('profile.daysDelivery', { days: service.delivery_time_days })}
+                                </span>
+                              </div>
+                            )}
 
                           {service.place && (
                             <div className="flex items-center gap-2 text-sm text-gray-400">
@@ -332,18 +333,18 @@ const ProfilePage = () => {
                           )}
                         </div>
 
-                        <div className="flex justify-between items-center">
-                          <span className="text-xs text-gray-500 bg-gray-700/50 px-2 py-1 rounded">
-                            {service.category_name}
-                          </span>
-                          {isOwnProfile && (
-                            <span className="text-xs text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                              Click to edit
+                          <div className="flex justify-between items-center">
+                            <span className="text-xs text-gray-500 bg-gray-700/50 px-2 py-1 rounded">
+                              {service.category_name}
                             </span>
-                          )}
+                            {isOwnProfile && (
+                              <span className="text-xs text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                                {t('profile.clickToEdit')}
+                              </span>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
                   </div>
                 </div>
               )}
@@ -352,7 +353,7 @@ const ProfilePage = () => {
               {profileData?.experience && (
                 <div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 p-8">
                   <h2 className="text-2xl font-bold text-white mb-6">
-                    Experience
+                    {t('profile.experience')}
                   </h2>
                   <p className="text-gray-300 leading-relaxed">
                     {profileData.experience}

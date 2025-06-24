@@ -1,37 +1,39 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 /**
  * Componente LandingNavigationButtons - Botones de navegación principales para el Landing
  * Proporciona acceso rápido a las secciones principales de la aplicación
  */
 const LandingNavigationButtons = () => {
+	const { t } = useTranslation();
 	const navigate = useNavigate();
 
 	const navigationButtons = [
 		{
-			label: "Browse Services",
+			label: t("landingNav.browseServices"),
 			path: "/services",
 			variant: "primary",
-			ariaLabel: "Browse available services",
+			ariaLabel: t("landingNav.browseServicesAria"),
 		},
 		{
-			label: "Find Freelancers",
+			label: t("landingNav.findFreelancers"),
 			path: "/freelancers",
 			variant: "secondary",
-			ariaLabel: "Find freelance professionals",
+			ariaLabel: t("landingNav.findFreelancersAria"),
 		},
 		{
-			label: "Post a Service",
+			label: t("landingNav.postService"),
 			path: "/services/create",
 			variant: "secondary",
-			ariaLabel: "Post a new service",
+			ariaLabel: t("landingNav.postServiceAria"),
 		},
 		{
-			label: "Contact Us",
+			label: t("landingNav.contactUs"),
 			path: "/contact",
 			variant: "secondary",
-			ariaLabel: "Contact support",
+			ariaLabel: t("landingNav.contactUsAria"),
 		},
 	];
 

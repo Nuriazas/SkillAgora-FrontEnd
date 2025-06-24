@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const FreelancerSearchFilter = ({
 	onFiltersChange,
@@ -6,6 +7,7 @@ const FreelancerSearchFilter = ({
 	onClearFilters,
 	filters,
 }) => {
+	const { t } = useTranslation();
 	const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
 	const handleInputChange = (field, value) => {
@@ -34,11 +36,11 @@ const FreelancerSearchFilter = ({
 						{/* Búsqueda */}
 						<div className="md:col-span-2">
 							<label className="block text-sm font-medium text-gray-300 mb-2">
-								Search Freelancers
+								{t('freelancerSearchFilter.searchFreelancers', 'Buscar Freelancers')}
 							</label>
 							<input
 								type="text"
-								placeholder="Search by name, bio, location..."
+								placeholder={t('freelancerSearchFilter.searchPlaceholder')}
 								value={filters.search || ''}
 								onChange={(e) => handleSearchChange(e.target.value)}
 								className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
@@ -48,19 +50,19 @@ const FreelancerSearchFilter = ({
 						{/* Sort By */}
 						<div>
 							<label className="block text-sm font-medium text-gray-300 mb-2">
-								Sort By
+								{t('freelancerSearchFilter.sortBy')}
 							</label>
 							<select
 								value={filters.sortBy || 'rating'}
 								onChange={(e) => handleInputChange('sortBy', e.target.value)}
 								className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
 							>
-								<option value="rating">Best Rating</option>
-								<option value="price">Average Price</option>
-								<option value="services">Most Services</option>
-								<option value="reviews">Most Reviews</option>
-								<option value="recent">Most Recent</option>
-								<option value="name">Name A-Z</option>
+								<option value="rating">{t('freelancerSearchFilter.sortOptions.bestRating')}</option>
+								<option value="price">{t('freelancerSearchFilter.sortOptions.averagePrice')}</option>
+								<option value="services">{t('freelancerSearchFilter.sortOptions.mostServices')}</option>
+								<option value="reviews">{t('freelancerSearchFilter.sortOptions.mostReviews')}</option>
+								<option value="recent">{t('freelancerSearchFilter.sortOptions.mostRecent')}</option>
+								<option value="name">{t('freelancerSearchFilter.sortOptions.nameAZ')}</option>
 							</select>
 						</div>
 					</div>
@@ -71,43 +73,43 @@ const FreelancerSearchFilter = ({
 							onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
 							className="text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors"
 						>
-							{showAdvancedFilters ? "Hide" : "Show"} Advanced Filters
+							{showAdvancedFilters ? t('freelancerSearchFilter.hideAdvancedFilters') : t('freelancerSearchFilter.showAdvancedFilters')}
 						</button>
 					</div>
 
 					{/* Filtros avanzados */}
 					{showAdvancedFilters && (
 						<div className="mt-6 pt-6 border-t border-gray-800/50">
-							<h3 className="text-lg font-semibold text-white mb-4">Advanced Filters</h3>
+							<h3 className="text-lg font-semibold text-white mb-4">{t('freelancerSearchFilter.advancedFilters')}</h3>
 							
 							<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
 								{/* Filter by Rating */}
 								<div>
 									<label className="block text-sm font-medium text-gray-300 mb-2">
-										Rating  
+										{t('freelancerSearchFilter.rating')}
 									</label>
 									<select
 										value={filters.minRating || ''}
 										onChange={(e) => handleInputChange('minRating', e.target.value)}
 										className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
 									>
-										<option value="">All Ratings</option>
-										<option value="5">5 Stars</option>
-										<option value="4">4+ Stars</option>
-										<option value="3">3+ Stars</option>
-										<option value="2">2+ Stars</option>
-										<option value="1">1+ Stars</option>
+										<option value="">{t('freelancerSearchFilter.allRatings')}</option>
+										<option value="5">5 {t('freelancerSearchFilter.stars', 'Estrellas')}</option>
+										<option value="4">4+ {t('freelancerSearchFilter.stars', 'Estrellas')}</option>
+										<option value="3">3+ {t('freelancerSearchFilter.stars', 'Estrellas')}</option>
+										<option value="2">2+ {t('freelancerSearchFilter.stars', 'Estrellas')}</option>
+										<option value="1">1+ {t('freelancerSearchFilter.stars', 'Estrellas')}</option>
 									</select>
 								</div>
 
 								{/* Precio mínimo */}
 								<div>
 									<label className="block text-sm font-medium text-gray-300 mb-2">
-										Min Price ($)
+										{t('freelancerSearchFilter.minPrice')}
 									</label>
 									<input
 										type="number"
-										placeholder="0"
+										placeholder={t('freelancerSearchFilter.minPricePlaceholder', '0')}
 										value={filters.minPrice || ''}
 										onChange={(e) => handleInputChange('minPrice', e.target.value)}
 										className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
@@ -117,11 +119,11 @@ const FreelancerSearchFilter = ({
 								{/* Precio máximo */}
 								<div>
 									<label className="block text-sm font-medium text-gray-300 mb-2">
-										Max Price ($)
+										{t('freelancerSearchFilter.maxPrice')}
 									</label>
 									<input
 										type="number"
-										placeholder="1000"
+										placeholder={t('freelancerSearchFilter.maxPricePlaceholder', '1000')}
 										value={filters.maxPrice || ''}
 										onChange={(e) => handleInputChange('maxPrice', e.target.value)}
 										className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
@@ -131,29 +133,29 @@ const FreelancerSearchFilter = ({
 								{/* Mínimo de servicios */}
 								<div>
 									<label className="block text-sm font-medium text-gray-300 mb-2">
-										Min Services
+										{t('freelancerSearchFilter.minServices')}
 									</label>
 									<select
 										value={filters.minServices || ''}
 										onChange={(e) => handleInputChange('minServices', e.target.value)}
 										className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
 									>
-										<option value="">Any Amount</option>
-										<option value="1">1+ Services</option>
-										<option value="3">3+ Services</option>
-										<option value="5">5+ Services</option>
-										<option value="10">10+ Services</option>
+										<option value="">{t('freelancerSearchFilter.anyAmount')}</option>
+										<option value="1">1+ {t('freelancerSearchFilter.services', 'Servicios')}</option>
+										<option value="3">3+ {t('freelancerSearchFilter.services', 'Servicios')}</option>
+										<option value="5">5+ {t('freelancerSearchFilter.services', 'Servicios')}</option>
+										<option value="10">10+ {t('freelancerSearchFilter.services', 'Servicios')}</option>
 									</select>
 								</div>
 
 								{/* Ubicación */}
 								<div>
 									<label className="block text-sm font-medium text-gray-300 mb-2">
-										Location
+										{t('freelancerSearchFilter.location')}
 									</label>
 									<input
 										type="text"
-										placeholder="City, Country"
+										placeholder={t('freelancerSearchFilter.locationPlaceholder', 'Ciudad, País')}
 										value={filters.location || ''}
 										onChange={(e) => handleInputChange('location', e.target.value)}
 										className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
@@ -163,15 +165,15 @@ const FreelancerSearchFilter = ({
 								{/* Orden de clasificación */}
 								<div>
 									<label className="block text-sm font-medium text-gray-300 mb-2">
-										Order
+										{t('freelancerSearchFilter.order')}
 									</label>
 									<select
 										value={filters.sortOrder || 'desc'}
 										onChange={(e) => handleInputChange('sortOrder', e.target.value)}
 										className="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
 									>
-										<option value="desc">High to Low</option>
-										<option value="asc">Low to High</option>
+										<option value="desc">{t('freelancerSearchFilter.highToLow')}</option>
+										<option value="asc">{t('freelancerSearchFilter.lowToHigh')}</option>
 									</select>
 								</div>
 							</div>
@@ -181,7 +183,7 @@ const FreelancerSearchFilter = ({
 								onClick={clearAllFilters}
 								className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors text-sm"
 							>
-								Clear All Filters
+								{t('freelancerSearchFilter.clearAllFilters')}
 							</button>
 						</div>
 					)}
