@@ -1,147 +1,23 @@
 import React, { useState, useEffect } from "react";
-import Header from "../components/Header";
-import SimpleHeroSection from "../components/SimpleHeroSection";
-import SearchFilter from "../components/SearchFilter";
-import ServicesList from "../components/ServicesList";
-import Footer from "../components/Footer";
+import Header from "../components/layout/Header.jsx";
+import SimpleHeroSection from "../components/hero/SimpleHeroSection.jsx";
+import SearchFilter from "../components/search/SearchFilter.jsx";
+import ServicesList from "../components/services/list/ServicesList.jsx";
+import Footer from "../components/layout/Footer.jsx";
 import { servicesApi } from "../services/api/api";
-import useServiceFilters from "../hooks/useServiceFilters";
+import useServiceFilters from "../hooks/services/useServiceFilters.js";
+import ServicesPagination from "../components/services/components/ServicePagination.jsx";
 
-// Componente de paginación para servicios (reutilizando la lógica de FreelancerPagination)
-const ServicesPagination = ({ currentPage, totalPages, onPageChange }) => {
-	if (totalPages <= 1) return null;
-
-	const handlePreviousPage = () => {
-		onPageChange(Math.max(1, currentPage - 1));
-	};
-
-	const handleNextPage = () => {
-		onPageChange(Math.min(totalPages, currentPage + 1));
-	};
-
-	const handlePageClick = (page) => {
-		onPageChange(page);
-	};
-
-	// Generar números de página a mostrar
-	const getPageNumbers = () => {
-		const pages = [];
-		const maxVisible = 5;
-		let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
-		let end = Math.min(totalPages, start + maxVisible - 1);
-
-		// Ajustar el inicio si llegamos al final
-		if (end - start < maxVisible - 1) {
-			start = Math.max(1, end - maxVisible + 1);
-		}
-
-		for (let i = start; i <= end; i++) {
-			pages.push(i);
-		}
-
-		return pages;
-	};
-
-	const pageNumbers = getPageNumbers();
-
-	return (
-		<nav
-			className="flex justify-center items-center gap-2 mt-8 mb-8"
-			aria-label="Pagination navigation"
-		>
-			{/* Botón anterior */}
-			<button
-				onClick={handlePreviousPage}
-				disabled={currentPage === 1}
-				className="flex items-center gap-2 px-4 py-2 bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-xl text-gray-300 hover:text-white hover:bg-gray-800/80 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-900/80 disabled:hover:text-gray-300"
-				aria-label="Previous page"
-			>
-				<span>←</span>
-				<span className="hidden sm:inline">Previous</span>
-			</button>
-
-			{/* Números de página */}
-			<div className="flex gap-1">
-				{/* Primera página si no está visible */}
-				{pageNumbers[0] > 1 && (
-					<>
-						<button
-							onClick={() => handlePageClick(1)}
-							className="w-10 h-10 flex items-center justify-center bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-xl text-gray-300 hover:text-white hover:bg-gray-800/80 transition-all duration-200 text-sm font-medium"
-						>
-							1
-						</button>
-						{pageNumbers[0] > 2 && (
-							<span className="w-10 h-10 flex items-center justify-center text-gray-500">
-								...
-							</span>
-						)}
-					</>
-				)}
-
-				{/* Páginas visibles */}
-				{pageNumbers.map((page) => (
-					<button
-						key={page}
-						onClick={() => handlePageClick(page)}
-						className={`w-10 h-10 flex items-center justify-center backdrop-blur-xl border rounded-xl transition-all duration-200 text-sm font-medium ${
-							page === currentPage
-								? "bg-gradient-to-r from-purple-600 to-blue-600 border-purple-500/50 text-white shadow-lg hover:shadow-purple-500/25"
-								: "bg-gray-900/80 border-gray-800/50 text-gray-300 hover:text-white hover:bg-gray-800/80"
-						}`}
-						aria-label={`Go to page ${page}`}
-						aria-current={page === currentPage ? "page" : undefined}
-					>
-						{page}
-					</button>
-				))}
-
-				{/* Última página si no está visible */}
-				{pageNumbers[pageNumbers.length - 1] < totalPages && (
-					<>
-						{pageNumbers[pageNumbers.length - 1] < totalPages - 1 && (
-							<span className="w-10 h-10 flex items-center justify-center text-gray-500">
-								...
-							</span>
-						)}
-						<button
-							onClick={() => handlePageClick(totalPages)}
-							className="w-10 h-10 flex items-center justify-center bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-xl text-gray-300 hover:text-white hover:bg-gray-800/80 transition-all duration-200 text-sm font-medium"
-						>
-							{totalPages}
-						</button>
-					</>
-				)}
-			</div>
-
-			{/* Botón siguiente */}
-			<button
-				onClick={handleNextPage}
-				disabled={currentPage === totalPages}
-				className="flex items-center gap-2 px-4 py-2 bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-xl text-gray-300 hover:text-white hover:bg-gray-800/80 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-900/80 disabled:hover:text-gray-300"
-				aria-label="Next page"
-			>
-				<span className="hidden sm:inline">Next</span>
-				<span>→</span>
-			</button>
-
-			{/* Info de página */}
-			<div className="ml-4 text-sm text-gray-400">
-				Page {currentPage} of {totalPages}
-			</div>
-		</nav>
-	);
-};
-
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 6;	// limite de servicios por página
 
 const ServicesPage = () => {
+	// Estados para manejar los datos de servicios, categorías, carga y errores
 	const [categories, setCategories] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
 
-	const {
+	const {	// Trae los filtros y servicios filtrados y funciones para manejar los filtros y búsqueda
 		filteredServices,
 		filters,
 		handleFiltersChange,
@@ -149,7 +25,7 @@ const ServicesPage = () => {
 		clearFilters,
 	} = useServiceFilters();
 
-	useEffect(() => {
+	useEffect(() => {	// Cargar datos iniciales al montar el componente
 		loadInitialData();
 	}, []);
 
@@ -158,11 +34,11 @@ const ServicesPage = () => {
 		setCurrentPage(1);
 	}, [filteredServices]);
 
-	const loadInitialData = async () => {
+	const loadInitialData = async () => {	// Función para cargar las categorías y servicios al inicio
 		try {
 			setLoading(true);
-			const categoriesResponse = await servicesApi.getCategories();
-			setCategories(categoriesResponse.data);
+			const categoriesResponse = await servicesApi.getCategories();	// Obtiene categorías
+			setCategories(categoriesResponse.data);	// Actualiza el estado de categorías
 		} catch (err) {
 			setError("Error loading data");
 			console.error("Error loading initial data:", err);
@@ -178,10 +54,9 @@ const ServicesPage = () => {
 		currentPage * ITEMS_PER_PAGE
 	);
 
-	const handlePageChange = (newPage) => {
+	const handlePageChange = (newPage) => { // Función para manejar el cambio de página
 		setCurrentPage(newPage);
-		// Scroll al top cuando cambie de página
-		window.scrollTo({ top: 0, behavior: 'smooth' });
+		window.scrollTo({ top: 0, behavior: 'smooth' });	// Scroll al top cuando cambie de página
 	};
 
 	if (error) {
@@ -244,7 +119,7 @@ const ServicesPage = () => {
 				/>
 
 				{/* Mostrar información de resultados */}
-				{!loading && (
+				{!loading && (	// Si no está cargando, muestra la información de resultados
 					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
 						<p className="text-gray-400 text-sm">
 							Showing {((currentPage - 1) * ITEMS_PER_PAGE) + 1} to {Math.min(currentPage * ITEMS_PER_PAGE, filteredServices.length)} of {filteredServices.length} services
@@ -253,14 +128,14 @@ const ServicesPage = () => {
 				)}
 
 				<ServicesList
-					services={paginatedServices}
+					services={paginatedServices}	// Le pasa a la lista de servicios los servicios paginados 
 					loading={loading}
 					showTitle={false}
-					limit={ITEMS_PER_PAGE}  // Agregar esta línea
+					limit={ITEMS_PER_PAGE}
 />
 
 				{/* Paginación */}
-				{!loading && totalPages > 1 && (
+				{!loading && totalPages > 1 && (	// Si no está cargando y hay más de una página, muestra la paginación
 					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 						<ServicesPagination
 							currentPage={currentPage}

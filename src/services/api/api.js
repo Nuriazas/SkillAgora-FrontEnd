@@ -1,18 +1,15 @@
-// src/services/api/api.js
-
-import { getAllServices } from "./getAllServicesService.js";
-import { getServiceById } from "./getServiceDetailsService.js";
+import { getAllServices } from "../services/getAllServicesService.js";
+import { getServiceById } from "../services/getServiceDetailsService.js";
 import {
   getProfileByName,
   getCurrentUserFromToken,
 } from "./getProfileByNameService.js";
-import { getFeaturedServices } from "./getFeaturedServicesService.js";
+import { getFeaturedServices } from "../services/getFeaturedServicesService.js";
 import {
   getFilteredServices,
   getCategories,
-} from "./getFilteredServicesService.js";
+} from "../services/getFilteredServicesService.js";
 
-// ✅ Actualizado: función para actualizar perfil
 const updateProfile = async (data) => {
   const token = localStorage.getItem("token");
 
@@ -33,7 +30,6 @@ const updateProfile = async (data) => {
   return result;
 };
 
-// ✅ NUEVO: función para subir avatar
 const uploadProfilePhoto = async (formData) => {
   const token = localStorage.getItem("token");
 
@@ -42,7 +38,7 @@ const uploadProfilePhoto = async (formData) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    body: formData, // No se pone Content-Type manualmente
+    body: formData,
   });
 
   const result = await response.json();
@@ -62,7 +58,7 @@ export const userApi = {
   getProfileByName,
   getCurrentUserFromToken,
   updateProfile,
-  uploadProfilePhoto, // 👈 Importante: este nombre es el que usas en EditProfilePage
+  uploadProfilePhoto,
 };
 
 export const contactApi = {

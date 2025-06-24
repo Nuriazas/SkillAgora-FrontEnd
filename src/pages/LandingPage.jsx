@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Header from "../components/Header";
-import HeroSection from "../components/HeroSection.jsx";
-import SearchFilter from "../components/SearchFilter.jsx";
-import ServicesList from "../components/ServicesList.jsx";
+import Header from "../components/layout/Header.jsx";
+import HeroSection from "../components/hero/HeroSection.jsx";
+import SearchFilter from "../components/search/SearchFilter.jsx";
+import ServicesList from "../components/services/list/ServicesList.jsx";
 import FreelancersList from "../components/FreelancersList/FreelancerList.jsx";
-import Footer from "../components/Footer";
+import Footer from "../components/layout/Footer.jsx";
 import { servicesApi } from "../services/api/api";
-import useServiceFilters from "../hooks/useServiceFilters";
-import { useFreelancersList } from "../hooks/useFreelancersList.js";
+import useServiceFilters from "../hooks/services/useServiceFilters.js";
+import { useFreelancersList } from "../hooks/freelancers/useFreelancersList.js";
 
 const LandingPage = () => {
 	const [categories, setCategories] = useState([]);

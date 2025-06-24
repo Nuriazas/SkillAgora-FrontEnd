@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import Header from "../components/Header";
-import SimpleHeroSection from "../components/SimpleHeroSection.jsx";
-import Footer from "../components/Footer.jsx";
-import ServiceEditModal from "../components/serviceModal/ServiceEditModal.jsx";
+import Header from "../components/layout/Header.jsx";
+import SimpleHeroSection from "../components/hero/SimpleHeroSection.jsx";
+import Footer from "../components/layout/Footer.jsx";
+import ServiceEditModal from "../components/services/edit/ServiceEditModal.jsx";
 import { AuthContext } from "../context/AuthContextProvider.jsx";
 import { userApi } from "../services/api/api";
 import DefaultAvatar from "../assets/defaultAvatar.jpeg";
-import Spinner from "../components/Spinner.jsx";
+import Spinner from "../components/shared/UI/Spinner.jsx";
 import {
   FiMail,
   FiMapPin,

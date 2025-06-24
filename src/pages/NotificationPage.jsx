@@ -2,7 +2,9 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { AuthContext } from "../context/AuthContextProvider";
-import Header from "../components/Header.jsx";
+import Header from "../components/layout/Header.jsx";
+import OrderDetailModal from "../components/OrderDetailModal.jsx";
+import MessageDetailModal from "../components/MessageDetailModal.jsx";
 
 const NotificationPage = () => {
   const { token } = useContext(AuthContext);
@@ -10,6 +12,12 @@ const NotificationPage = () => {
   const [messages, setMessages] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [loadingMessages, setLoadingMessages] = useState(true);
+  
+  // Estados para modales
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [selectedMessage, setSelectedMessage] = useState(null);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
 
   const fetchOrders = async () => {
     try {
@@ -45,12 +53,66 @@ const NotificationPage = () => {
     }
   };
 
+  // Abrir modal de orden
   const openOrderModal = (order) => {
     console.log("Abrir modal de orden:", order);
+    setSelectedOrder(order);
+    setIsOrderModalOpen(true);
   };
 
+  // Abrir modal de mensaje
   const openMessageModal = (msg) => {
     console.log("Abrir modal de mensaje:", msg);
+    setSelectedMessage(msg);
+    setIsMessageModalOpen(true);
+  };
+
+  // Cerrar modales
+  const closeOrderModal = () => {
+    setSelectedOrder(null);
+    setIsOrderModalOpen(false);
+  };
+
+  const closeMessageModal = () => {
+    setSelectedMessage(null);
+    setIsMessageModalOpen(false);
+  };
+
+  // Actualizar orden en la lista - VERSIÓN MEJORADA
+  const handleOrderUpdate = (updatedOrder) => {
+    console.log("🔄 Actualizando orden:", updatedOrder);
+    
+    // Validar que la orden actualizada tenga los datos mínimos
+    if (!updatedOrder || !updatedOrder.id) {
+      console.error("❌ Orden inválida para actualizar:", updatedOrder);
+      return;
+    }
+
+    setOrders(prevOrders => {
+      console.log("📋 Órdenes antes de actualizar:", prevOrders);
+      
+      const newOrders = prevOrders.map(order => {
+        // Validar que cada orden tenga ID
+        if (!order || !order.id) {
+          console.warn("⚠️ Orden sin ID encontrada:", order);
+          return order; // mantener la orden como está
+        }
+        
+        return order.id === updatedOrder.id ? { ...order, ...updatedOrder } : order;
+      }).filter(order => order && order.id); // Filtrar órdenes inválidas
+      
+      console.log("📋 Órdenes después de actualizar:", newOrders);
+      return newOrders;
+    });
+  };
+
+  // Actualizar mensaje en la lista (si es necesario)
+  const handleMessageUpdate = (updatedMessage) => {
+    setMessages(prevMessages => 
+      prevMessages.map(message => 
+        message.id === updatedMessage.id ? updatedMessage : message
+      )
+    );
   };
 
   useEffect(() => {
@@ -62,8 +124,9 @@ const NotificationPage = () => {
     const statusConfig = {
       completed: { label: "Completado", class: "bg-green-100 text-green-800" },
       pending: { label: "Pendiente", class: "bg-yellow-100 text-yellow-800" },
-      in_progress: { label: "En progreso", class: "bg-blue-100 text-blue-800" },
-      delivered: { label: "Entregado", class: "bg-purple-100 text-purple-800" },
+      accepted: { label: "Aceptada", class: "bg-blue-100 text-blue-800" },
+      in_progress: { label: "En progreso", class: "bg-purple-100 text-purple-800" },
+      delivered: { label: "Entregado", class: "bg-green-100 text-green-800" },
       cancelled: { label: "Cancelado", class: "bg-red-100 text-red-800" },
     };
 
@@ -178,29 +241,29 @@ const NotificationPage = () => {
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {messages.map((msg, index) => (
+                    {messages.filter(msg => msg && msg.id).map((msg, index) => (
                       <div
-                        key={msg.id || index}
-                        className="bg-gray-800/30 border border-gray-700/50 rounded-xl p-4 hover:bg-gray-800/50 cursor-pointer transition-all duration-200 hover:border-purple-500/30"
+                        key={msg.id || `msg-${index}`}
+                        className="bg-gray-800/30 border border-gray-700/50 rounded-xl p-4 hover:bg-gray-800/50 cursor-pointer transition-all duration-200 hover:border-purple-500/30 hover:scale-[1.02]"
                         onClick={() => openMessageModal(msg)}
                       >
                         <div className="flex items-start gap-3">
                           <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
                             <span className="text-white font-medium text-sm">
-                              {msg.senderName?.[0] || "?"}
+                              {msg?.senderName?.[0] || "?"}
                             </span>
                           </div>
                           <div className="flex-1 min-w-0">
                             <h4 className="font-semibold text-white text-base mb-1">
-                              {msg.senderName && msg.senderLastName
+                              {msg?.senderName && msg?.senderLastName
                                 ? `${msg.senderName} ${msg.senderLastName}`
                                 : "Usuario desconocido"}
                             </h4>
                             <p className="text-gray-300 text-sm mb-3 line-clamp-2">
-                              {msg.content || "Sin contenido"}
+                              {msg?.content || "Sin contenido"}
                             </p>
                             <p className="text-gray-500 text-xs">
-                              {formatDate(msg.createdAt)}
+                              {formatDate(msg?.createdAt)}
                             </p>
                           </div>
                         </div>
@@ -257,38 +320,38 @@ const NotificationPage = () => {
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {orders.map((order, index) => (
+                    {orders.filter(order => order && order.id).map((order, index) => (
                       <div
-                        key={order.id || index}
-                        className="bg-gray-800/30 border border-gray-700/50 rounded-xl p-4 hover:bg-gray-800/50 cursor-pointer transition-all duration-200 hover:border-blue-500/30"
+                        key={order.id || `order-${index}`}
+                        className="bg-gray-800/30 border border-gray-700/50 rounded-xl p-4 hover:bg-gray-800/50 cursor-pointer transition-all duration-200 hover:border-blue-500/30 hover:scale-[1.02]"
                         onClick={() => openOrderModal(order)}
                       >
                         <div className="flex items-start gap-3">
                           <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0">
                             <span className="text-white font-medium text-sm">
-                              {order.client_name?.[0] || "?"}
+                              {order?.client_name?.[0] || "?"}
                             </span>
                           </div>
                           <div className="flex-1 min-w-0">
                             <h4 className="font-semibold text-white text-base mb-1">
-                              {order.client_name && order.client_lastName
+                              {order?.client_name && order?.client_lastName
                                 ? `${order.client_name} ${order.client_lastName}`
                                 : "Cliente desconocido"}
                             </h4>
                             <p className="text-gray-300 text-sm font-medium mb-2">
-                              {order.service_title || "Servicio sin título"}
+                              {order?.service_title || "Servicio sin título"}
                             </p>
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-3">
-                                {getStatusBadge(order.status)}
+                                {getStatusBadge(order?.status)}
                                 <span className="text-gray-400 text-xs">
-                                  {order.total_price || "N/A"}{" "}
-                                  {order.currency_code || "USD"}
+                                  ${order?.total_price || "N/A"}{" "}
+                                  {order?.currency_code || "USD"}
                                 </span>
                               </div>
                             </div>
                             <p className="text-gray-500 text-xs mt-2">
-                              {formatDate(order.ordered_at)}
+                              {formatDate(order?.ordered_at)}
                             </p>
                           </div>
                         </div>
@@ -300,9 +363,24 @@ const NotificationPage = () => {
             </section>
           </div>
         </main>
+
+        {/* Modales */}
+        <OrderDetailModal
+          order={selectedOrder}
+          isOpen={isOrderModalOpen}
+          onClose={closeOrderModal}
+          onOrderUpdate={handleOrderUpdate}
+        />
+
+        <MessageDetailModal
+          message={selectedMessage}
+          isOpen={isMessageModalOpen}
+          onClose={closeMessageModal}
+          onMessageUpdate={handleMessageUpdate}
+        />
       </div>
 
-      <style jsx>{`
+      <style>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
         }

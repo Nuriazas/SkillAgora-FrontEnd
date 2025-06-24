@@ -8,7 +8,7 @@ import {
   FiMail,
   FiBriefcase,
 } from "react-icons/fi";
-import { useFreelancerModalLogic } from "../../hooks/useFreelancerModalLogic.js";
+import { useFreelancerModalLogic } from "../../hooks/freelancers/useFreelancerModal.js";
 import FreelancerContactModal from "./FreelancerContactModal.jsx";
 import FreelancerHireModal from "./FreelancerHireModal.jsx";
 import FreelancerResultModal from "./FreelancerResultModal.jsx";

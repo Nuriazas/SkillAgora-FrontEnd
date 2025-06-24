@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Header from "../components/Header.jsx";
-import SimpleHeroSection from "../components/SimpleHeroSection.jsx";
+import Header from "../components/layout/Header.jsx";
+import SimpleHeroSection from "../components/hero/SimpleHeroSection.jsx";
 import FreelancerSearchFilter from "../components/FreelancerSearchFilter.jsx";
 import { FreelancerCard } from "../components/FreelancersList/FreelancerCard.jsx";
 import { FreelancerModal } from "../components/FreelancersList/FreelancerModal.jsx";
 import { FreelancerPagination } from "../components/FreelancersList/FreelancerPagination.jsx";
-import Footer from "../components/Footer";
+import Footer from "../components/layout/Footer.jsx";
 import { freelancerService } from "../services/getAllFreelancersService.js";
 
 const ITEMS_PER_PAGE = 6;

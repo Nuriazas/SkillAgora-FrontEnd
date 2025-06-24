@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContextProvider.jsx";
 import ApiService from "../services/users/LoginUserService.js";
 import { useNavigate, Link } from "react-router-dom";
-import { Background } from "../components/background.jsx";
+import { Background } from "../components/shared/Background/index.jsx";
 import {
   FaGoogle,
   FaFacebookF,

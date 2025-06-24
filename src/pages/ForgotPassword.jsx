@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Background } from "../components/background";
+import { Background } from "../../src/components/shared/Background/index.jsx";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");

@@ -9,10 +9,10 @@ import NotFoundPage from "./components/NotFoundPage.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import ServicesPage from "./pages/ServicesPage";
 import ProfilePage from "./pages/ProfilePage";
-import EditProfilePage from "./pages/EditProfilePage"; // ✅ NUEVA LÍNEA
-import ErrorBoundary from "./components/ErrorBoundary.jsx";
+import EditProfilePage from "./pages/EditProfilePage";
+import ErrorBoundary from "./components/shared/modals/ErrorBoundary.jsx"
 import RegisterPage from "./pages/RegisterPage.jsx";
-import Spinner from "./components/Spinner.jsx";
+import Spinner from "./components/shared/UI/Spinner.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
 import HelpCenterPage from "./pages/HelpCenterPage.jsx";

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../components/layout/Header.jsx";
+import Footer from "../components/layout/Footer.jsx";
 import { AuthContext } from "../context/AuthContextProvider";
 import { userApi } from "../services/api/api";
 import DefaultAvatar from "../assets/defaultAvatar.jpeg";

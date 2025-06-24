@@ -1,6 +1,6 @@
 import React from "react";
 import { createContext, useState, useEffect } from "react";
-import getDataUserLoggedService from "../services/getDataUserLoggedService.js";
+import getDataUserLoggedService from "../../src/services/users/getDataUserLoggedService.js";
 
 const AuthContext = createContext();
 

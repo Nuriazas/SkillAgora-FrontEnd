@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Header from "../components/Header.jsx";
-import { Background } from "../components/background.jsx";
+import Header from "../components/layout/Header.jsx";
+import { Background } from "../components/shared/Background/index.jsx";
 
-import { useFreelancersList } from "../hooks/useFreelancersList.js";
+import { useFreelancersList } from "../hooks/freelancers/useFreelancersList.js";
 import { AuthContext } from "../context/AuthContextProvider.jsx";
-import { getCategories } from "../services/api/getFilteredServicesService.js";
+import { getCategories } from "../services/services/getFilteredServicesService.js";
 
 const CreateServicePage = () => {
   const navigate = useNavigate();

@@ -5,9 +5,9 @@ import registerUserService from "../services/users/RegisterUserService.js";
 import { AuthContext } from "../context/AuthContextProvider.jsx";
 
 import { useNavigate } from "react-router-dom";
-import { Background } from "../components/background.jsx";
-import Header from "../components/Header.jsx";
-import Spinner from "../components/Spinner.jsx";
+import { Background } from "../components/shared/Background/index.jsx";
+import Header from "../components/layout/Header.jsx";
+import Spinner from "../components/shared/UI/Spinner.jsx";
 
 const RegisterPage = () => {
   const [form, setForm] = useState({

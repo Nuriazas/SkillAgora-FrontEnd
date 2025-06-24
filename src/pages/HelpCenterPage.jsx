@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Background } from "../components/background";
+import { Background } from "../components/shared/Background/index.jsx";
 
 const helpArticles = [
   {

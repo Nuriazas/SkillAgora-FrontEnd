@@ -1,5 +1,5 @@
 import React from "react";
-import { Background } from "./background.jsx";
+import { Background } from "../components/shared/Background/index.jsx";
 function NotFoundPage() {
   return (
       <main className="relative min-h-screen overflow-hidden bg-transparent">

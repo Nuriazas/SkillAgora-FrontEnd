@@ -1,6 +1,6 @@
 import React from "react";
 import { FaWhatsapp, FaEnvelope, FaPhoneAlt, FaComments } from "react-icons/fa";
-import { Background } from "../components/background";
+import { Background } from "../components/shared/Background/index.jsx";
 
 const ContactPage = () => {
   return (
