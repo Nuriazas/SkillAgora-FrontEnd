@@ -7,10 +7,13 @@ import Footer from "../components/layout/Footer.jsx";
 import { servicesApi } from "../services/api/api";
 import useServiceFilters from "../hooks/services/useServiceFilters.js";
 import ServicesPagination from "../components/services/components/ServicePagination.jsx";
+import { useTranslation } from "react-i18next";
+
 
 const ITEMS_PER_PAGE = 6;	// limite de servicios por página
 
 const ServicesPage = () => {
+	const { t } = useTranslation();
 	// Estados para manejar los datos de servicios, categorías, carga y errores
 	const [categories, setCategories] = useState([]);
 	const [loading, setLoading] = useState(true);

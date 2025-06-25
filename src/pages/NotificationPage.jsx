@@ -7,7 +7,9 @@ import OrderDetailModal from "../components/OrderDetailModal.jsx";
 import MessageDetailModal from "../components/MessageDetailModal.jsx";
 import { useTranslation } from "react-i18next";
 
+
 const NotificationPage = () => {
+  
   const { token } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
   const [messages, setMessages] = useState([]);

@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContextProvider.jsx";
 import UserDropdown from "../shared/navigation/UserDropDown.jsx";
-import { LanguageToggle } from "./shared/UI/LanguageToggle/index.jsx";
+import { LanguageToggle } from "../shared/navigation/LanguageToggle.jsx";
 import { useTranslation } from "react-i18next";
 
 // componente header que muestra la barra de navegación superior con enlaces y dropdown de usuario

@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Button } from "../index";
+import { Button } from "../UI/Button";
 
 export const LanguageToggle = memo(() => {
   const { i18n, t } = useTranslation();

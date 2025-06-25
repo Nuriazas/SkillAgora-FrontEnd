@@ -22,17 +22,13 @@ const LandingNavigationButtons = () => {
 			ariaLabel: t('landingNav.findFreelancersAria'),
 		},
 		{
-<<<<<<< HEAD:src/components/hero/LandingNavigationButtons.jsx
-			label: "Contact Us",
-=======
-			label: t('landingNav.postJob'),
-			path: "/jobs/create",
+			label: t("landingNav.postService"),
+			path: "/services/create",
 			variant: "secondary",
-			ariaLabel: t('landingNav.postJobAria'),
+			ariaLabel: t("landingNav.postServiceAria"),
 		},
 		{
 			label: t('landingNav.contactUs'),
->>>>>>> 175a05442e0d57b481b0778e9e16bbdcd12d85bd:src/pages/LandingNavigationButton.jsx
 			path: "/contact",
 			variant: "secondary",
 			ariaLabel: t('landingNav.contactUsAria'),

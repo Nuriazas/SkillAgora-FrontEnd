@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { AuthContext } from "../context/AuthContextProvider";
+import { AuthContext } from "../../context/AuthContextProvider.jsx";
 
 // componente para el pie de página (footer)
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { FiStar, FiMapPin, FiUser } from "react-icons/fi";
-import DefaultAvatar from "../assets/defaultAvatar.jpeg";
+import DefaultAvatar from "../../../assets/defaultAvatar.jpeg";
 import { useTranslation } from "react-i18next";
 
 const ServiceCard = ({ service, onClick }) => {

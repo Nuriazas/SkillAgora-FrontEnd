@@ -8,12 +8,8 @@ import {
   FiLogOut,
 } from "react-icons/fi";
 // import DefaultAvatar from "../assets/defaultAvatar.jpeg";
-<<<<<<< HEAD:src/components/shared/navigation/UserDropDown.jsx
 import UseAvatar from "../../UseAvatar.jsx";
-=======
-import UseAvatar from "./UseAvatar.jsx";
 import { useTranslation } from "react-i18next";
->>>>>>> 175a05442e0d57b481b0778e9e16bbdcd12d85bd:src/components/UserDropDown.jsx
 
 /**
  * Dropdown del usuario logueado con opciones de perfil y logout

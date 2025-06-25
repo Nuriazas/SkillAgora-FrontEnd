@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../components/Header.jsx";
-import { Background } from "../components/background.jsx";
-import { getServiceById } from "../services/api/getServiceById.js";
+import Header from "../components/layout/Header.jsx";
+import { Background } from "../components/shared/Background/index.jsx";
+import { getServiceById } from "../services/services/getServiceByIdService.js";
 
 const ReviewForm = () => {
   const { service_id } = useParams();
