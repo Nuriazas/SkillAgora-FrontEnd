@@ -9,6 +9,8 @@ const ServicesList = ({ services, loading, limit = null, showViewAll = false, is
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();
 
+	console.log("SERVICES RECIBIDOS EN ServicesList:", services);
+
 	// Handler para abrir modal de servicio
 	const handleServiceClick = (service) => {
 		setSelectedService(service);

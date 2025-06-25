@@ -2,15 +2,17 @@ import React from "react";
 import { FiStar, FiMapPin, FiUser } from "react-icons/fi";
 import DefaultAvatar from "../../../assets/defaultAvatar.jpeg";
 import { useTranslation } from "react-i18next";
+import DefaultImage from "../../../assets/defaultLogo.png";
 
 const ServiceCard = ({ service, onClick }) => {
+  console.log("ESTO ES EL SERVICE QUE LE LLEGA A SERVICECAR", service);
   const { t } = useTranslation();
   // Imagen por defecto si el servicio no tiene imagen
-  const defaultImage =
-    "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&h=250&fit=crop";
 
-  // Usar imagen del servicio o imagen por defecto
-  const imageUrl = service.image || defaultImage;
+  const imageUrl = service.media?.[0]?.media_url 
+ ? `http://localhost:3000/uploads/${service.media[0].media_url}` 
+ : DefaultImage;
+
 
   // Handler para click con validación
   const handleClick = () => {
@@ -19,10 +21,6 @@ const ServiceCard = ({ service, onClick }) => {
     }
   };
 
-  // Handler para errores de carga de imagen
-  const handleImageError = (e) => {
-    e.target.src = defaultImage;
-  };
 
   // Formatear precio con validación
   const formatPrice = (price) => {
@@ -52,7 +50,6 @@ const ServiceCard = ({ service, onClick }) => {
           src={imageUrl}
           alt={t('serviceCard.imageAlt', { title: service.title })}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-          onError={handleImageError}
           loading="lazy"
         />
         {/* Overlay de gradiente */}

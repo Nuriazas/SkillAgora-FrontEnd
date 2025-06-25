@@ -23,7 +23,16 @@ const CreateServicePage = () => {
     description: "",
     price: "",
     place: "",
+    img: "",
   });
+
+  const handleFileChange = (e) => {
+			const file = e.target.files[0];
+			setFormData((prev) => ({
+				...prev,
+				img: file,
+  }));
+		};
 
   // Obtener categorías del backend
   useEffect(() => {
@@ -53,6 +62,7 @@ const CreateServicePage = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
+      console.log("DATOS DEL FORMULARIO EN EL CREATESERVICEPAGE:", formData);
       console.log("Token obtenido del contexto:", token);
       console.log("¿Existe el token?", !!token);
       console.log("Tipo de token:", typeof token);
@@ -63,7 +73,9 @@ const CreateServicePage = () => {
         description: formData.description,
         price: formData.price,
         place: formData.place,
+        img: formData.img,
       };
+
       await handleCreateService(serviceData, token);
       navigate("/");
     } catch (error) {
@@ -163,6 +175,24 @@ const CreateServicePage = () => {
                         ))}
                       </select>
                     </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-gray-400 mb-2">
+                      Service Images
+                    </label>
+                    <input
+                      type="file"
+                      name="img"
+                      onChange={handleFileChange}
+                      accept="image/*,video/*"
+                      className="w-full px-2 py-2 rounded-lg bg-[#1a1c2d] text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-purple-600 file:text-white hover:file:bg-purple-700"
+                    />
+                    {formData.img && (
+                      <p className="text-sm text-gray-500 mt-1">
+                        Selected File: {formData.img.name}
+                      </p>
+                    )}
                   </div>
 
                   <div>

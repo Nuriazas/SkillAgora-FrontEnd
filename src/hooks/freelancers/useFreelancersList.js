@@ -29,7 +29,7 @@ export const useFreelancersList = () => {
       setLoading(true);
       console.log("Token recibido en hook:", token);
       console.log("¿Token válido en hook?", !!token);
-      const { category_name, title, description, price, place } = serviceData;
+      const { category_name, title, description, price, place, img } = serviceData;
       const newService = await CreateService.create(
         {
           category_name,
@@ -37,6 +37,7 @@ export const useFreelancersList = () => {
           description,
           price,
           place,
+          img
         },
         token
       );
@@ -47,6 +48,7 @@ export const useFreelancersList = () => {
         description,
         price,
         place,
+        img
       };
     } catch (err) {
       setError(err.message);

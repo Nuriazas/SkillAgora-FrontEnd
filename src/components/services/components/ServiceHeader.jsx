@@ -1,18 +1,22 @@
 import React from "react";
 import { FiX } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
+import DefaultImage from "../../../assets/defaultLogo.png";
 
 // Componente ServiceHeader para mostrar la cabecera del servicio
-const ServiceHeader = ({ title, onClose }) => {
+const ServiceHeader = ({ title, service, onClose }) => {
   const { t } = useTranslation();
   
-  const mockImage =
-    "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&h=250&fit=crop";
+   const imageUrl = service.media?.[0]?.media_url 
+ ? `http://localhost:3000/uploads/${service.media[0].media_url}` 
+ : DefaultImage;
+
+ console.log("LLEGA LA IMAGEN A SERVICEHEADER", imageUrl);
 
   return (
     <div className="relative">
       <img
-        src={mockImage}
+        src={imageUrl}
         alt={t("serviceModal.serviceImageAlt", { title: title || t('serviceModal.defaultServiceTitle') })}
         className="w-full h-64 object-cover rounded-t-2xl"
       />

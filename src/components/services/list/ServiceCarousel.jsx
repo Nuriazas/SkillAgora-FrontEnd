@@ -24,7 +24,7 @@ const ServiceCarousel = ({	// Props del componente
 	// Estado sin servicios
 	if (!displayService) {
 		return (
-			<div className="bg-white rounded-2xl shadow-2xl p-8 relative z-10 text-center">
+			<div className="bg-gray-800 rounded-2xl shadow-2xl p-8 relative z-10 text-center">
 				<div className="text-gray-500 mb-4">{t('serviceCarousel.noServices')}</div>
 				<button className="text-purple-600 hover:text-purple-700 font-semibold">
 					{t('serviceCarousel.reload')}
@@ -35,27 +35,28 @@ const ServiceCarousel = ({	// Props del componente
 
 
 	return (
-		<div className="bg-white rounded-2xl shadow-2xl p-8 relative z-10 transition-all duration-500">
-			{/* Navegación del carrusel */}
-			{limitedServices.length > 1 && (
-				<>
-					<button
-						onClick={onPrev}
-						className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200 z-20"
-						aria-label={t('serviceCarousel.prevService')}
-					>
-						<FiChevronLeft className="w-5 h-5 text-gray-600" />
-					</button>
-					<button
-						onClick={onNext}
-						className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200 z-20"
-						aria-label={t('serviceCarousel.nextService')}
-					>
-						<FiChevronRight className="w-5 h-5 text-gray-600" />
-					</button>
-				</>
-			)}
+	<div className="relative z-20"> {/* Nuevo wrapper */}
+		{/* Navegación del carrusel FUERA del contenedor principal */}
+		{limitedServices.length > 1 && (
+			<>
+				<button
+					onClick={onPrev}
+					className="absolute -left-14 top-1/2 -translate-y-1/2 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200 z-30"
+					aria-label={t('serviceCarousel.prevService')}
+				>
+					<FiChevronLeft className="w-5 h-5 text-gray-600" />
+				</button>
+				<button
+					onClick={onNext}
+					className="absolute -right-14 top-1/2 -translate-y-1/2 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200 z-30"
+					aria-label={t('serviceCarousel.nextService')}
+				>
+					<FiChevronRight className="w-5 h-5 text-gray-600" />
+				</button>
+			</>
+		)}
 
+		<div className="bg-gray-800 rounded-2xl shadow-2xl p-8 z-10 transition-all duration-500">
 			{/* Header con usuario y rating */}
 			<div className="flex items-center justify-between mb-6">
 				<div className="flex items-center space-x-3">
@@ -65,20 +66,20 @@ const ServiceCarousel = ({	// Props del componente
 						</span>
 					</div>
 					<div>
-						<div className="font-semibold text-gray-900">
+						<div className="font-semibold text-white">
 							{displayService.user_name || t('serviceCarousel.anonymousUser')}
 						</div>
-						<div className="text-sm text-gray-500">
+						<div className="text-sm text-white">
 							{displayService.category_name}
 						</div>
 					</div>
 				</div>
 				<div className="text-right">
-					<div className="flex items-center space-x-1 text-sm text-gray-500 mb-1">
+					<div className="flex items-center space-x-1 text-sm text-white mb-1">
 						<FiStar className="w-4 h-4 fill-yellow-400 text-yellow-400" />
 						<span>{displayService.rating || "5.0"}</span>
 					</div>
-					<div className="text-xl font-bold text-gray-900">
+					<div className="text-xl font-bold text-white">
 						${displayService.price}
 					</div>
 				</div>
@@ -86,21 +87,21 @@ const ServiceCarousel = ({	// Props del componente
 
 			{/* Contenido del servicio */}
 			<div className="mb-6">
-				<h3 className="text-xl font-bold text-gray-900 mb-3">
+				<h3 className="text-xl font-bold text-white mb-3">
 					{displayService.title}
 				</h3>
-				<p className="text-gray-600 leading-relaxed mb-4 line-clamp-3">
+				<p className="text-white leading-relaxed mb-4 line-clamp-3">
 					{displayService.description}
 				</p>
 
 				<div className="space-y-2">
-					<div className="flex items-center space-x-2 text-sm text-gray-500">
+					<div className="flex items-center space-x-2 text-sm text-gray-400">
 						<FiClock className="w-4 h-4" />
 						<span>
 							{t('serviceCarousel.delivery', { days: displayService.delivery_time_days || 3 })}
 						</span>
 					</div>
-					<div className="flex items-center space-x-2 text-sm text-gray-500">
+					<div className="flex items-center space-x-2 text-sm text-gray-400">
 						<span className="w-4 h-4 flex items-center justify-center">📍</span>
 						<span>{displayService.place || t('serviceCarousel.remote')}</span>
 					</div>
@@ -108,12 +109,12 @@ const ServiceCarousel = ({	// Props del componente
 			</div>
 
 			{/* Box de precio */}
-			<div className="bg-gray-50 rounded-xl p-4 mb-6">
+			<div className="bg-purple-300 rounded-xl p-4 mb-6">
 				<div className="flex justify-between items-center">
-					<span className="font-semibold text-gray-900">
+					<span className="text-xl font-semibold text-gray-900">
 						{t('serviceCarousel.priceLabel')}
 					</span>
-					<span className="text-2xl font-bold text-purple-600">
+					<span className="text-2xl font-bold text-white">
 						${displayService.price}
 					</span>
 				</div>
@@ -143,7 +144,8 @@ const ServiceCarousel = ({	// Props del componente
 				</div>
 			)}
 		</div>
-	);
+	</div>
+);
 };
 
 export default ServiceCarousel;

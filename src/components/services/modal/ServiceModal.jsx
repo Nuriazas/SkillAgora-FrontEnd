@@ -108,6 +108,7 @@ const ServiceModal = ({ service, onClose }) => {
         <div className="bg-gray-900/95 backdrop-blur-xl rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-800/50 shadow-2xl">
           <ServiceHeader 
             title={serviceDetails.title}
+            service={service}
             onClose={onClose}
           />
 

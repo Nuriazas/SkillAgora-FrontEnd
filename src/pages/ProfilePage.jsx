@@ -139,7 +139,6 @@ const ProfilePage = () => {
       </div>
     );
   }
-
   return (
     <div className="min-h-screen bg-gray-950 relative overflow-hidden font-sans">
       {/* Animated Background */}

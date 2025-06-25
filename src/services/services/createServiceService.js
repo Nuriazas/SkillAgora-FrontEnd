@@ -2,25 +2,23 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export const CreateService = {
 	create: async (serviceData, token) => {
-		const bodyData = {
-			category_name: serviceData.category_name,
-			title: serviceData.title,
-			description: serviceData.description,
-			price: parseInt(serviceData.price),
-			place: serviceData.place,
-		};
+		const formData = new FormData();
+		formData.append('category_name', serviceData.category_name);
+		formData.append('title', serviceData.title);
+		formData.append('description', serviceData.description);
+		formData.append('price', serviceData.price);
+		formData.append('place', serviceData.place);
+		formData.append('img', serviceData.img);
+		
 
-		console.log("Body que se enviará:", JSON.stringify(bodyData));
-		console.log("Token que se enviará:", token);
-		console.log("URL completa:", `${API_BASE_URL}/create-service`);
+		console.log("DATOS DE EL CREAR SERVICIO QUE SE MANDAN AL BACK:", serviceData);
 
 		const response = await fetch(`${API_BASE_URL}/create-service`, {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/json", // ← AÑADIDO: faltaba este header
-				Authorization: `Bearer ${token}`, // ← CORREGIDO: mayúsculas correctas
+				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify(bodyData),
+			body: formData,
 		});
 
 		console.log("Status de respuesta:", response.status);
