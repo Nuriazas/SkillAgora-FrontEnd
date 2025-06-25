@@ -262,7 +262,6 @@ export const useFreelancerModalLogic = (freelancer, onClose) => {
 		// Handlers
 		handleContactFreelancer,
 		handleSendMessage,
-		handleHireFreelancer,
 		handleConfirmHire,
 		handleKeyDown,
 	};

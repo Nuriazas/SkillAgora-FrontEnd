@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 
 
 const NotificationPage = () => {
-  
   const { token } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -26,7 +25,7 @@ const NotificationPage = () => {
   const fetchOrders = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_URL_API}/orders/get`,
+        `http://localhost:3000/orders/get`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -43,7 +42,7 @@ const NotificationPage = () => {
   const fetchMessages = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_URL_API}/notifications/contacts`,
+        `http://localhost:3000/notifications/contacts`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

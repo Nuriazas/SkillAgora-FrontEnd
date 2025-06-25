@@ -41,7 +41,6 @@ const FreelancerModal = ({ isOpen, onClose, freelancer }) => {
     // Handlers
     handleContactFreelancer,
     handleSendMessage,
-    handleHireFreelancer,
     handleConfirmHire,
   } = useFreelancerModalLogic(freelancer, onClose);
 
@@ -218,12 +217,7 @@ const FreelancerModal = ({ isOpen, onClose, freelancer }) => {
                   <FiMail className="w-4 h-4" />
                   {t('freelancerModal.contact')}
                 </button>
-                <button
-                  onClick={handleHireFreelancer}
-                  className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl transition-all duration-200 font-semibold shadow-lg hover:shadow-purple-500/25"
-                >
-                  {t('freelancerModal.hireFreelancer')}
-                </button>
+              
               </div>
             </div>
           </div>
