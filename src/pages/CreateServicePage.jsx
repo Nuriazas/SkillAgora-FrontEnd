@@ -15,7 +15,8 @@ const CreateServicePage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [loadingCategories, setLoadingCategories] = useState(true);
-  const { token } = useContext(AuthContext);
+  const { token, userLogged, loading: authLoading, isAuthenticated } = useContext(AuthContext);
+  const [showRoleModal, setShowRoleModal] = useState(false);
 
   const [formData, setFormData] = useState({
     category_name: "",
@@ -25,6 +26,22 @@ const CreateServicePage = () => {
     place: "",
     img: "",
   });
+
+  // Verificar rol del usuario al cargar la página
+  useEffect(() => {
+    // Solo verificar cuando la autenticación haya terminado de cargar
+    if (!authLoading) {
+      if (!isAuthenticated) {
+        // Si no está autenticado, redirigir al login
+        navigate("/login");
+        return;
+      }
+      
+      if (userLogged && userLogged.role !== 'freelancer') {
+        setShowRoleModal(true);
+      }
+    }
+  }, [userLogged, authLoading, isAuthenticated, navigate]);
 
   const handleFileChange = (e) => {
 			const file = e.target.files[0];
@@ -61,44 +78,96 @@ const CreateServicePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    try {
-      console.log("DATOS DEL FORMULARIO EN EL CREATESERVICEPAGE:", formData);
-      const serviceData = {
-        category_name: formData.category_name,
-        title: formData.title,
-        description: formData.description,
-        price: formData.price,
-        place: formData.place,
-        img: formData.img,
-      };
 
-      await handleCreateService(serviceData);
-      navigate("/");
+    try {
+      // Verificar rol antes de enviar
+      if (userLogged && userLogged.role !== 'freelancer') {
+        setShowRoleModal(true);
+        return;
+      }
+
+      const formDataToSend = new FormData();
+      formDataToSend.append("category_name", formData.category_name);
+      formDataToSend.append("title", formData.title);
+      formDataToSend.append("description", formData.description);
+      formDataToSend.append("price", formData.price);
+      formDataToSend.append("place", formData.place);
+      if (formData.img) {
+        formDataToSend.append("img", formData.img);
+      }
+
+      await handleCreateService(formDataToSend);
+      navigate("/services");
     } catch (error) {
       console.error("Error al crear el servicio:", error);
+      // Si el error es por rol, mostrar el modal
+      if (error.message && error.message.includes("Solo los freelancers")) {
+        setShowRoleModal(true);
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleCloseRoleModal = () => {
+    setShowRoleModal(false);
+    navigate(-1); // Volver a la página anterior
+  };
+
+  // Modal para usuarios que no son freelancers
+  const RoleModal = () => (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-gray-900 border border-gray-700 rounded-xl p-8 max-w-md mx-4">
+        <div className="text-center">
+          <h3 className="text-xl font-bold text-white mb-4">
+            Acceso Restringido
+          </h3>
+          <p className="text-gray-300 mb-6">
+            Solo los freelancers pueden crear servicios. Si eres un freelancer, 
+            contacta a un administrador para solicitar el cambio de rol.
+          </p>
+          <button
+            onClick={handleCloseRoleModal}
+            className="bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 hover:from-purple-700 hover:to-blue-700 text-white px-6 py-3 rounded-lg"
+          >
+            Entendido
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Mostrar loading mientras se verifica la autenticación
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+        <div className="text-white">Cargando...</div>
+      </div>
+    );
+  }
+
+  // Si el usuario no es freelancer, mostrar solo el modal
+  if (showRoleModal) {
+    return <RoleModal />;
+  }
+
   return (
     <>
-      <main>
-		<Header />
-        <div className="min-h-screen bg-[#070714]  w-full flex flex-col items-center justify-start relative overflow-x-hidden">
-          
-
-          {/* Contenedor del formulario y decoraciones */}
-          <div className="relative flex-1 w-full flex items-center justify-center py-8 sm:py-16">
-            <Background />
-
-            {/* Formulario principal perfectamente centrado */}
-			<article >
-            <article className="relative z-20 w-full flex items-center justify-center bg-[#1a1c2d]  rounded-xl">
-              <section className="w-full max-w-2xl px-4">
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent mt-8 mb-8 text-center">
-                  {t("createService.title")}
-                </h1>
+      <Header />
+      <main className="min-h-screen bg-gray-950 pt-16">
+        <Background />
+        <div className="relative z-10">
+          <div className="container mx-auto px-4 py-8">
+            <article className="max-w-4xl mx-auto">
+              <article className="mb-8">
+                <section className="text-center mb-8">
+                  <h1 className="text-4xl font-bold text-white mb-4">
+                    {t("createService.title")}
+                  </h1>
+                  <p className="text-gray-400 text-lg">
+                    Crea un nuevo servicio para mostrar tus habilidades
+                  </p>
+                </section>
 
                 <form
                   onSubmit={handleSubmit}
@@ -224,9 +293,8 @@ const CreateServicePage = () => {
                     </button>
                   </div>
                 </form>
-              </section>
+              </article>
             </article>
-			</article>
           </div>
         </div>
       </main>

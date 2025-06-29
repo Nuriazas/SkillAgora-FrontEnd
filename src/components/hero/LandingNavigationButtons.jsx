@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { AuthContext } from "../../context/AuthContextProvider.jsx";
+import RoleWarningModal from "../shared/modals/RoleWarningModal.jsx";
 
 // componente para los botones de navegación en la página de inicio
 
 const LandingNavigationButtons = () => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
+	const { userLogged } = useContext(AuthContext);
+	const [showModal, setShowModal] = useState(false);
 
 	const navigationButtons = [
 		{
@@ -26,6 +30,7 @@ const LandingNavigationButtons = () => {
 			path: "/services/create",
 			variant: "secondary",
 			ariaLabel: t("landingNav.postServiceAria"),
+			isPostService: true,
 		},
 		{
 			label: t('landingNav.contactUs'),
@@ -34,9 +39,16 @@ const LandingNavigationButtons = () => {
 			ariaLabel: t('landingNav.contactUsAria'),
 		},
 	];
+
 	// Función para manejar la navegación al hacer clic en un botón
-	const handleNavigation = (path) => {
-		navigate(path);
+	const handleNavigation = (button) => {
+		if (button.isPostService) {
+			if (userLogged && userLogged.role === "client") {
+				setShowModal(true);
+				return;
+			}
+		}
+		navigate(button.path);
 	};
 
 	// Función para obtener los estilos de los botones según el tipo de variante
@@ -53,18 +65,24 @@ const LandingNavigationButtons = () => {
 
 	// Retorna los botones de navegación con sus estilos y funciones de navegacion
 	return (
-		<div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-			{navigationButtons.map((button) => (
-				<button
-					key={button.path}
-					className={getButtonStyles(button.variant)}
-					onClick={() => handleNavigation(button.path)}
-					aria-label={button.ariaLabel}
-				>
-					{button.label}
-				</button>
-			))}
-		</div>
+		<>
+			<div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+				{navigationButtons.map((button) => {
+					const buttonStyles = getButtonStyles(button.variant);
+					return (
+						<button
+							key={button.path}
+							className={buttonStyles}
+							onClick={() => handleNavigation(button)}
+							aria-label={button.ariaLabel}
+						>
+							{button.label}
+						</button>
+					);
+				})}
+			</div>
+			<RoleWarningModal open={showModal} onClose={() => setShowModal(false)} />
+		</>
 	);
 };
 

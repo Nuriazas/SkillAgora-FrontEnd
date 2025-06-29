@@ -665,7 +665,13 @@
     "viewAllAria": "Ver todos los servicios"
   },
   "landingPage": {
-    "errorTitle": "Error al cargar los datos",
+    "errorTitle": "Error al cargar datos",
     "tryAgain": "Intentar de nuevo"
+  },
+  "banner": {
+    "title": "Conecta con talento excepcional",
+    "subtitle": "Encuentra el profesional perfecto para hacer realidad tu proyecto",
+    "description": "Nuestra plataforma conecta clientes con freelancers talentosos y verificados. Desde desarrollo web hasta diseño creativo, encuentra el experto que necesitas para llevar tu idea al siguiente nivel.",
+    "cta": "Explorar talentos"
   }
 } 

@@ -627,6 +627,12 @@
     "errorTitle": "Error loading data",
     "tryAgain": "Try again"
   },
+  "banner": {
+    "title": "Connect with exceptional talent",
+    "subtitle": "Find the perfect professional to bring your project to life",
+    "description": "Our platform connects clients with talented and verified freelancers. From web development to creative design, find the expert you need to take your idea to the next level.",
+    "cta": "Explore talents"
+  },
   "servicesPage": {
     "heroTitle": "Discover the best",
     "heroHighlight": "services for your project",
