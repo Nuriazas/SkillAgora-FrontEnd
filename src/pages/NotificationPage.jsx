@@ -6,6 +6,7 @@ import Header from "../components/layout/Header.jsx";
 import OrderDetailModal from "../components/OrderDetailModal.jsx";
 import MessageDetailModal from "../components/MessageDetailModal.jsx";
 import { useTranslation } from "react-i18next";
+import { FiSend } from "react-icons/fi";
 
 const NotificationPage = () => {
   const { token, userLogged } = useContext(AuthContext);
@@ -274,7 +275,8 @@ const NotificationPage = () => {
                       .map((msg, index) => (
                         <div
                           key={msg.id || `msg-${index}`}
-                          className="bg-gray-800/30 border border-gray-700/50 rounded-xl p-4 hover:bg-gray-800/50 transition-all duration-200 hover:border-purple-500/30 hover:scale-[1.02]"
+                          className="bg-gray-800/30 border border-gray-700/50 rounded-xl p-4 hover:bg-gray-800/50 transition-all duration-200 hover:border-purple-500/30 hover:scale-[1.02] cursor-pointer group"
+                          onClick={() => openMessageModal(msg)}
                         >
                           <div className="flex items-start gap-3">
                             <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
@@ -293,7 +295,6 @@ const NotificationPage = () => {
                                 <p className="text-gray-500 text-xs">
                                   {formatDate(msg?.createdAt)}
                                 </p>
-                                
                                 {/* Botones de acción para solicitudes de freelancer (solo para admin) */}
                                 {isAdmin && isFreelancerRequest(msg) && msg.status === 'contact_request_pending' && (
                                   <div className="flex gap-2">
@@ -317,7 +318,6 @@ const NotificationPage = () => {
                                     </button>
                                   </div>
                                 )}
-                                
                                 {/* Mostrar estado si no es pendiente */}
                                 {isAdmin && isFreelancerRequest(msg) && msg.status !== 'contact_request_pending' && (
                                   <span className={`text-xs px-2 py-1 rounded ${
@@ -326,6 +326,13 @@ const NotificationPage = () => {
                                       : 'bg-red-600 text-white'
                                   }`}>
                                     {msg.status === 'contact_request_accepted' ? 'Aceptada' : 'Rechazada'}
+                                  </span>
+                                )}
+                                {/* Icono de responder para el resto de mensajes */}
+                                {!(isAdmin && isFreelancerRequest(msg)) && (
+                                  <span className="ml-2 text-purple-400 opacity-70 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-xs">
+                                    <FiSend className="inline-block w-4 h-4" />
+                                    <span className="hidden sm:inline">Responder</span>
                                   </span>
                                 )}
                               </div>
