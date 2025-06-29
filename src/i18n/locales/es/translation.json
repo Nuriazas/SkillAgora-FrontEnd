@@ -686,5 +686,10 @@
     "subtitle": "Encuentra el profesional perfecto para hacer realidad tu proyecto",
     "description": "Nuestra plataforma conecta clientes con freelancers talentosos y verificados. Desde desarrollo web hasta diseño creativo, encuentra el experto que necesitas para llevar tu idea al siguiente nivel.",
     "cta": "Explorar talentos"
+  },
+  "roleWarningModal": {
+    "title": "Acceso Restringido",
+    "description": "Solo los freelancers pueden crear servicios. Si eres un freelancer, contacta a un administrador para solicitar el cambio de rol.",
+    "understood": "Entendido"
   }
 } 

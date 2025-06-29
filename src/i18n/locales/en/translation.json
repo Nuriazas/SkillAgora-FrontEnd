@@ -718,5 +718,10 @@
     "viewAll": "View All Services",
     "viewAllDescription": "Explore our complete collection of services",
     "viewAllAria": "View all services"
+  },
+  "roleWarningModal": {
+    "title": "Restricted Access",
+    "description": "Only freelancers can create services. If you are a freelancer, contact an administrator to request a role change.",
+    "understood": "Understood"
   }
 } 
