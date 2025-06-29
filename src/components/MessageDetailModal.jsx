@@ -56,7 +56,7 @@ const MessageDetailModal = ({ message, isOpen, onClose, onMessageUpdate }) => {
 			setLoading(false);
 		}
 	};
-e
+
 	const getSenderInfo = () => {
 		const senderName = message.senderName && message.senderLastName 
 			? `${message.senderName} ${message.senderLastName}`
