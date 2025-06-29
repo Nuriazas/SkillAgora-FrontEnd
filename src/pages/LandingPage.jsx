@@ -109,7 +109,6 @@ const LandingPage = () => {
 
 	const handleFreelancerPopClick = () => {
 		sessionStorage.setItem('showFreelancerRequestButton', 'true');
-		console.log('userLogged:', userLogged);
 		if (userLogged && userLogged.name) {
 			// Normaliza el nombre para la URL (sin espacios, minúsculas)
 			const username = userLogged.name.trim().replace(/\s+/g, '-').toLowerCase();

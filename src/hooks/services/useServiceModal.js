@@ -69,7 +69,6 @@ export const useServiceModalLogic = (service, onClose) => {
 			}
 
 			try {
-				console.log("🔍 Verificando estado de orden para servicio:", serviceId);
 				const status = await checkOrderStatus(serviceId, token);
 				
 				setOrderStatus({
@@ -163,7 +162,6 @@ export const useServiceModalLogic = (service, onClose) => {
 
 	// Handler para contratar servicio
 	const handleHireService = () => {
-		console.log("serviceDetails en handleHireService:", serviceDetails);
 		const token = getToken();
 		const serviceId = serviceDetails.service_id || serviceDetails.id;
 		

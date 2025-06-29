@@ -10,7 +10,6 @@ const ForgotPassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`Enviar enlace de recuperación a: ${email}`);
     setSubmitted(true);
   };
 

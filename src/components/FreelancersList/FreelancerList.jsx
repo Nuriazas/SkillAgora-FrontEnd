@@ -16,7 +16,6 @@ const FreelancersList = ({ freelancers, loading, limit = null, showViewAll = fal
 
 	// Handler para abrir modal de freelancer
 	const handleFreelancerClick = (freelancer) => {
-		console.log("Carta freelancer seleccionada:", freelancer);
 		setSelectedFreelancer(freelancer);
 		setIsModalOpen(true);
 	};
@@ -26,13 +25,6 @@ const FreelancersList = ({ freelancers, loading, limit = null, showViewAll = fal
 		setIsModalOpen(false);
 		setSelectedFreelancer(null);
 	};
-
-	console.log("🎭 Evaluando renderizado del modal:");
-	console.log("  - isModalOpen:", isModalOpen);
-	console.log("  - selectedFreelancer:", selectedFreelancer);
-	console.log("  - Condición para renderizar:", isModalOpen && selectedFreelancer);
-	console.log("  - Tipo de FreelancerModal:", typeof FreelancerModal);
-
 
 	// Aplicar límite si se especifica
 	const displayFreelancers = limit ? freelancers?.slice(0, limit) : freelancers;

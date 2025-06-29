@@ -7,7 +7,6 @@ export const acceptOrder = async (orderId, token) => {
       throw new Error("No hay token de autenticación disponible");
     }
 
-    console.log("✅ Aceptando orden:", orderId);
 
     const response = await fetch(`${API_BASE_URL}/orders/accept/${orderId}`, {
       method: "PUT",
@@ -40,7 +39,6 @@ export const getOrderById = async (orderId, token) => {
       throw new Error("No hay token de autenticación disponible");
     }
 
-    console.log("🔍 Obteniendo detalles de orden:", orderId);
 
     const response = await fetch(`${API_BASE_URL}/orders/getById/${orderId}`, {
       method: "GET",
@@ -51,7 +49,6 @@ export const getOrderById = async (orderId, token) => {
     });
 
     const data = await response.json();
-    console.log("📝 Detalles de orden:", data);
 
     if (!response.ok) {
       throw new Error(
@@ -73,8 +70,6 @@ export const updateOrder = async (orderId, updateData, token) => {
       throw new Error("No hay token de autenticación disponible");
     }
 
-    console.log("🔄 Actualizando orden:", orderId, updateData);
-
     const response = await fetch(`${API_BASE_URL}/orders/update/${orderId}`, {
       method: "PUT",
       credentials: "include",
@@ -85,7 +80,7 @@ export const updateOrder = async (orderId, updateData, token) => {
     });
 
     const data = await response.json();
-    console.log("📝 Orden actualizada:", data);
+
 
     if (!response.ok) {
       throw new Error(
@@ -107,7 +102,6 @@ export const deliverOrder = async (orderId, deliveryUrl, token) => {
       throw new Error("No hay token de autenticación disponible");
     }
 
-    console.log("📦 Marcando orden como entregada:", orderId);
 
     const response = await fetch(
       `${API_BASE_URL}/orders/delivered/${orderId}`,
@@ -122,7 +116,6 @@ export const deliverOrder = async (orderId, deliveryUrl, token) => {
     );
 
     const data = await response.json();
-    console.log("📝 Orden entregada:", data);
 
     if (!response.ok) {
       throw new Error(

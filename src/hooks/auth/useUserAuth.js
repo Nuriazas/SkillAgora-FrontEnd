@@ -37,7 +37,6 @@ const useUserAuth = () => {
 			// Intentar obtener datos completos del backend si tenemos el nombre
 			if (tokenData.name) {
 				try {
-					console.log("🔍 Cargando perfil completo para:", tokenData.name);
 					const profileResponse = await userApi.getProfileByName(
 						tokenData.name
 					);
@@ -47,7 +46,6 @@ const useUserAuth = () => {
 						profileResponse.success &&
 						profileResponse.data
 					) {
-						console.log("✅ Perfil completo obtenido:", profileResponse.data);
 
 						// Combinar datos del token con datos completos del backend
 						setUser((prevUser) => ({

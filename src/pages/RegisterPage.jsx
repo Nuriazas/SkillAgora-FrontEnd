@@ -46,7 +46,6 @@ const RegisterPage = () => {
 
     try {
       const data = await registerUserService(form);
-      console.log("Datos recibidos del registro:", data); // Para debug
 
       // Validar la estructura de la respuesta
       if (!data) {
@@ -61,7 +60,6 @@ const RegisterPage = () => {
       // El token se maneja automáticamente por las cookies HTTP
       // Notificar al contexto que el registro fue exitoso
       handleLoginSuccess();
-      console.log("Registro exitoso, token manejado por cookies HTTP");
 
       setMessage(t('register.success'));
       setForm({ name: "", lastName: "", password: "" });

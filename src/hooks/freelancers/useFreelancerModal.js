@@ -61,22 +61,15 @@ export const useFreelancerModalLogic = (freelancer, onClose) => {
 	const handleContactFreelancer = () => {
 		const userId = freelancerDetails.id;
 
-		console.log("🔍 Freelancer details completo:", freelancerDetails);
-		console.log("🔍 User ID encontrado:", userId);
-		console.log("🔍 Tipo de userId:", typeof userId);
-
 		// Si aún no encontramos el userId, intentemos con propiedades que contengan 'id'
 		if (!userId) {
-			console.log("🔍 Buscando propiedades que contengan 'id':");
 			const serviceKeys = Object.keys(serviceDetails);
 			const idProperties = serviceKeys.filter(key => 
 				key.toLowerCase().includes('id') || 
 				key.toLowerCase().includes('user')
 			);
-			console.log("🔍 Propiedades con 'id' o 'user':", idProperties);
 			
 			idProperties.forEach(prop => {
-				console.log(`🔍 ${prop}:`, serviceDetails[prop]);
 			});
 		}
 
@@ -87,7 +80,6 @@ export const useFreelancerModalLogic = (freelancer, onClose) => {
 			return;
 		}
 
-		console.log("✅ Abriendo modal de contacto con userId:", userId);
 		setIsContactModalOpen(true);
 	};
 
@@ -96,17 +88,6 @@ export const useFreelancerModalLogic = (freelancer, onClose) => {
 		try {
 			const token = getToken();
 			const userId = freelancerDetails.id;
-
-			console.log("🔑 Token RAW:", token);
-			console.log("🔑 Tipo de token:", typeof token);
-			console.log("🔑 ¿Es null?:", token === null);
-			console.log('🔑 ¿Es string "null"?:', token === "null");
-			console.log("🔑 ¿Es undefined?:", token === undefined);
-			console.log('🔑 ¿Es string "undefined"?:', token === "undefined");
-			console.log(
-				"🔑 Todas las claves localStorage:",
-				Object.keys(localStorage)
-			);
 
 			// Validar token (filtrar valores inválidos)
 			if (!token || token === "null" || token === "undefined") {
@@ -152,7 +133,6 @@ export const useFreelancerModalLogic = (freelancer, onClose) => {
 
 	// Handler para contratar servicio
 	const handleHireService = () => {
-		console.log("serviceDetails en handleHireService:", serviceDetails);
 		const token = getToken();
 		const serviceId = serviceDetails.service_id || serviceDetails.id;
 		

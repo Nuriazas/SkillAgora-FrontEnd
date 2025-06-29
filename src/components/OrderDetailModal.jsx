@@ -16,15 +16,12 @@ const OrderDetailModal = ({ isOpen, onClose, order, onOrderUpdate }) => {
 	const [freelancerData, setFreelancerData] = useState(null);
 	const [loadingFreelancer, setLoadingFreelancer] = useState(false);
 
-	// Extraer user y token del contexto
 	const user = authContext?.userLogged;
 	const token = authContext?.token;
 
-	// Determinar rol del usuario logueado
 	const isFreelancer = user?.role === "freelancer";
 	const isClient = user?.role === "client" || user?.role === "cliente";
 
-	// Obtener datos del freelancer si es cliente
 	useEffect(() => {
 		const fetchFreelancerData = async () => {
 			if (!order) {
@@ -44,7 +41,7 @@ const OrderDetailModal = ({ isOpen, onClose, order, onOrderUpdate }) => {
 					const data = await response.json();
 					setFreelancerData(data.data || data);
 				} catch (error) {
-					console.error("❌ Error al obtener freelancer:", error);
+					console.error("Error al obtener freelancer:", error);
 					setFreelancerData(null);
 				} finally {
 					setLoadingFreelancer(false);
@@ -60,7 +57,6 @@ const OrderDetailModal = ({ isOpen, onClose, order, onOrderUpdate }) => {
 		}
 	}, [isOpen, order?.id, order?.freelancer_id, isClient]);
 
-	// Reset states when modal closes
 	useEffect(() => {
 		if (!isOpen) {
 			setShowDeliveryForm(false);
@@ -71,7 +67,6 @@ const OrderDetailModal = ({ isOpen, onClose, order, onOrderUpdate }) => {
 		}
 	}, [isOpen]);
 
-	// ✅ EARLY RETURNS
 	if (!isOpen || !order) {
 		return null;
 	}

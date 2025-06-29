@@ -29,9 +29,7 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      console.log("🔄 Iniciando login...");
       const data = await ApiService.login(email, password);
-      console.log("📥 Datos recibidos del login:", data);
 
       // Validar la estructura de la respuesta
       if (!data) {
@@ -43,26 +41,20 @@ const LoginPage = () => {
         console.error("❌ Login fallido:", data);
         throw new Error(data.message || "Error en el login");
       }
-
-      console.log("✅ Login exitoso, verificando cookies...");
       
       // Verificar si hay cookies después del login
       const cookies = document.cookie;
-      console.log("🍪 Cookies disponibles:", cookies);
       
       // Intentar obtener el token de las cookies
       const token = getToken();
-      console.log("🔑 Token obtenido de cookies:", token ? "SÍ" : "NO");
 
       // El token se maneja automáticamente por las cookies HTTP
       // Notificar al contexto que el login fue exitoso
       handleLoginSuccess();
-      console.log("🎉 Login completado, redirigiendo...");
 
       // Verificar que el usuario esté autenticado antes de redirigir
       setTimeout(() => {
         const finalToken = getToken();
-        console.log("🔍 Verificación final - Token:", finalToken ? "SÍ" : "NO");
         if (!finalToken) {
           setError("Error: No se pudo establecer la sesión. Por favor, inténtalo de nuevo.");
           setLoading(false);

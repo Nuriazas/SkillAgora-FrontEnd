@@ -27,7 +27,6 @@ const MessageDetailModal = ({ message, isOpen, onClose, onMessageUpdate }) => {
 		});
 	};
 
-	// ✅ NUEVA FUNCIÓN: Manejar envío de respuesta
 	const handleSendReply = async () => {
 		if (!replyMessage.trim()) {
 			toast.error("Por favor, escribe un mensaje");
@@ -42,21 +41,13 @@ const MessageDetailModal = ({ message, isOpen, onClose, onMessageUpdate }) => {
 		try {
 			setLoading(true);
 			
-			console.log("🔍 Respondiendo al mensaje ID:", message.id);
-			console.log("🔍 Contenido de la respuesta:", replyMessage.trim());
-			
-			// ✅ USAR LA NUEVA FUNCIÓN
 			const result = await replyToMessage(message.id, replyMessage.trim(), token);
-			
-			console.log("✅ Respuesta enviada:", result);
 			
 			toast.success(`Respuesta enviada a ${result.data?.recipientName || 'el usuario'}`);
 			
-			// Limpiar formulario
 			setReplyMessage("");
 			setShowReplyForm(false);
 			
-			// Cerrar modal
 			onClose();
 		} catch (error) {
 			console.error("❌ Error al enviar respuesta:", error);
@@ -65,8 +56,7 @@ const MessageDetailModal = ({ message, isOpen, onClose, onMessageUpdate }) => {
 			setLoading(false);
 		}
 	};
-
-	// Obtener información del remitente
+e
 	const getSenderInfo = () => {
 		const senderName = message.senderName && message.senderLastName 
 			? `${message.senderName} ${message.senderLastName}`

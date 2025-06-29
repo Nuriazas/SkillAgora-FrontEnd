@@ -37,8 +37,6 @@ export const checkOrderStatus = async (serviceId, token) => {
       throw new Error("No hay token de autenticación disponible");
     }
 
-    console.log("🔍 Verificando estado de orden para servicio:", serviceId);
-
     const response = await fetch(
       `${API_BASE_URL}/orders/checkStatus/${serviceId}`,
       {

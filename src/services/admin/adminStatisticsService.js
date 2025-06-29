@@ -2,7 +2,6 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export const getAdminStatistics = async () => {
   try {
-    console.log("🔧 Obteniendo estadísticas de admin...");
     
     const response = await fetch(`${API_BASE_URL}/admin/statistics`, {
       method: "GET",
@@ -15,8 +14,6 @@ export const getAdminStatistics = async () => {
       },
     });
 
-    console.log("📊 Status de respuesta:", response.status);
-    console.log("📊 Respuesta OK:", response.ok);
 
     const contentType = response.headers.get("content-type");
     if (!contentType || !contentType.includes("application/json")) {
@@ -24,7 +21,6 @@ export const getAdminStatistics = async () => {
     }
 
     const data = await response.json();
-    console.log("📈 Estadísticas recibidas:", data);
 
     if (!response.ok) {
       throw new Error(data.message || `Error HTTP ${response.status}: ${response.statusText}`);

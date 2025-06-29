@@ -9,12 +9,6 @@ export const sendContactRequest = async (serviceId, message, token) => {
       throw new Error("No hay token de autenticación disponible");
     }
 
-    console.log("🚀 Enviando request con:", {
-      serviceId, 
-      message,
-      token: token ? `${token.substring(0, 20)}...` : "ausente",
-    });
-
     const response = await fetch(`${API_BASE_URL}/contact/request`, {
       method: "POST",
       credentials: "include",

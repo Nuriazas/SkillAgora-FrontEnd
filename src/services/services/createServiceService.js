@@ -24,8 +24,6 @@ export const CreateService = {
       body: formData,
     });
 
-    console.log("Status de respuesta:", response.status);
-
     if (!response.ok) {
       const error = await response.json().catch(() => ({}));
       console.error("Error del backend:", error);

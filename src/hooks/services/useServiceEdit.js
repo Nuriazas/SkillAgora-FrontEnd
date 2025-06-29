@@ -16,7 +16,6 @@ export const useServiceEdit = (service, isOpen) => {	// recibe el servicio y si 
 
 	useEffect(() => {
 		if (isOpen && service) {
-			console.log("Opening edit modal for service:", service);
 			setFormData({
 				title: service.title || "",
 				description: service.description || "",

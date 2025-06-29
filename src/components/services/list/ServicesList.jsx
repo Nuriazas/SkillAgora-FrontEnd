@@ -11,8 +11,6 @@ const ServicesList = ({ services, loading, limit = null, showViewAll = false, is
 	const navigate = useNavigate();
 	const { t } = useTranslation();
 
-	console.log("SERVICES RECIBIDOS EN ServicesList:", services);
-
 	// Handler para abrir modal de servicio
 	const handleServiceClick = (service) => {
 		setSelectedService(service);

@@ -15,12 +15,10 @@ const AuthContextProvider = ({ children }) => {
 	// Función para verificar si el usuario está autenticado
 	const checkAuthStatus = async () => {
 		try {
-			console.log("🔍 Verificando estado de autenticación...");
 			const currentToken = getToken();
-			console.log("🔑 Token actual:", currentToken ? "SÍ" : "NO");
+
 			
 			if (!currentToken) {
-				console.log("❌ No hay token, usuario no autenticado");
 				setIsAuthenticated(false);
 				setUserLogged(null);
 				setTokenState(null);
@@ -29,7 +27,6 @@ const AuthContextProvider = ({ children }) => {
 			}
 
 			if (!isTokenValid(currentToken)) {
-				console.log("❌ Token expirado o inválido");
 				setIsAuthenticated(false);
 				setUserLogged(null);
 				removeToken();
@@ -38,22 +35,18 @@ const AuthContextProvider = ({ children }) => {
 				return;
 			}
 
-			console.log("✅ Token válido, obteniendo datos del usuario...");
 			// Intentar obtener datos del usuario
 			const userData = await getDataUserLoggedService();
-			console.log("👤 Datos del usuario obtenidos:", userData);
 			
 			setUserLogged(userData);
 			setTokenState(currentToken);
 			setIsAuthenticated(true);
-			console.log("✅ Usuario autenticado correctamente");
 		} catch (error) {
 			console.error("❌ Error verificando autenticación:", error);
 			if (
 				error.message?.includes("401") ||
 				error.message?.includes("Unauthorized")
 			) {
-				console.log("🚫 Usuario no autorizado, limpiando estado");
 				setIsAuthenticated(false);
 				setUserLogged(null);
 				removeToken();
@@ -69,20 +62,17 @@ const AuthContextProvider = ({ children }) => {
 	}, []);
 
 	const handleSetToken = (newToken) => {
-		console.log("🔧 Estableciendo token manualmente:", newToken ? "SÍ" : "NO");
 		setToken(newToken);
 		setTokenState(newToken);
 		setIsAuthenticated(true);
 	};
 
 	const handleLoginSuccess = async () => {
-		console.log("🎉 Login exitoso, verificando estado...");
 		// Después de un login exitoso, verificar el estado de autenticación
 		await checkAuthStatus();
 	};
 
 	const logout = () => {
-		console.log("🚪 Cerrando sesión...");
 		setUserLogged(null);
 		setIsAuthenticated(false);
 		removeToken();

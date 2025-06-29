@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import DefaultImage from "../../../assets/defaultLogo.png";
 
 const ServiceCard = ({ service, onClick }) => {
-  console.log("ESTO ES EL SERVICE QUE LE LLEGA A SERVICECAR", service);
   const { t } = useTranslation();
   // Imagen por defecto si el servicio no tiene imagen
 

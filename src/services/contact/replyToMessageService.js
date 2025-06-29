@@ -16,12 +16,6 @@ export const replyToMessage = async (messageId, replyMessage, token) => {
       throw new Error("Mensaje de respuesta requerido");
     }
 
-    console.log("🚀 Enviando respuesta a mensaje:", {
-      messageId,
-      replyMessage: replyMessage.substring(0, 50) + "...",
-      token: token ? `${token.substring(0, 20)}...` : "ausente",
-    });
-
     const response = await fetch(`${API_BASE_URL}/message/${messageId}/reply`, {
       method: "POST",
       credentials: "include",
@@ -36,11 +30,8 @@ export const replyToMessage = async (messageId, replyMessage, token) => {
       }),
     });
 
-    console.log("📡 Respuesta HTTP status:", response.status);
-    console.log("📡 Respuesta OK:", response.ok);
 
     const data = await response.json();
-    console.log("📝 Respuesta del servidor:", data);
 
     if (!response.ok) {
       throw new Error(

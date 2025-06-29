@@ -9,7 +9,6 @@ const registerUserService = async (form) => {
     });
 
     const data = await res.json();
-    console.log("Respuesta del registro:", data); // Para debug
 
     if (!res.ok) throw new Error(data.message || "Error en el registro");
     return data;

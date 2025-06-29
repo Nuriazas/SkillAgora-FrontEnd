@@ -16,11 +16,9 @@ const ReviewForm = () => {
   const [hoverRating, setHoverRating] = useState(0);
 
   useEffect(() => {
-    console.log("serviceId recibido desde URL:", service_id);
     if (!service_id) return;
     getServiceById(service_id)
       .then((response) => {
-        console.log("Datos recibidos del servicio:", response);
         setServiceDetails(response.data);
       })
       .catch((err) => setError(err.message));
@@ -46,7 +44,6 @@ const ReviewForm = () => {
         const errorData = await res.json();
         throw new Error(errorData.message || "Error al enviar la review");
       }
-      console.log("Review enviada correctamente.");
       setSuccess(true);
       setRating(0);
       setComment("");

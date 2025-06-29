@@ -11,8 +11,6 @@ const ServiceHeader = ({ title, service, onClose }) => {
  ? `http://localhost:3000/uploads/${service.media[0].media_url}` 
  : DefaultImage;
 
- console.log("LLEGA LA IMAGEN A SERVICEHEADER", imageUrl);
-
   return (
     <div className="relative">
       <img
