@@ -641,7 +641,8 @@
   },
   "landingPage": {
     "errorTitle": "Error loading data",
-    "tryAgain": "Try again"
+    "tryAgain": "Try again",
+    "welcomeBack": "Welcome back, {{name}}!"
   },
   "banner": {
     "title": "Connect with exceptional talent",

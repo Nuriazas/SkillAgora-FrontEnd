@@ -46,5 +46,25 @@ body {
   }
 }
 
+@keyframes logo-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.85; }
+}
+
+.animate-logo-pulse {
+  animation: logo-pulse 1.2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-20px) scale(0.95); }
+  10% { opacity: 1; transform: translateY(0) scale(1); }
+  90% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-20px) scale(0.95); }
+}
+
+.animate-fade-in-out {
+  animation: fadeInOut 2.5s both;
+}
+
 
 

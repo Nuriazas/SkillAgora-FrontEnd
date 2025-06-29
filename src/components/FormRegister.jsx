@@ -10,6 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import PasswordInput from "./shared/UI/PasswordInput";
 import { useTranslation } from "react-i18next";
+import LogoLoader from "./shared/UI/LogoLoader";
 
 const FormRegister = ({ form, handleChange, loading }) => {
   const { t } = useTranslation();
@@ -90,7 +91,7 @@ const FormRegister = ({ form, handleChange, loading }) => {
           aria-label={t('formRegister.signUp')}
           disabled={loading}
         >
-          {loading ? <Spinner /> : t('formRegister.signUp')}
+          {loading ? <LogoLoader size={28} /> : t('formRegister.signUp')}
         </button>
 
         <p className="text-center text-white text-[15px] mt-1">

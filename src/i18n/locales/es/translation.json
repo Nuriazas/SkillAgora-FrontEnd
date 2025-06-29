@@ -684,7 +684,8 @@
   },
   "landingPage": {
     "errorTitle": "Error al cargar datos",
-    "tryAgain": "Intentar de nuevo"
+    "tryAgain": "Intentar de nuevo",
+    "welcomeBack": "¡Bienvenido de nuevo, {{name}}!"
   },
   "banner": {
     "title": "Conecta con talento excepcional",

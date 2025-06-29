@@ -7,7 +7,7 @@ import { AuthContext } from "../context/AuthContextProvider.jsx";
 import { useNavigate } from "react-router-dom";
 import { Background } from "../components/shared/Background/index.jsx";
 import Header from "../components/layout/Header.jsx";
-import Spinner from "../components/shared/UI/Spinner.jsx";
+import LogoLoader from "../components/shared/UI/LogoLoader";
 import { useTranslation } from "react-i18next";
 
 const RegisterPage = () => {

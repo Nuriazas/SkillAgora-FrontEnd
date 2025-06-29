@@ -68,6 +68,7 @@ const LoginPage = () => {
           setLoading(false);
         } else {
           setLoading(false);
+          sessionStorage.setItem('showWelcome', 'true');
           navigate("/");
         }
       }, 1000);

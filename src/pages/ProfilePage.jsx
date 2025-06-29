@@ -21,6 +21,7 @@ import {
 } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import AdminStatistics from "../components/admin/AdminStatistics.jsx";
+import LogoLoader from "../components/shared/UI/LogoLoader";
 
 const ProfilePage = () => {
   const { name } = useParams();
@@ -207,17 +208,8 @@ const ProfilePage = () => {
         {loading ? (
           // Loading skeleton
           <section className="py-8 px-4 sm:px-6 lg:px-8 pt-24">
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 p-8 animate-pulse">
-                <div className="flex flex-col md:flex-row gap-8">
-                  <div className="w-32 h-32 bg-gray-700 rounded-full mx-auto md:mx-0"></div>
-                  <div className="flex-1 space-y-4">
-                    <div className="h-8 bg-gray-700 rounded w-48"></div>
-                    <div className="h-4 bg-gray-700 rounded w-64"></div>
-                    <div className="h-4 bg-gray-700 rounded w-32"></div>
-                  </div>
-                </div>
-              </div>
+            <div className="max-w-4xl mx-auto flex justify-center items-center min-h-[200px]">
+              <LogoLoader size={48} />
             </div>
           </section>
         ) : (

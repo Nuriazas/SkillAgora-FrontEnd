@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { AuthContext } from "../context/AuthContextProvider.jsx";
 import { useNavigate } from "react-router-dom";
 import HowItWorksSection from "../components/shared/HowItWorksSection.jsx";
+import LogoLoader from "../components/shared/UI/LogoLoader";
 
 const LandingPage = () => {
 	const { t } = useTranslation();
@@ -22,6 +23,7 @@ const LandingPage = () => {
 	const [categories, setCategories] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const [showWelcome, setShowWelcome] = useState(false);
 
 	const {
 		filteredServices,
@@ -76,6 +78,17 @@ const LandingPage = () => {
 	useEffect(() => {
 		loadInitialData();
 	}, []);
+
+	useEffect(() => {
+		// Mostrar animación solo si viene de login (por ejemplo, usando sessionStorage)
+		if (userLogged && sessionStorage.getItem('showWelcome') === 'true') {
+			setShowWelcome(true);
+			setTimeout(() => {
+				setShowWelcome(false);
+				sessionStorage.removeItem('showWelcome');
+			}, 2500);
+		}
+	}, [userLogged]);
 
 	const loadInitialData = async () => {
 		try {
@@ -148,6 +161,17 @@ const LandingPage = () => {
 			</div>
 
 			<div className="relative z-10">
+				{/* Animación de bienvenida personalizada */}
+				{showWelcome && userLogged && (
+					<div className="fixed inset-0 z-50 flex items-start justify-center pointer-events-none">
+						<div className="mt-32 flex items-center gap-4 bg-gray-900/90 border border-purple-500/30 shadow-xl rounded-2xl px-6 py-4 animate-fade-in-out pointer-events-auto">
+							<LogoLoader size={36} />
+							<span className="text-lg font-semibold text-white">
+								{t('landingPage.welcomeBack', { name: userLogged.name })}
+							</span>
+						</div>
+					</div>
+				)}
 				<Header 
 					showStickySearch={showStickySearch} 
 					stickyValue={stickyValue}
