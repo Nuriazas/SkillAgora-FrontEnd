@@ -174,7 +174,7 @@ const FreelancerPage = () => {
 				></div>
 			</div>
 
-			<div className="relative z-10">
+			<div className="relative z-10 pt-16">
 				<Header />
 
 				<SimpleHeroSection

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Header from "../components/layout/Header.jsx";
 import HeroSection from "../components/hero/HeroSection.jsx";
 import SearchFilter from "../components/search/SearchFilter.jsx";
 import ServicesList from "../components/services/list/ServicesList.jsx";
 import FreelancersList from "../components/FreelancersList/FreelancerList.jsx";
 import Footer from "../components/layout/Footer.jsx";
+import Banner from "../components/shared/Banner.jsx";
 import { servicesApi } from "../services/api/api";
 import useServiceFilters from "../hooks/services/useServiceFilters.js";
 import { useFreelancersList } from "../hooks/freelancers/useFreelancersList.js";
@@ -30,6 +31,41 @@ const LandingPage = () => {
 		loading: freelancersLoading,
 		error: freelancersError,
 	} = useFreelancersList();
+
+	// --- Sticky search logic ---
+	const searchRef = useRef(null);
+	const [showStickySearch, setShowStickySearch] = useState(false);
+	const [stickyValue, setStickyValue] = useState(filters.search || "");
+
+	// Sincronizar stickyValue con el filtro principal
+	useEffect(() => {
+		setStickyValue(filters.search || "");
+	}, [filters.search]);
+
+	// Detectar visibilidad de la barra de búsqueda
+	useEffect(() => {
+		const observer = new window.IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting) {
+					setShowStickySearch(false);
+				} else {
+					setShowStickySearch(true);
+				}
+			},
+			{ root: null, threshold: 0 }
+		);
+		if (searchRef.current) {
+			observer.observe(searchRef.current);
+		}
+		return () => {
+			if (searchRef.current) observer.unobserve(searchRef.current);
+		};
+	}, []);
+
+	const handleStickyInput = useCallback((e) => {
+		setStickyValue(e.target.value);
+		handleSearch(e.target.value);
+	}, [handleSearch]);
 
 	useEffect(() => {
 		loadInitialData();
@@ -93,16 +129,22 @@ const LandingPage = () => {
 				></div>
 			</div>
 
-			<div className="relative z-10">
-				<Header />
-				<HeroSection />
-				<SearchFilter
-					onFiltersChange={handleFiltersChange}
-					onSearch={handleSearch}
-					onClearFilters={clearFilters}
-					categories={categories}
-					filters={filters}
+			<div className="relative z-10 pt-16">
+				<Header 
+					showStickySearch={showStickySearch} 
+					stickyValue={stickyValue}
+					onStickyInput={handleStickyInput}
 				/>
+				<HeroSection />
+				<div ref={searchRef}>
+					<SearchFilter
+						onFiltersChange={handleFiltersChange}
+						onSearch={handleSearch}
+						onClearFilters={clearFilters}
+						categories={categories}
+						filters={filters}
+					/>
+				</div>
 				{/* Mostrar solo 7 servicios + 1 carta de "Ver todos" */}
 				<ServicesList 
 					services={filteredServices} 
@@ -111,14 +153,18 @@ const LandingPage = () => {
 					showViewAll={true}
 					isLandingPage={true}
 				/>
+				{/* Banner entre servicios y freelancers */}
+				<Banner />
 				{/* Mostrar solo 7 freelancers + 1 carta de "Ver todos" */}
-				<FreelancersList 
-					freelancers={freelancers} 
-					loading={freelancersLoading}
-					limit={7}
-					showViewAll={true}
-					isLandingPage={true}
-				/>
+				<div className="mt-14">
+					<FreelancersList 
+						freelancers={freelancers} 
+						loading={freelancersLoading}
+						limit={7}
+						showViewAll={true}
+						isLandingPage={true}
+					/>
+				</div>
 				<Footer />
 			</div>
 		</div>
