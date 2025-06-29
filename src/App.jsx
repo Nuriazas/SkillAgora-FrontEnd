@@ -19,6 +19,7 @@ import HelpCenterPage from "./pages/HelpCenterPage.jsx";
 import OrdersPage from "./pages/NotificationPage.jsx";
 import TermsPage from "./pages/TermsPage.jsx";
 import ReviewPage from "./pages/ReviewPage.jsx";
+import ValidateUser from "./pages/ValidateUser.jsx";
 
 
 function SpinnerPage() {
@@ -48,7 +49,8 @@ function App() {
           <Route path="/help" element={<HelpCenterPage />} />
           <Route path="/notifications/contacts" element={<OrdersPage />} />
           <Route path="/terms" element={<TermsPage />} />
-          <Route path="/review/:service_id" element={<ReviewPage />} /> 
+          <Route path="/review/:service_id" element={<ReviewPage />} />
+          <Route path="/validate-user/:code" element={<ValidateUser />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </ErrorBoundary>

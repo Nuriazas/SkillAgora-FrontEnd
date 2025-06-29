@@ -8,7 +8,7 @@ import MessageDetailModal from "../components/MessageDetailModal.jsx";
 import { useTranslation } from "react-i18next";
 
 const NotificationPage = () => {
-  const { token } = useContext(AuthContext);
+  const { token, userLogged } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
   const [messages, setMessages] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
@@ -20,6 +20,9 @@ const NotificationPage = () => {
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const { t } = useTranslation();
+
+  // Verificar si el usuario actual es admin (ID 1)
+  const isAdmin = userLogged?.id === 1;
 
   const fetchOrders = async () => {
     try {
@@ -52,70 +55,74 @@ const NotificationPage = () => {
     }
   };
 
-  // Abrir modal de orden
+  // Funciones para manejar solicitudes de freelancer
+  const handleAcceptFreelancerRequest = async (notificationId) => {
+    try {
+      await axios.post(
+        `http://localhost:3000/admin/accept-freelancer-request/${notificationId}`,
+        {},
+        { withCredentials: true }
+      );
+      toast.success("Solicitud de freelancer aceptada");
+      fetchMessages(); // Recargar mensajes
+    } catch (error) {
+      console.error("Error al aceptar solicitud:", error);
+      toast.error("Error al aceptar la solicitud");
+    }
+  };
+
+  const handleRejectFreelancerRequest = async (notificationId) => {
+    try {
+      await axios.post(
+        `http://localhost:3000/admin/reject-freelancer-request/${notificationId}`,
+        {},
+        { withCredentials: true }
+      );
+      toast.success("Solicitud de freelancer rechazada");
+      fetchMessages(); // Recargar mensajes
+    } catch (error) {
+      console.error("Error al rechazar solicitud:", error);
+      toast.error("Error al rechazar la solicitud");
+    }
+  };
+
+  // Verificar si un mensaje es una solicitud de freelancer
+  const isFreelancerRequest = (message) => {
+    return message.content && message.content.includes('solicita ser freelancer');
+  };
+
   const openOrderModal = (order) => {
-    console.log("Abrir modal de orden:", order);
     setSelectedOrder(order);
     setIsOrderModalOpen(true);
   };
 
-  // Abrir modal de mensaje
   const openMessageModal = (msg) => {
-    console.log("Abrir modal de mensaje:", msg);
     setSelectedMessage(msg);
     setIsMessageModalOpen(true);
   };
 
-  // Cerrar modales
   const closeOrderModal = () => {
-    setSelectedOrder(null);
     setIsOrderModalOpen(false);
+    setSelectedOrder(null);
   };
 
   const closeMessageModal = () => {
-    setSelectedMessage(null);
     setIsMessageModalOpen(false);
+    setSelectedMessage(null);
   };
 
-  // Actualizar orden en la lista - VERSIÓN MEJORADA
   const handleOrderUpdate = (updatedOrder) => {
-    console.log("🔄 Actualizando orden:", updatedOrder);
-
-    // Validar que la orden actualizada tenga los datos mínimos
-    if (!updatedOrder || !updatedOrder.id) {
-      console.error("❌ Orden inválida para actualizar:", updatedOrder);
-      return;
-    }
-
-    setOrders((prevOrders) => {
-      console.log("📋 Órdenes antes de actualizar:", prevOrders);
-
-      const newOrders = prevOrders
-        .map((order) => {
-          // Validar que cada orden tenga ID
-          if (!order || !order.id) {
-            console.warn("⚠️ Orden sin ID encontrada:", order);
-            return order; // mantener la orden como está
-          }
-
-          return order.id === updatedOrder.id
-            ? { ...order, ...updatedOrder }
-            : order;
-        })
-        .filter((order) => order && order.id); // Filtrar órdenes inválidas
-
-      console.log("📋 Órdenes después de actualizar:", newOrders);
-      return newOrders;
-    });
+    setOrders(orders.map(order => 
+      order.id === updatedOrder.id ? updatedOrder : order
+    ));
+    closeOrderModal();
   };
 
-  // Actualizar mensaje en la lista (si es necesario)
   const handleMessageUpdate = (updatedMessage) => {
-    setMessages((prevMessages) =>
-      prevMessages.map((message) =>
-        message.id === updatedMessage.id ? updatedMessage : message
-      )
-    );
+    setMessages(messages.map(message => 
+      message.id === updatedMessage.id ? updatedMessage : message
+    ));
+    closeMessageModal();
   };
 
   useEffect(() => {
@@ -202,7 +209,7 @@ const NotificationPage = () => {
         <Header />
         <Toaster position="top-right" />
 
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto px-4 py-8 pt-24">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-white mb-4">
               {t("notificationPage.title")}{" "}
@@ -267,8 +274,7 @@ const NotificationPage = () => {
                       .map((msg, index) => (
                         <div
                           key={msg.id || `msg-${index}`}
-                          className="bg-gray-800/30 border border-gray-700/50 rounded-xl p-4 hover:bg-gray-800/50 cursor-pointer transition-all duration-200 hover:border-purple-500/30 hover:scale-[1.02]"
-                          onClick={() => openMessageModal(msg)}
+                          className="bg-gray-800/30 border border-gray-700/50 rounded-xl p-4 hover:bg-gray-800/50 transition-all duration-200 hover:border-purple-500/30 hover:scale-[1.02]"
                         >
                           <div className="flex items-start gap-3">
                             <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
@@ -278,16 +284,51 @@ const NotificationPage = () => {
                             </div>
                             <div className="flex-1 min-w-0">
                               <h4 className="font-semibold text-white text-base mb-1">
-                                {msg?.senderName && msg?.senderLastName
-                                  ? `${msg.senderName} ${msg.senderLastName}`
-                                  : t("notificationPage.unknownUser")}
+                                {msg?.senderId ? `${msg.senderName} ${msg.senderLastName}` : "SkillAgora"}
                               </h4>
                               <p className="text-gray-300 text-sm mb-3 line-clamp-2">
-                                {msg.content || t("notificationPage.noContent")}
+                                {t(msg.content) || t("notificationPage.noContent")}
                               </p>
-                              <p className="text-gray-500 text-xs">
-                                {formatDate(msg?.createdAt)}
-                              </p>
+                              <div className="flex items-center justify-between">
+                                <p className="text-gray-500 text-xs">
+                                  {formatDate(msg?.createdAt)}
+                                </p>
+                                
+                                {/* Botones de acción para solicitudes de freelancer (solo para admin) */}
+                                {isAdmin && isFreelancerRequest(msg) && msg.status === 'contact_request_pending' && (
+                                  <div className="flex gap-2">
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleAcceptFreelancerRequest(msg.id);
+                                      }}
+                                      className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-xs rounded-lg transition-colors"
+                                    >
+                                      Aceptar
+                                    </button>
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleRejectFreelancerRequest(msg.id);
+                                      }}
+                                      className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-xs rounded-lg transition-colors"
+                                    >
+                                      Rechazar
+                                    </button>
+                                  </div>
+                                )}
+                                
+                                {/* Mostrar estado si no es pendiente */}
+                                {isAdmin && isFreelancerRequest(msg) && msg.status !== 'contact_request_pending' && (
+                                  <span className={`text-xs px-2 py-1 rounded ${
+                                    msg.status === 'contact_request_accepted' 
+                                      ? 'bg-green-600 text-white' 
+                                      : 'bg-red-600 text-white'
+                                  }`}>
+                                    {msg.status === 'contact_request_accepted' ? 'Aceptada' : 'Rechazada'}
+                                  </span>
+                                )}
+                              </div>
                             </div>
                           </div>
                         </div>

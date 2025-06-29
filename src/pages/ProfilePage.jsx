@@ -33,8 +33,11 @@ const ProfilePage = () => {
   const [error, setError] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showFreelancerButton, setShowFreelancerButton] = useState(true);
   // const [visibleServicesCount, setVisibleServicesCount] = useState(6);
   const servicesContainerRef = useRef();
+  const freelancerButtonRef = useRef();
 
   // Verificar si es el perfil del usuario actual
   const isOwnProfile = React.useMemo(
@@ -53,6 +56,21 @@ const ProfilePage = () => {
   useEffect(() => {
     loadProfile();
   }, [name]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && sessionStorage.getItem('showFreelancerRequestButton') === 'true') {
+      sessionStorage.removeItem('showFreelancerRequestButton');
+      setTimeout(() => {
+        if (freelancerButtonRef.current) {
+          freelancerButtonRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          freelancerButtonRef.current.classList.add('animate-pulse-freelancer');
+          setTimeout(() => {
+            freelancerButtonRef.current.classList.remove('animate-pulse-freelancer');
+          }, 1500);
+        }
+      }, 300);
+    }
+  }, []);
 
   const loadProfile = async () => {
     try {
@@ -100,6 +118,28 @@ const ProfilePage = () => {
       ),
     }));
     await loadProfile();
+  };
+
+  // Handler para solicitud de freelancer
+  const handleFreelancerRequest = async () => {
+    setShowSuccessMessage(true);
+    setShowFreelancerButton(false);
+    // Llama al endpoint correcto del backend para crear la solicitud de freelancer y la notificación
+    try {
+      await fetch(`http://localhost:3000/users/request-freelancer-status/${userLogged.id}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (e) {
+      // Si falla, solo mostramos el mensaje local igualmente
+      console.error('Error enviando solicitud de freelancer:', e);
+    }
+    setTimeout(() => {
+      setShowSuccessMessage(false);
+    }, 3000);
   };
 
   if (error) {
@@ -157,9 +197,16 @@ const ProfilePage = () => {
       <div className="relative z-10">
         <Header />
 
+        {/* Mensaje de éxito para solicitud de freelancer */}
+        {showSuccessMessage && (
+          <div className="fixed top-20 right-6 z-50 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-lg shadow-lg border border-purple-500/30">
+            {t('profile.freelancerRequestSuccess', 'Solicitud enviada exitosamente. Te contactaremos pronto.')}
+          </div>
+        )}
+
         {loading ? (
           // Loading skeleton
-          <section className="py-8 px-4 sm:px-6 lg:px-8">
+          <section className="py-8 px-4 sm:px-6 lg:px-8 pt-24">
             <div className="max-w-4xl mx-auto">
               <div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 p-8 animate-pulse">
                 <div className="flex flex-col md:flex-row gap-8">
@@ -175,7 +222,7 @@ const ProfilePage = () => {
           </section>
         ) : (
           // Profile content
-          <section className="py-8 px-4 sm:px-6 lg:px-8">
+          <section className="py-8 px-4 sm:px-6 lg:px-8 pt-24">
             <div className="max-w-4xl mx-auto space-y-8">
               {/* Main Profile Card */}
               <div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 p-8">
@@ -197,6 +244,14 @@ const ProfilePage = () => {
                       <h1 className="text-3xl font-bold text-white">
                         {profileData?.name} {profileData?.lastName}
                       </h1>
+                      {/* Badge de rol solo si NO es admin (id, user_id o _id !== 1) */}
+                      {profileData && (profileData.id !== 1 && profileData.user_id !== 1 && profileData._id !== 1) && (
+                        profileData.role === "freelancer" ? (
+                          <span className="ml-2 px-2 py-0.5 rounded-full text-xs font-semibold bg-purple-700 text-white flex items-center" title="Freelancer">🟣 Freelancer</span>
+                        ) : profileData.role === "client" ? (
+                          <span className="ml-2 px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-600 text-white flex items-center" title="Cliente">🔵 Cliente</span>
+                        ) : null
+                      )}
                       {isOwnProfile && (
                         <button
                           className="p-2 text-gray-400 hover:text-white transition-colors"
@@ -204,6 +259,19 @@ const ProfilePage = () => {
                         >
                           <FiEdit className="w-5 h-5" />
                         </button>
+                      )}
+                      {/* NUEVO: Solicitud para ser freelancer - Solo para usuarios que NO sean admin (ID 1) */}
+                      {isOwnProfile && showFreelancerButton && userLogged?.id !== 1 && (
+                        <div className="flex flex-col items-end ml-auto" ref={freelancerButtonRef}>
+                          <span className="text-xs text-gray-300 mb-1">{t('profile.wantToBeFreelancer', '¿Quieres ser freelancer?')}</span>
+                          <button
+                            className="px-3 py-1 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg text-xs font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-200 shadow"
+                            type="button"
+                            onClick={handleFreelancerRequest}
+                          >
+                            {t('profile.requestHere', 'Solicítalo aquí')}
+                          </button>
+                        </div>
                       )}
                     </div>
 
@@ -243,7 +311,8 @@ const ProfilePage = () => {
                         </span>
                       </div>
 
-                      {profileData?.average_rating && (
+                      {/* Rating - Solo para usuarios que NO sean admin (ID 1) */}
+                      {profileData?.average_rating && userLogged?.id !== 1 && (
                         <div className="flex items-center gap-2 justify-center md:justify-start">
                           <FiStar className="w-4 h-4 text-yellow-400" />
                           <span className="text-white font-medium">
@@ -438,6 +507,17 @@ const ProfilePage = () => {
         onUpdate={handleServiceUpdate}
         onDelete={handleServiceDelete}
       />
+
+      <style>{`
+      @keyframes pulse-freelancer {
+        0% { box-shadow: 0 0 0 0 rgba(139,92,246,0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(139,92,246,0); }
+        100% { box-shadow: 0 0 0 0 rgba(139,92,246,0); }
+      }
+      .animate-pulse-freelancer {
+        animation: pulse-freelancer 1.5s;
+      }
+      `}</style>
     </div>
   );
 };

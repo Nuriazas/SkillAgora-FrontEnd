@@ -210,7 +210,10 @@
     "services": "Servicios",
     "daysDelivery": "{{days}} días de entrega",
     "clickToEdit": "Haz clic para editar",
-    "experience": "Experiencia"
+    "experience": "Experiencia",
+    "freelancerRequestSuccess": "Solicitud enviada exitosamente. Te contactaremos pronto.",
+    "wantToBeFreelancer": "¿Quieres ser freelancer?",
+    "requestHere": "Solicítalo aquí"
   },
   "editProfile": {
     "errorSaving": "Error al guardar los cambios",
@@ -667,6 +670,8 @@
     "hidePassword": "Ocultar contraseña",
     "firstName": "Nombre",
     "lastName": "Apellido",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
     "signUp": "Registrarse",
     "orOtherAccounts": "o regístrate con otras cuentas",
     "alreadyAccount": "¿Ya tienes una cuenta?",
@@ -691,5 +696,31 @@
     "title": "Acceso Restringido",
     "description": "Solo los freelancers pueden crear servicios. Si eres un freelancer, contacta a un administrador para solicitar el cambio de rol.",
     "understood": "Entendido"
+  },
+  "notification": {
+    "freelancerAccepted": "¡Felicidades! Tu solicitud para ser freelancer ha sido aceptada. Ya puedes empezar a crear y publicar tus servicios en la plataforma.",
+    "freelancerRejected": "Tu solicitud para ser freelancer ha sido rechazada. Puedes intentar nuevamente en el futuro o contactar al soporte para más información."
+  },
+  "floatingFreelancerButton": {
+    "wantToBe": "¿Quieres ser freelancer?",
+    "requestHere": "Solicítalo aquí",
+    "close": "Cerrar"
+  },
+  "howItWorks": {
+    "title": "¿Cómo funciona?",
+    "steps": [
+      { "title": "Regístrate gratis", "desc": "Crea tu cuenta como cliente o freelancer en segundos." },
+      { "title": "Publica o contrata servicios", "desc": "Ofrece tus habilidades o encuentra al profesional ideal para tu proyecto." },
+      { "title": "¡Conecta y colabora!", "desc": "Chatea, acuerda y recibe resultados de calidad en SkillAgora." }
+    ]
+  },
+  "validateUser": {
+    "success": "¡Tu cuenta ha sido activada! Ya puedes iniciar sesión.",
+    "error": "El enlace no es válido o ya fue usado.",
+    "activated": "¡Cuenta activada!",
+    "errorTitle": "Error de validación",
+    "goToLogin": "Ir a iniciar sesión",
+    "goToHome": "Ir a la página principal",
+    "validating": "Validando tu cuenta..."
   }
 } 

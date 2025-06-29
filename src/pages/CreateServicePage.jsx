@@ -154,7 +154,7 @@ const CreateServicePage = () => {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gray-950 pt-16">
+      <main className="min-h-screen bg-gray-950 pt-24">
         <Background />
         <div className="relative z-10">
           <div className="container mx-auto px-4 py-8">

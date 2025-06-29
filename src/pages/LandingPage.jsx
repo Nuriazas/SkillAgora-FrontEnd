@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useContext } from "react";
 import Header from "../components/layout/Header.jsx";
 import HeroSection from "../components/hero/HeroSection.jsx";
 import SearchFilter from "../components/search/SearchFilter.jsx";
@@ -6,13 +6,19 @@ import ServicesList from "../components/services/list/ServicesList.jsx";
 import FreelancersList from "../components/FreelancersList/FreelancerList.jsx";
 import Footer from "../components/layout/Footer.jsx";
 import Banner from "../components/shared/Banner.jsx";
+import FloatingFreelancerButton from "../components/shared/FloatingFreelancerButton.jsx";
 import { servicesApi } from "../services/api/api";
 import useServiceFilters from "../hooks/services/useServiceFilters.js";
 import { useFreelancersList } from "../hooks/freelancers/useFreelancersList.js";
 import { useTranslation } from "react-i18next";
+import { AuthContext } from "../context/AuthContextProvider.jsx";
+import { useNavigate } from "react-router-dom";
+import HowItWorksSection from "../components/shared/HowItWorksSection.jsx";
 
 const LandingPage = () => {
 	const { t } = useTranslation();
+	const { userLogged } = useContext(AuthContext);
+	const navigate = useNavigate();
 	const [categories, setCategories] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -88,6 +94,18 @@ const LandingPage = () => {
 		}
 	};
 
+	const handleFreelancerPopClick = () => {
+		sessionStorage.setItem('showFreelancerRequestButton', 'true');
+		console.log('userLogged:', userLogged);
+		if (userLogged && userLogged.name) {
+			// Normaliza el nombre para la URL (sin espacios, minúsculas)
+			const username = userLogged.name.trim().replace(/\s+/g, '-').toLowerCase();
+			navigate(`/profile/${username}`);
+		} else {
+			alert("No se pudo obtener tu perfil. Intenta recargar la página o vuelve a iniciar sesión.");
+		}
+	};
+
 	if (error) {
 		return (
 			<div className="min-h-screen bg-gray-950 flex items-center justify-center">
@@ -129,7 +147,7 @@ const LandingPage = () => {
 				></div>
 			</div>
 
-			<div className="relative z-10 pt-16">
+			<div className="relative z-10">
 				<Header 
 					showStickySearch={showStickySearch} 
 					stickyValue={stickyValue}
@@ -155,6 +173,7 @@ const LandingPage = () => {
 				/>
 				{/* Banner entre servicios y freelancers */}
 				<Banner />
+				<HowItWorksSection />
 				{/* Mostrar solo 7 freelancers + 1 carta de "Ver todos" */}
 				<div className="mt-14">
 					<FreelancersList 
@@ -166,6 +185,8 @@ const LandingPage = () => {
 					/>
 				</div>
 				<Footer />
+				{/* Botón flotante para ser freelancer */}
+				<FloatingFreelancerButton show={true} user={userLogged} onClick={handleFreelancerPopClick} />
 			</div>
 		</div>
 	);

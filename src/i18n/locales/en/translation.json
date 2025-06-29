@@ -211,7 +211,10 @@
     "services": "Services",
     "daysDelivery": "{{days}} days delivery",
     "clickToEdit": "Click to edit",
-    "experience": "Experience"
+    "experience": "Experience",
+    "freelancerRequestSuccess": "Request sent successfully. We'll contact you soon.",
+    "wantToBeFreelancer": "Want to be a freelancer?",
+    "requestHere": "Request here"
   },
   "editProfile": {
     "errorSaving": "Error saving changes",
@@ -664,14 +667,20 @@
   "validateUser": {
     "title": "User validation",
     "validating": "Validating, please wait...",
-    "success": "Your account has been successfully validated! You can now log in.",
+    "success": "Your account has been activated! You can now log in.",
     "linkError": "The validation link is invalid or has expired. You can try to validate with the code manually.",
     "codeError": "The validation code is invalid or has expired.",
     "codeLabel": "Enter your validation code:",
     "codePlaceholder": "Validation code",
     "validateBtn": "Validate",
     "redirecting": "Redirecting to login...",
-    "help": "Problems? Check your email or request a new validation code."
+    "help": "Problems? Check your email or request a new validation code.",
+    "error": "The link is not valid or has already been used.",
+    "activated": "Account activated!",
+    "errorTitle": "Validation error",
+    "goToLogin": "Go to login",
+    "goToHome": "Go to home page",
+    "validating": "Validating your account..."
   },
   "errorBoundary": {
     "title": "Something went wrong.",
@@ -723,5 +732,22 @@
     "title": "Restricted Access",
     "description": "Only freelancers can create services. If you are a freelancer, contact an administrator to request a role change.",
     "understood": "Understood"
+  },
+  "notification": {
+    "freelancerAccepted": "Congratulations! Your request to become a freelancer has been accepted. You can now start creating and posting your services on the platform.",
+    "freelancerRejected": "Your request to become a freelancer has been rejected. You can try again in the future or contact support for more information."
+  },
+  "floatingFreelancerButton": {
+    "wantToBe": "Want to be a freelancer?",
+    "requestHere": "Request here",
+    "close": "Close"
+  },
+  "howItWorks": {
+    "title": "How does it work?",
+    "steps": [
+      { "title": "Sign up for free", "desc": "Create your account as a client or freelancer in seconds." },
+      { "title": "Post or hire services", "desc": "Offer your skills or find the ideal professional for your project." },
+      { "title": "Connect and collaborate!", "desc": "Chat, agree and get quality results on SkillAgora." }
+    ]
   }
 } 

@@ -1,120 +1,70 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { FiCheckCircle, FiXCircle } from "react-icons/fi";
+import Header from "../components/layout/Header.jsx";
+import Footer from "../components/layout/Footer.jsx";
 
 const ValidateUser = () => {
+  const { code } = useParams();
   const { t } = useTranslation();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [status, setStatus] = useState('idle'); // idle | loading | success | error
-  const [message, setMessage] = useState('');
-  const [code, setCode] = useState('');
-  const [showCodeForm, setShowCodeForm] = useState(false);
+  const [status, setStatus] = useState("pending"); // 'pending', 'success', 'error'
+  const [message, setMessage] = useState("");
 
-  // Helper to get query params
-  function getQueryParam(param) {
-    const params = new URLSearchParams(location.search);
-    return params.get(param);
-  }
-
-  // Validate user with token from URL
   useEffect(() => {
-    const token = getQueryParam('token');
-    if (token) {
-      setStatus('loading');
-      axios
-        .post('/api/validate-user', { token }) // Cambia la ruta al endpoint real de tu backend
-        .then(() => {
-          setStatus('success');
-          setMessage(t('validateUser.success'));
-          setTimeout(() => navigate('/login'), 3000);
-        })
-        .catch((err) => {
-          setStatus('error');
-          setMessage(
-            err.response?.data?.message ||
-            t('validateUser.linkError')
-          );
-          setShowCodeForm(true);
-        });
-    } else {
-      setShowCodeForm(true);
-    }
-    // eslint-disable-next-line
-  }, []);
-
-  // Validar con código manual
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!code) return;
-    setStatus('loading');
-    try {
-      await axios.post('/api/validate-user', { code }); // Cambia la ruta al endpoint real de tu backend
-      setStatus('success');
-      setMessage(t('validateUser.success'));
-      setTimeout(() => navigate('/login'), 3000);
-    } catch (err) {
-      setStatus('error');
-      setMessage(
-        err.response?.data?.message ||
-        t('validateUser.codeError')
-      );
-    }
-  };
+    const validate = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/users/validate/${code}`);
+        const data = await res.json();
+        if (res.ok) {
+          setStatus("success");
+          setMessage(t('validateUser.success', '¡Tu cuenta ha sido activada! Ya puedes iniciar sesión.'));
+        } else {
+          setStatus("error");
+          setMessage(data?.message || t('validateUser.error', 'El enlace no es válido o ya fue usado.'));
+        }
+      } catch (e) {
+        setStatus("error");
+        setMessage(t('validateUser.error', 'El enlace no es válido o ya fue usado.'));
+      }
+    };
+    if (code) validate();
+  }, [code, t]);
 
   return (
-    <div style={{
-      maxWidth: 400,
-      margin: "4rem auto",
-      padding: "2rem",
-      border: "1px solid #eee",
-      borderRadius: 8,
-      background: "#fff",
-      boxShadow: "0 2px 8px rgba(0,0,0,0.05)"
-    }}>
-      <h2>{t('validateUser.title')}</h2>
-      {status === 'loading' && <p>{t('validateUser.validating')}</p>}
-      {status === 'success' && <p style={{ color: "green" }}>{message}</p>}
-      {status === 'error' && <p style={{ color: "red" }}>{message}</p>}
-      {showCodeForm && status !== 'success' && (
-        <form onSubmit={handleSubmit} style={{ marginTop: 24 }}>
-          <label htmlFor="code">{t('validateUser.codeLabel')}</label>
-          <input
-            id="code"
-            type="text"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            placeholder={t('validateUser.codePlaceholder')}
-            required
-            style={{
-              display: "block",
-              width: "100%",
-              padding: "0.5rem",
-              margin: "12px 0"
-            }}
-          />
-          <button
-            type="submit"
-            disabled={status === 'loading'}
-            style={{
-              width: "100%",
-              padding: "0.75rem",
-              background: "#3056d3",
-              color: "#fff",
-              border: "none",
-              borderRadius: "4px",
-              fontWeight: "bold",
-              cursor: "pointer"
-            }}
-          >
-            {t('validateUser.validateBtn')}
-          </button>
-        </form>
-      )}
-      <div style={{ marginTop: 32, fontSize: "0.95em", color: "#888" }}>
-        {status === 'success' ? t('validateUser.redirecting') : t('validateUser.help')}
-      </div>
+    <div className="min-h-screen bg-gray-950 relative overflow-hidden font-sans">
+      <Header />
+      <main className="container mx-auto px-4 py-24 flex flex-col items-center justify-center min-h-[70vh]">
+        <div className="bg-gray-900/80 rounded-2xl shadow-2xl border border-gray-800/50 p-10 flex flex-col items-center max-w-md w-full">
+          {status === "pending" && (
+            <div className="flex flex-col items-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mb-6"></div>
+              <p className="text-white text-lg font-semibold mb-2">{t('validateUser.validating', 'Validando tu cuenta...')}</p>
+            </div>
+          )}
+          {status === "success" && (
+            <div className="flex flex-col items-center">
+              <FiCheckCircle className="w-16 h-16 text-green-400 mb-4" />
+              <h2 className="text-2xl font-bold text-white mb-2">{t('validateUser.activated', '¡Cuenta activada!')}</h2>
+              <p className="text-gray-300 mb-6 text-center">{message}</p>
+              <Link to="/login" className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-200">
+                {t('validateUser.goToLogin', 'Ir a iniciar sesión')}
+              </Link>
+            </div>
+          )}
+          {status === "error" && (
+            <div className="flex flex-col items-center">
+              <FiXCircle className="w-16 h-16 text-red-400 mb-4" />
+              <h2 className="text-2xl font-bold text-white mb-2">{t('validateUser.errorTitle', 'Error de validación')}</h2>
+              <p className="text-gray-300 mb-6 text-center">{message}</p>
+              <Link to="/" className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-200">
+                {t('validateUser.goToHome', 'Ir a la página principal')}
+              </Link>
+            </div>
+          )}
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };

@@ -95,7 +95,7 @@ const EditProfilePage = () => {
     <div className="min-h-screen bg-gray-950 text-white">
       <Header />
 
-      <div className="max-w-2xl mx-auto py-10 px-6">
+      <div className="max-w-2xl mx-auto py-10 px-6 pt-24">
         <h1 className="text-3xl font-bold mb-6">{t('editProfile.title')}</h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">

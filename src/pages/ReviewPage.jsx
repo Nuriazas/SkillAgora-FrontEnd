@@ -66,7 +66,7 @@ const ReviewForm = () => {
         <div className="fixed inset-0 z-0">
           <Background />
         </div>
-        <div className="relative z-10 container mx-auto p-6 flex flex-col items-center">
+        <div className="relative z-10 container mx-auto p-6 flex flex-col items-center pt-24">
           {/* Detalles del servicio */}
           {serviceDetails && (
             <section

@@ -103,7 +103,7 @@ const ServicesPage = () => {
 				></div>
 			</div>
 
-			<div className="relative z-10 pt-16">
+			<div className="relative z-10 pt-24">
 				<Header />
 
 				<SimpleHeroSection
