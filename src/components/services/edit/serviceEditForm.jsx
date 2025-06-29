@@ -78,7 +78,7 @@ const ServiceEditForm = ({
 			/>
 
 			<div className="text-xs text-gray-500 bg-gray-800/30 p-2 rounded">
-				Service ID: {service?.id || "MISSING"}
+				{t('serviceEditModal.serviceId', { id: service?.id || t('serviceEditModal.missing') })}
 			</div>
 
 			<div className="flex gap-3 justify-end pt-6 border-t border-gray-800/50">

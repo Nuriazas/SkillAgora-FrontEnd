@@ -240,10 +240,12 @@
     "lastName": "Last Name",
     "email": "Email",
     "password": "Password",
-    "signUp": "Sign up",
-    "orOtherAccounts": "or sign in with other accounts?",
+    "signUp": "Sign Up",
+    "orOtherAccounts": "or sign up with other accounts",
     "alreadyAccount": "Already have an account?",
-    "clickToSignIn": "Click here to sign in."
+    "clickToSignIn": "Click here to sign in.",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
   },
   "serviceCard": {
     "ariaLabel": "View service details: {{title}}",
@@ -339,16 +341,16 @@
     "location": "Location: {{location}}",
     "rate": "Rate: ${{price}}/hour",
     "close": "Close",
-    "loadingDetails": "Loading freelancer details...",
-    "anonymousUser": "Anonymous User",
+    "loadingDetails": "Loading details...",
+    "anonymousUser": "Anonymous user",
     "general": "General",
     "remote": "Remote",
     "english": "English",
-    "defaultBio": "Experienced {{specialty}} professional ready to help with your projects.",
+    "defaultBio": "Experienced professional in {{specialty}} ready to help you with your projects.",
     "experience": "Experience",
     "rating": "Rating",
     "hourlyRate": "Hourly Rate",
-    "hourlyRateValue": "$ {{value}}/hour",
+    "hourlyRateValue": "${{value}}/hr",
     "hourlyRateShort": "$ {{value}}/hr",
     "viewPortfolio": "View Portfolio",
     "contact": "Contact",
@@ -412,13 +414,20 @@
     "serviceTitlePlaceholder": "Enter service title",
     "description": "Description",
     "descriptionPlaceholder": "Describe your service",
+    "price": "Price",
     "pricePlaceholder": "0.00",
+    "deliveryTime": "Delivery Time (days)",
     "deliveryTimePlaceholder": "3",
+    "location": "Location",
     "locationPlaceholder": "Remote, City, etc.",
-    "updateError": "Error updating the service.",
-    "authError": "Authentication error: Please log in again.",
-    "idError": "Error: Service ID not found.",
-    "updateErrorGeneric": "Error updating service: {{error}}"
+    "category": "Category",
+    "selectCategory": "Select a category",
+    "services": "services",
+    "cancel": "Cancel",
+    "updateService": "Update Service",
+    "updating": "Updating...",
+    "serviceId": "Service ID: {{id}}",
+    "missing": "MISSING"
   },
   "landingNav": {
     "browseServices": "Browse Services",
@@ -615,7 +624,7 @@
     }
   },
   "landingPage": {
-    "errorTitle": "Oops! Something went wrong",
+    "errorTitle": "Error loading data",
     "tryAgain": "Try again"
   },
   "servicesPage": {
@@ -661,7 +670,7 @@
     "question": "Are you sure you want to hire this service?",
     "info": "You will be able to discuss details and conditions with the provider before confirming the job.",
     "cancel": "Cancel",
-    "confirm": "Confirm Hire",
+    "confirm": "Confirm",
     "confirming": "Hiring..."
   },
   "serviceCarousel": {
@@ -685,5 +694,10 @@
     "phone": "Phone",
     "liveChat": "Live Chat",
     "available": "Available 9:00 to 18:00"
+  },
+  "servicesList": {
+    "viewAll": "View All Services",
+    "viewAllDescription": "Explore our complete collection of services",
+    "viewAllAria": "View all services"
   }
 } 

@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ServiceCard from "../../services/list/ServiceCard.jsx";
 import ServiceModal from "../modal/ServiceModal.jsx";
+import { useTranslation } from "react-i18next";
 
 // lista de servicios con paginación y modal
 const ServicesList = ({ services, loading, limit = null, showViewAll = false, isLandingPage = false }) => {
 	const [selectedService, setSelectedService] = useState(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();
+	const { t } = useTranslation();
 
 	console.log("SERVICES RECIBIDOS EN ServicesList:", services);
 
@@ -98,7 +100,7 @@ const ServicesList = ({ services, loading, limit = null, showViewAll = false, is
 						className="bg-gray-900/80 backdrop-blur-xl rounded-xl shadow-xl border border-gray-800/50 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 cursor-pointer hover:-translate-y-2 group overflow-hidden flex items-center justify-center min-h-[300px]"
 						role="button"
 						tabIndex={0}
-						aria-label="Ver todos los servicios"
+						aria-label={t('servicesList.viewAllAria', 'Ver todos los servicios')}
 						onKeyDown={(e) => {
 							if (e.key === "Enter" || e.key === " ") {
 								e.preventDefault();
@@ -111,10 +113,10 @@ const ServicesList = ({ services, loading, limit = null, showViewAll = false, is
 								<span className="text-2xl">📋</span>
 							</div>
 							<h4 className="font-semibold text-white mb-2 group-hover:text-purple-300 transition-colors">
-								Ver Todos los Servicios
+								{t('servicesList.viewAll', 'Ver Todos los Servicios')}
 							</h4>
 							<p className="text-sm text-gray-400">
-								Explora nuestra colección completa de servicios
+								{t('servicesList.viewAllDescription', 'Explora nuestra colección completa de servicios')}
 							</p>
 						</div>
 					</div>

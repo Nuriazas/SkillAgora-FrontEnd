@@ -129,7 +129,7 @@ const FreelancerPagination = ({ currentPage, totalPages, onPageChange }) => {
 
 			{/* Info de página */}
 			<div className="ml-4 text-sm text-gray-400">
-				Page {currentPage} of {totalPages}
+				{t('freelancerPagination.pageInfo', { current: currentPage, total: totalPages })}
 			</div>
 		</nav>
 	);

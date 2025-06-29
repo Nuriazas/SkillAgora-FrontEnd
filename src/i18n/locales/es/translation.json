@@ -285,8 +285,10 @@
     "close": "Cerrar"
   },
   "pagination": {
+    "navigation": "Navegación de paginación",
     "previous": "Anterior",
-    "next": "Siguiente"
+    "next": "Siguiente",
+    "pageInfo": "Página {{current}} de {{total}}"
   },
   "filterControls": {
     "allCategories": "Todas las categorías",
@@ -323,11 +325,24 @@
     "specialty": "Especialidad: {{specialty}}",
     "location": "Ubicación: {{location}}",
     "rate": "Tarifa: ${{price}}/hora",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "experience": "Experiencia",
+    "rating": "Valoración",
+    "hourlyRate": "Tarifa por hora",
+    "hourlyRateValue": "${{value}}/hora",
+    "viewPortfolio": "Ver Portafolio",
+    "contact": "Contactar",
+    "loadingDetails": "Cargando detalles...",
+    "anonymousUser": "Usuario anónimo",
+    "general": "General",
+    "remote": "Remoto",
+    "english": "Español",
+    "defaultBio": "Profesional experimentado en {{specialty}} listo para ayudarte con tus proyectos."
   },
   "freelancerPagination": {
     "previous": "Anterior",
-    "next": "Siguiente"
+    "next": "Siguiente",
+    "pageInfo": "Página {{current}} de {{total}}"
   },
   "avatar": {
     "userAvatar": "Avatar de usuario",
@@ -376,18 +391,27 @@
     "serviceTitlePlaceholder": "Introduce el título del servicio",
     "description": "Descripción",
     "descriptionPlaceholder": "Describe tu servicio",
+    "price": "Precio",
     "pricePlaceholder": "0.00",
+    "deliveryTime": "Tiempo de entrega (días)",
     "deliveryTimePlaceholder": "3",
+    "location": "Ubicación",
     "locationPlaceholder": "Remoto, Ciudad, etc.",
-    "updateError": "Error al actualizar el servicio.",
-    "authError": "Error de autenticación: Por favor, inicia sesión de nuevo.",
-    "idError": "Error: No se encontró el ID del servicio.",
-    "updateErrorGeneric": "Error al actualizar el servicio: {{error}}"
+    "category": "Categoría",
+    "selectCategory": "Selecciona una categoría",
+    "services": "servicios",
+    "cancel": "Cancelar",
+    "updateService": "Actualizar Servicio",
+    "updating": "Actualizando...",
+    "serviceId": "ID del Servicio: {{id}}",
+    "missing": "FALTANTE"
   },
   "confirmationModal": {
     "title": "Confirmar Contratación",
     "question": "¿Estás seguro de que quieres contratar este servicio?",
-    "info": "Se creará una orden de compra que podrás gestionar desde tu panel."
+    "info": "Se creará una orden de compra que podrás gestionar desde tu panel.",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar"
   },
   "landingNav": {
     "browseServices": "Explorar Servicios",
@@ -624,5 +648,24 @@
     },
     "stillNeedHelp": "¿Aún necesitas ayuda?",
     "contactSupport": "Contactar Soporte"
+  },
+  "formRegister": {
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "signUp": "Registrarse",
+    "orOtherAccounts": "o regístrate con otras cuentas",
+    "alreadyAccount": "¿Ya tienes una cuenta?",
+    "clickToSignIn": "Haz clic aquí para iniciar sesión."
+  },
+  "servicesList": {
+    "viewAll": "Ver Todos los Servicios",
+    "viewAllDescription": "Explora nuestra colección completa de servicios",
+    "viewAllAria": "Ver todos los servicios"
+  },
+  "landingPage": {
+    "errorTitle": "Error al cargar los datos",
+    "tryAgain": "Intentar de nuevo"
   }
 } 
