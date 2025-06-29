@@ -404,7 +404,20 @@
     "updateService": "Actualizar Servicio",
     "updating": "Actualizando...",
     "serviceId": "ID del Servicio: {{id}}",
-    "missing": "FALTANTE"
+    "missing": "FALTANTE",
+    "deleteService": "Eliminar Servicio"
+  },
+  "deleteModal": {
+    "title": "Confirmar Eliminación",
+    "warning": "¿Estás seguro de que quieres eliminar este servicio?",
+    "serviceName": "Servicio:",
+    "permanent": "Esta acción es irreversible",
+    "cancel": "Cancelar",
+    "confirm": "Eliminar",
+    "deleting": "Eliminando...",
+    "success": "Servicio eliminado exitosamente",
+    "error": "Error al eliminar el servicio",
+    "errorGeneric": "Error al eliminar: {{error}}"
   },
   "confirmationModal": {
     "title": "Confirmar Contratación",

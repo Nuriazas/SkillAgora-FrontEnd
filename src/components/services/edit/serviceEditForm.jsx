@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiSave, FiLoader } from "react-icons/fi";
+import { FiSave, FiLoader, FiTrash2 } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import FormField from './FormField';
 import CategorySelect from './CategorySelect';
@@ -11,7 +11,9 @@ const ServiceEditForm = ({
 	service, 
 	onSubmit, 
 	onChange, 
-	onClose 
+	onClose,
+	onDeleteClick,
+	isDeleting
 }) => {
 	const { t } = useTranslation();
 
@@ -81,32 +83,55 @@ const ServiceEditForm = ({
 				{t('serviceEditModal.serviceId', { id: service?.id || t('serviceEditModal.missing') })}
 			</div>
 
-			<div className="flex gap-3 justify-end pt-6 border-t border-gray-800/50">
+			<div className="flex gap-3 justify-between pt-6 border-t border-gray-800/50">
+				{/* Botón de eliminar a la izquierda */}
 				<button
 					type="button"
-					onClick={onClose}
-					className="px-6 py-3 bg-gray-700/80 hover:bg-gray-600/80 text-white rounded-xl transition-all duration-200 font-medium border border-gray-600/50"
-					disabled={loading}
+					onClick={onDeleteClick}
+					className="px-6 py-3 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white rounded-xl transition-all duration-200 font-medium shadow-lg hover:shadow-red-500/25 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+					disabled={loading || isDeleting}
 				>
-					{t('serviceEditModal.cancel')}
-				</button>
-				<button
-					type="submit"
-					disabled={loading}
-					className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl transition-all duration-200 font-medium shadow-lg hover:shadow-purple-500/25 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-				>
-					{loading ? (
+					{isDeleting ? (
 						<>
 							<FiLoader className="w-4 h-4 animate-spin" />
-							{t('serviceEditModal.updating')}
+							{t('deleteModal.deleting') || 'Eliminando...'}
 						</>
 					) : (
 						<>
-							<FiSave className="w-4 h-4" />
-							{t('serviceEditModal.updateService')}
+							<FiTrash2 className="w-4 h-4" />
+							{t('serviceEditModal.deleteService') || 'Eliminar Servicio'}
 						</>
 					)}
 				</button>
+
+				{/* Botones de acción a la derecha */}
+				<div className="flex gap-3">
+					<button
+						type="button"
+						onClick={onClose}
+						className="px-6 py-3 bg-gray-700/80 hover:bg-gray-600/80 text-white rounded-xl transition-all duration-200 font-medium border border-gray-600/50"
+						disabled={loading || isDeleting}
+					>
+						{t('serviceEditModal.cancel')}
+					</button>
+					<button
+						type="submit"
+						disabled={loading || isDeleting}
+						className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl transition-all duration-200 font-medium shadow-lg hover:shadow-purple-500/25 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+					>
+						{loading ? (
+							<>
+								<FiLoader className="w-4 h-4 animate-spin" />
+								{t('serviceEditModal.updating')}
+							</>
+						) : (
+							<>
+								<FiSave className="w-4 h-4" />
+								{t('serviceEditModal.updateService')}
+							</>
+						)}
+					</button>
+				</div>
 			</div>
 		</form>
 	);

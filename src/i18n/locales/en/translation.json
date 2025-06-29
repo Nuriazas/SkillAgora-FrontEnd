@@ -427,7 +427,20 @@
     "updateService": "Update Service",
     "updating": "Updating...",
     "serviceId": "Service ID: {{id}}",
-    "missing": "MISSING"
+    "missing": "MISSING",
+    "deleteService": "Delete Service"
+  },
+  "deleteModal": {
+    "title": "Confirm Deletion",
+    "warning": "Are you sure you want to delete this service?",
+    "serviceName": "Service:",
+    "permanent": "This action is irreversible",
+    "cancel": "Cancel",
+    "confirm": "Delete",
+    "deleting": "Deleting...",
+    "success": "Service deleted successfully",
+    "error": "Error deleting service",
+    "errorGeneric": "Delete error: {{error}}"
   },
   "landingNav": {
     "browseServices": "Browse Services",

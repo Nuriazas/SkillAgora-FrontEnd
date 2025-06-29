@@ -78,6 +78,17 @@ const ProfilePage = () => {
     setIsEditModalOpen(true);
   };
 
+  // Handler para eliminar servicio
+// Handler para eliminar servicio
+  const handleServiceDelete = async (deletedServiceId) => {
+    setProfileData((prev) => ({
+      ...prev,
+      services: prev.services.filter((service) => 
+        service.service_id !== deletedServiceId
+      ),
+    }));
+  };
+
   // Handler para actualizar servicio después de la edición
   const handleServiceUpdate = async (updatedService) => {
     setProfileData((prev) => ({
@@ -425,6 +436,7 @@ const ProfilePage = () => {
           setSelectedService(null);
         }}
         onUpdate={handleServiceUpdate}
+        onDelete={handleServiceDelete}
       />
     </div>
   );
