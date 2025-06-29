@@ -50,7 +50,7 @@ const FreelancerHireModal = ({
 								</div>
 							</div>
 							<div className="text-xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-								{t('freelancerHireModal.pricePerHour', { price: freelancer.hourly_rate })}
+								{freelancer.hourly_rate_formatted || t('freelancerHireModal.pricePerHour', { price: freelancer.hourly_rate })}
 							</div>
 						</div>
 						<p className="text-sm text-gray-400">

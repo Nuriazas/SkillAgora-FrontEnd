@@ -10,31 +10,24 @@ export const sendContactRequest = async (serviceId, message, token) => {
     }
 
     console.log("🚀 Enviando request con:", {
-      serviceId, // ✅ CORREGIDO: ahora es serviceId
+      serviceId, 
       message,
       token: token ? `${token.substring(0, 20)}...` : "ausente",
     });
 
     const response = await fetch(`${API_BASE_URL}/contact/request`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-        "Cache-Control": "no-cache, no-store, must-revalidate",
-        "Pragma": "no-cache",
-        "Expires": "0",
       },
       body: JSON.stringify({
-        providerId: serviceId, // ✅ CORREGIDO: enviamos serviceId como providerId (el backend lo espera así)
+        providerId: serviceId, 
         message,
       }),
     });
 
-    console.log("📡 Respuesta HTTP status:", response.status);
-    console.log("📡 Respuesta OK:", response.ok);
-
     const data = await response.json();
-    console.log("📝 Respuesta del servidor:", data);
 
     if (!response.ok) {
       throw new Error(

@@ -1,27 +1,44 @@
-const API_URL_VITE = 'http://localhost:3000/';
+const API_URL_VITE = "http://localhost:3000";
 
+export const createReview = async (service_id, reviewData) => {
+  try {
+    const res = await fetch(`${API_URL_VITE}/services/newreview/${service_id}`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(reviewData),
+    });
 
-export const createReview = async ({ order_id, rating, comment, token, status }) => {
-  const res = await fetch(`${API_URL_VITE}/services/newreview/${service_id}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`, 
-    },
-    body: JSON.stringify({ order_id: order_id, rating, comment }),
-  });
+    const data = await res.json();
 
-  if (!res.ok) {
-    const errorData = await res.json();
-    throw new Error(errorData.message || "Failed to create review");
+    if (!res.ok) {
+      throw new Error(data.message || "Error al crear la reseña");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error creating review:", error);
+    throw error;
   }
-  return res.json();
 };
 
 export const getFreelancerReviews = async (freelancer_id) => {
-  const res = await fetch(`${API_URL_VITE}/freelancer/${freelancer_id}`);
-  if (!res.ok) {
-    throw new Error("Failed to fetch reviews");
+  try {
+    const res = await fetch(`${API_URL_VITE}/freelancer/${freelancer_id}`, {
+      credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || "Error al obtener las reseñas");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching freelancer reviews:", error);
+    throw error;
   }
-  return res.json();
 };

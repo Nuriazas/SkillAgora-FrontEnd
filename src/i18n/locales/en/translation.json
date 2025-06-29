@@ -204,7 +204,7 @@
     "notFound": "Profile not found",
     "notFoundTitle": "Profile Not Found",
     "goBack": "Go Back",
-    "memberSince": "Member since {{year}}",
+    "memberSince": "Member since {{date}}",
     "rating": "rating",
     "viewPortfolio": "View Portfolio",
     "myServices": "My Services",
@@ -250,7 +250,7 @@
     "imageAlt": "Service image: {{title}}",
     "anonymousUser": "Anonymous user",
     "reviews": "({{count}} reviews)",
-    "price": "$ {{price}}"
+    "price": "{{price}}"
   },
   "contactModal": {
     "title": "Contact {{name}}",

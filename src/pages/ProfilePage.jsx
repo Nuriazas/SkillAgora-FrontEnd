@@ -63,32 +63,7 @@ const ProfilePage = () => {
       setLoading(false);
     }
   };
-  // useEffect(() => {
-  //   if (!profileData || !profileData.services) return;
-
-  //   const handleScroll = () => {
-  //     if (
-  //       window.innerHeight + window.scrollY >=
-  //         document.documentElement.scrollHeight - 100 &&
-  //       visibleServicesCount < profileData.services.length &&
-  //       !loadingMore
-  //     ) {
-  //       setLoadingMore(true);
-  //       setTimeout(() => {
-  //         setVisibleServicesCount((prev) => {
-  //           const newCount = prev + 6;
-  //           return newCount > profileData.services.length
-  //             ? profileData.services.length
-  //             : newCount;
-  //         });
-  //         setLoadingMore(false);
-  //       }, 1000);
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, [profileData, visibleServicesCount, loadingMore]);
+  
 
   // Handler para abrir modal de edición de servicio
   const handleEditService = (service) => {
@@ -237,7 +212,16 @@ const ProfilePage = () => {
                       <div className="flex items-center gap-2 justify-center md:justify-start text-gray-400">
                         <FiCalendar className="w-4 h-4" />
                         <span>
-                          {t('profile.memberSince', { year: new Date(profileData?.created_at).getFullYear() })}
+                          {profileData?.created_at 
+                            ? t('profile.memberSince', { 
+                                date: new Date(profileData.created_at).toLocaleDateString('es-ES', {
+                                  day: 'numeric',
+                                  month: 'long',
+                                  year: 'numeric'
+                                })
+                              })
+                            : t('profile.memberSince', { date: 'N/A' })
+                          }
                         </span>
                       </div>
 
@@ -309,10 +293,18 @@ const ProfilePage = () => {
 
                         <div className="space-y-2 mb-4">
                           <div className="flex items-center gap-2 text-sm text-gray-400">
-                            <FiDollarSign className="w-4 h-4 text-purple-400" />
-                            <span className="text-purple-400 font-bold">
-                              ${service.price}
-                            </span>
+                            {service.price_formatted ? (
+                              <span className="text-purple-400 font-bold">
+                                {service.price_formatted}
+                              </span>
+                            ) : (
+                              <>
+                                <FiDollarSign className="w-4 h-4 text-purple-400" />
+                                <span className="text-purple-400 font-bold">
+                                  ${service.price}
+                                </span>
+                              </>
+                            )}
                           </div>
 
                             {service.delivery_time_days && (

@@ -163,7 +163,7 @@ const ProviderDetail = () => {
           return b.rating - a.rating;
         case 'price':
           return (
-            parseFloat(a.price.replace(/[^\d]/g, '')) - parseFloat(b.price.replace(/[^\d]/g, ''))
+            parseFloat(a.price_number ?? a.price) - parseFloat(b.price_number ?? b.price)
           );
         case 'name':
           return a.name.localeCompare(b.name);
@@ -375,7 +375,7 @@ const ProviderDetail = () => {
 
                             <div className="flex justify-between items-center mb-2">
                               <span className="text-indigo-300 font-bold text-xs">
-                                {service.price}
+                                {service.price_formatted || `$${service.price}`}
                               </span>
                               <span className="text-indigo-200 text-xs">{service.duration}</span>
                             </div>

@@ -203,7 +203,7 @@
     "notFound": "Perfil no encontrado",
     "notFoundTitle": "Perfil no encontrado",
     "goBack": "Volver",
-    "memberSince": "Miembro desde {{year}}",
+    "memberSince": "Miembro desde {{date}}",
     "rating": "valoración",
     "viewPortfolio": "Ver Portafolio",
     "myServices": "Mis Servicios",
@@ -239,7 +239,7 @@
     "imageAlt": "Imagen del servicio: {{title}}",
     "anonymousUser": "Usuario anónimo",
     "reviews": "({{count}} reseñas)",
-    "price": "$ {{price}}"
+    "price": "{{price}}"
   },
   "contactModal": {
     "defaultMessage": "Hola, estoy interesado en tu servicio: {{title}}",

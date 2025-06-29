@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Header from "../components/layout/Header.jsx";
 import { Background } from "../components/shared/Background/index.jsx";
 import { getServiceById } from "../services/services/getServiceByIdService.js";
+import { getToken } from "../utils/tokenUtils.js";
 
 const ReviewForm = () => {
   const { service_id } = useParams();
@@ -31,14 +32,12 @@ const ReviewForm = () => {
     setError(null);
     setSuccess(false);
 
-
     try {
-        const token = localStorage.getItem("token");
       const res = await fetch(   `http://localhost:3000/services/newreview/${service_id}`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
-           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ rating, comment }),
       });
@@ -147,7 +146,7 @@ const ReviewForm = () => {
                 {/* Price */}
                 {serviceDetails.price && (
                   <p className="mt-4 text-lg font-bold text-green-400">
-                    ${serviceDetails.price}
+                    {serviceDetails.price_formatted || `$${serviceDetails.price}`}
                   </p>
                 )}
               </div>

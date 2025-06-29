@@ -24,23 +24,18 @@ export const useFreelancersList = () => {
     fetchFreelancers();
   }, [fetchFreelancers]);
 
-  const handleCreateService = useCallback(async (serviceData, token) => {
+  const handleCreateService = useCallback(async (serviceData) => {
     try {
       setLoading(true);
-      console.log("Token recibido en hook:", token);
-      console.log("¿Token válido en hook?", !!token);
       const { category_name, title, description, price, place, img } = serviceData;
-      const newService = await CreateService.create(
-        {
-          category_name,
-          title,
-          description,
-          price,
-          place,
-          img
-        },
-        token
-      );
+      const newService = await CreateService.create({
+        category_name,
+        title,
+        description,
+        price,
+        place,
+        img
+      });
       setFreelancers((prev) => [...prev, newService]);
       return {
         category_name,

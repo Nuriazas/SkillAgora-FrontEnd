@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { sendContactRequest } from "../../services/contact/sendContactRequestService.js";
 import { freelancerService } from "../../services/getAllFreelancersService.js";
+import { getToken } from "../../utils/tokenUtils.js";
 
 /**
  * Hook personalizado para manejar toda la lógica del FreelancerModal
@@ -93,7 +94,7 @@ export const useFreelancerModalLogic = (freelancer, onClose) => {
 	// Handler para enviar mensaje de contacto
 	const handleSendMessage = async (message) => {
 		try {
-			const token = localStorage.getItem("token");
+			const token = getToken();
 			const userId = freelancerDetails.id;
 
 			console.log("🔑 Token RAW:", token);
@@ -152,7 +153,7 @@ export const useFreelancerModalLogic = (freelancer, onClose) => {
 	// Handler para contratar servicio
 	const handleHireService = () => {
 		console.log("serviceDetails en handleHireService:", serviceDetails);
-		const token = localStorage.getItem("token");
+		const token = getToken();
 		const serviceId = serviceDetails.service_id || serviceDetails.id;
 		
 		// Validar token
@@ -188,7 +189,7 @@ export const useFreelancerModalLogic = (freelancer, onClose) => {
 	const handleConfirmHire = async () => {
 		try {
 			setIsProcessing(true);
-			const token = localStorage.getItem("token");
+			const token = getToken();
 			const freelancerId = freelancerDetails.id;
 
 

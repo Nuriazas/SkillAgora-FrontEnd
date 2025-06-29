@@ -3,6 +3,7 @@ import { sendContactRequest } from "../../services/contact/sendContactRequestSer
 import { createOrder, checkOrderStatus } from "../../services/orders/createOrderService.js";
 import { servicesApi } from "../../services/api/api.js";
 import { getServiceById } from "../../services/services/getServiceByIdService.js";
+import { getToken } from "../../utils/tokenUtils.js";
 
 // Hook para manejar toda la lógica del modal de servicio
 // Todavia por modularizar
@@ -54,7 +55,7 @@ export const useServiceModalLogic = (service, onClose) => {
 
 	useEffect(() => {	// useEffect para verificar el estado de la orden al cargar el modal
 		const checkOrderStatusOnLoad = async () => {
-			const token = localStorage.getItem("token");
+			const token = getToken();
 			const serviceId = serviceDetails.id;
 
 			if (!token || token === "null" || token === "undefined" || !serviceId) {
@@ -104,7 +105,7 @@ export const useServiceModalLogic = (service, onClose) => {
 	// Handler para enviar un mensaje
 	const handleSendMessage = async (message) => {
 		try {
-			const token = localStorage.getItem("token");
+			const token = getToken();
 			const serviceId = serviceDetails?.id;
 
 			if (!token || token === "null" || token === "undefined") {
@@ -163,7 +164,7 @@ export const useServiceModalLogic = (service, onClose) => {
 	// Handler para contratar servicio
 	const handleHireService = () => {
 		console.log("serviceDetails en handleHireService:", serviceDetails);
-		const token = localStorage.getItem("token");
+		const token = getToken();
 		const serviceId = serviceDetails.service_id || serviceDetails.id;
 		
 		if (!token || token === "null" || token === "undefined") {
@@ -206,7 +207,7 @@ export const useServiceModalLogic = (service, onClose) => {
 	const handleConfirmHire = async () => {
 		try {
 			setIsCreatingOrder(true);
-			const token = localStorage.getItem("token");
+			const token = getToken();
 			const serviceId = serviceDetails.service_id || serviceDetails.id;
 			const response = await createOrder(serviceId, token);
 

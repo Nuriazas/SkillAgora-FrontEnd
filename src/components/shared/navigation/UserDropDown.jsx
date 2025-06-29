@@ -7,7 +7,7 @@ import {
   FiSettings,
   FiLogOut,
 } from "react-icons/fi";
-// import DefaultAvatar from "../assets/defaultAvatar.jpeg";
+import DefaultAvatar from "../../../assets/defaultAvatar.jpeg";
 import UseAvatar from "../../UseAvatar.jsx";
 import { useTranslation } from "react-i18next";
 

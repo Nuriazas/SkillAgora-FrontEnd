@@ -133,7 +133,7 @@ const ServiceModal = ({ service, onClose }) => {
             />
 
             <ServiceFooter
-              price={serviceDetails.price}
+              price={{ price: serviceDetails.price, price_formatted: serviceDetails.price_formatted }}
               orderStatus={orderStatus}
               handleContactSeller={handleContactSeller}
               handleHireService={handleHireService}

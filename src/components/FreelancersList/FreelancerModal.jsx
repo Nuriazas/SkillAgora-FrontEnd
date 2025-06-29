@@ -185,7 +185,11 @@ const FreelancerModal = ({ isOpen, onClose, freelancer }) => {
                     {t('freelancerModal.hourlyRate')}
                   </span>
                 </div>
-                <span className="text-gray-400">{t('freelancerModal.hourlyRateValue', { value: hourly_rate })}</span>
+                <span className="text-gray-400">
+                  {details.hourly_rate_number !== undefined
+                    ? `$${Number(details.hourly_rate_number).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}/hour`
+                    : t('freelancerModal.hourlyRateValue', { value: Number(hourly_rate).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) })}
+                </span>
               </div>
             </div>
 
@@ -204,21 +208,19 @@ const FreelancerModal = ({ isOpen, onClose, freelancer }) => {
               </div>
             )}
 
-            {/* Footer con precio y botones */}
-            <div className="flex items-center justify-between pt-6 border-t border-gray-800/50">
+            {/* Footer con precio y acciones */}
+            <div className="flex items-center justify-between pt-6 border-t border-gray-800/50 mt-8">
               <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                {t('freelancerModal.hourlyRateShort', { value: hourly_rate })}
+                {details.hourly_rate_number !== undefined
+                  ? `$${Number(details.hourly_rate_number).toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 2 })}/hr`
+                  : `$${Number(hourly_rate).toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 2 })}/hr`}
               </div>
-              <div className="flex gap-3">
-                <button
-                  onClick={handleContactFreelancer}
-                  className="px-6 py-3 bg-gray-700/80 hover:bg-gray-600/80 text-white rounded-xl transition-all duration-200 font-semibold border border-gray-600/50 flex items-center gap-2"
-                >
-                  <FiMail className="w-4 h-4" />
-                  {t('freelancerModal.contact')}
-                </button>
-              
-              </div>
+              <button
+                onClick={handleContactFreelancer}
+                className="px-6 py-3 bg-gray-700/80 hover:bg-gray-600/80 text-white rounded-xl transition-all duration-200 font-medium border border-gray-600/50"
+              >
+                {t('freelancerModal.contact')}
+              </button>
             </div>
           </div>
         </div>

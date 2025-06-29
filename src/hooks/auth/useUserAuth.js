@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { userApi } from "../services/api/api";
+import { removeToken } from "../../utils/tokenUtils.js";
 
 const useUserAuth = () => {
 	const [user, setUser] = useState(null);
@@ -75,18 +76,29 @@ const useUserAuth = () => {
 		} catch (error) {
 			console.error("❌ Error loading user profile:", error);
 			// Si hay error con el token, limpiar todo
-			localStorage.removeItem("authToken");
+			removeToken();
 			setUser(null);
 		} finally {
 			setLoading(false);
 		}
 	};
 
-	const logout = () => {
-		localStorage.removeItem("authToken");
-		setUser(null);
-		// Recargar para limpiar cualquier estado residual
-		window.location.href = "/";
+	const logout = async () => {
+		try {
+			// Llamar al endpoint de logout del backend para limpiar cookies
+			await fetch('http://localhost:3000/users/logout', {
+				method: 'POST',
+				credentials: 'include'
+			});
+		} catch (error) {
+			console.error('Error en logout del backend:', error);
+		} finally {
+			// Limpiar token del frontend
+			removeToken();
+			setUser(null);
+			// Recargar para limpiar cualquier estado residual
+			window.location.href = "/";
+		}
 	};
 
 	const refreshProfile = async () => {
@@ -100,7 +112,7 @@ const useUserAuth = () => {
 		user,
 		loading,
 		logout,
-		refreshProfile, // Para recargar el perfil después de actualizaciones
+		refreshProfile,
 	};
 };
 

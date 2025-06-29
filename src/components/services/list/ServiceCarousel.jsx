@@ -67,7 +67,7 @@ const ServiceCarousel = ({	// Props del componente
 					</div>
 					<div>
 						<div className="font-semibold text-white">
-							{displayService.user_name || t('serviceCarousel.anonymousUser')}
+							{displayService.user_name || displayService.freelancer_name || displayService.name || t('serviceCarousel.anonymousUser')}
 						</div>
 						<div className="text-sm text-white">
 							{displayService.category_name}
@@ -80,7 +80,7 @@ const ServiceCarousel = ({	// Props del componente
 						<span>{displayService.rating || "5.0"}</span>
 					</div>
 					<div className="text-xl font-bold text-white">
-						${displayService.price}
+						{displayService.price_formatted || `$${displayService.price}`}
 					</div>
 				</div>
 			</div>
@@ -115,7 +115,7 @@ const ServiceCarousel = ({	// Props del componente
 						{t('serviceCarousel.priceLabel')}
 					</span>
 					<span className="text-2xl font-bold text-white">
-						${displayService.price}
+						{displayService.price_formatted || `$${displayService.price}`}
 					</span>
 				</div>
 			</div>

@@ -63,10 +63,6 @@ const CreateServicePage = () => {
     setIsLoading(true);
     try {
       console.log("DATOS DEL FORMULARIO EN EL CREATESERVICEPAGE:", formData);
-      console.log("Token obtenido del contexto:", token);
-      console.log("¿Existe el token?", !!token);
-      console.log("Tipo de token:", typeof token);
-      console.log("Longitud del token:", token?.length);
       const serviceData = {
         category_name: formData.category_name,
         title: formData.title,
@@ -76,7 +72,7 @@ const CreateServicePage = () => {
         img: formData.img,
       };
 
-      await handleCreateService(serviceData, token);
+      await handleCreateService(serviceData);
       navigate("/");
     } catch (error) {
       console.error("Error al crear el servicio:", error);

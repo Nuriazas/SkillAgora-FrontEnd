@@ -1,9 +1,11 @@
+import { getToken } from "../../utils/tokenUtils.js";
+
 const BASE_URL = "http://localhost:3000";
 
 // Función para obtener usuario del JWT
 export const getCurrentUserFromToken = () => {
 	// CORREGIDO: usar "token" en lugar de "authToken"
-	const token = localStorage.getItem("token");
+	const token = getToken();
 	if (!token) return null;
 
 	try {
@@ -24,23 +26,18 @@ export const getCurrentUserFromToken = () => {
 
 export const getProfileByName = async (name) => {
 	try {
-		// CORREGIDO: usar "token" en lugar de "authToken"
-		const token = localStorage.getItem("token");
-		const headers = {
-			"Content-Type": "application/json",
-		};
-
-		if (token) {
-			headers.Authorization = `Bearer ${token}`;
-		}
-
 		const response = await fetch(`${BASE_URL}/users/profile/${name}`, {
-			headers,
+			method: "GET",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
 		});
+		
 		const data = await response.json();
 
 		if (!response.ok) {
-			throw new Error(data.message || "Something went wrong");
+			throw new Error(data.message || "Error al obtener el perfil");
 		}
 
 		return data;

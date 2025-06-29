@@ -137,14 +137,19 @@ const FreelancerCard = ({ freelancer, onClick }) => {
 					</div>
 
 					{/* Precio por hora */}
-					<div className="flex items-center space-x-1">
-						<FiDollarSign
-							className="w-3 h-3 text-purple-400"
-							aria-hidden="true"
-						/>
-						<span className="font-bold text-purple-400 text-sm">
-							{t('freelancerCard.rate', { price: hourly_rate })}
-						</span>
+					<div className="flex items-center gap-2 mt-2">
+						{freelancer.hourly_rate_formatted ? (
+							<span className="text-green-400 font-bold">
+								{Number(freelancer.hourly_rate_number ?? freelancer.hourly_rate).toLocaleString(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 2 })}/hr
+							</span>
+						) : (
+							<>
+								<FiDollarSign className="w-4 h-4 text-green-400" />
+								<span className="text-green-400 font-bold">
+									${Number(freelancer.hourly_rate).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}/hr
+								</span>
+							</>
+						)}
 					</div>
 				</div>
 			</div>

@@ -11,9 +11,10 @@ import {
 } from "react-icons/fa";
 import PasswordInput from "../components/shared/UI/PasswordInput";
 import { useTranslation } from "react-i18next";
+import { getToken } from "../utils/tokenUtils.js";
 
 const LoginPage = () => {
-  const { setToken } = useContext(AuthContext);
+  const { handleLoginSuccess } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -28,14 +29,51 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
+      console.log("🔄 Iniciando login...");
       const data = await ApiService.login(email, password);
+      console.log("📥 Datos recibidos del login:", data);
 
-      setToken(data.data.token); // guarda en contexto
-      localStorage.setItem("authToken", data.data.token); // ✅ guarda en localStorage
+      // Validar la estructura de la respuesta
+      if (!data) {
+        throw new Error("No se recibieron datos del servidor");
+      }
 
-      setLoading(false);
-      navigate("/");
+      // Verificar que el login fue exitoso
+      if (data.status !== 'ok' && data.status !== 'success') {
+        console.error("❌ Login fallido:", data);
+        throw new Error(data.message || "Error en el login");
+      }
+
+      console.log("✅ Login exitoso, verificando cookies...");
+      
+      // Verificar si hay cookies después del login
+      const cookies = document.cookie;
+      console.log("🍪 Cookies disponibles:", cookies);
+      
+      // Intentar obtener el token de las cookies
+      const token = getToken();
+      console.log("🔑 Token obtenido de cookies:", token ? "SÍ" : "NO");
+
+      // El token se maneja automáticamente por las cookies HTTP
+      // Notificar al contexto que el login fue exitoso
+      handleLoginSuccess();
+      console.log("🎉 Login completado, redirigiendo...");
+
+      // Verificar que el usuario esté autenticado antes de redirigir
+      setTimeout(() => {
+        const finalToken = getToken();
+        console.log("🔍 Verificación final - Token:", finalToken ? "SÍ" : "NO");
+        if (!finalToken) {
+          setError("Error: No se pudo establecer la sesión. Por favor, inténtalo de nuevo.");
+          setLoading(false);
+        } else {
+          setLoading(false);
+          navigate("/");
+        }
+      }, 1000);
+
     } catch (e) {
+      console.error("❌ Error en login:", e);
       setError(e.message || t('login.error'));
       setLoading(false);
     }

@@ -9,17 +9,19 @@ import {
   getFilteredServices,
   getCategories,
 } from "../services/getFilteredServicesService.js";
+import { getToken } from "../../utils/tokenUtils.js";
 
 const updateProfile = async (data) => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   const response = await fetch(
     `http://localhost:3000/users/update/${data.id}`,
     {
       method: "PUT",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        
       },
       body: JSON.stringify(data),
     }
@@ -31,13 +33,11 @@ const updateProfile = async (data) => {
 };
 
 const uploadProfilePhoto = async (formData) => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   const response = await fetch("http://localhost:3000/users/upload", {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    credentials: "include",
     body: formData,
   });
 
@@ -64,18 +64,12 @@ export const userApi = {
 export const contactApi = {
   sendContactRequest: async (data) => {
     try {
-      const token = localStorage.getItem("token");
-      const headers = {
-        "Content-Type": "application/json",
-      };
-
-      if (token) {
-        headers.Authorization = `Bearer ${token}`;
-      }
-
       const response = await fetch("http://localhost:3000/contact/request", {
         method: "POST",
-        headers,
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(data),
       });
 

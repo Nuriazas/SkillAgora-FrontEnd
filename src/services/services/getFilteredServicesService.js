@@ -31,7 +31,7 @@ export const getCategories = async () => {
 		const data = await response.json();
 
 		if (!response.ok) {
-			throw new Error(data.message || "Something went wrong");
+			throw new Error(data.message || "Error al obtener las categorías");
 		}
 
 		return data;

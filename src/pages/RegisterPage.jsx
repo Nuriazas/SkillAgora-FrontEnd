@@ -21,7 +21,7 @@ const RegisterPage = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { setToken } = useContext(AuthContext);
+  const { handleLoginSuccess } = useContext(AuthContext);
   
   useEffect(()=>{
     const timer = setTimeout(()=>{
@@ -46,7 +46,22 @@ const RegisterPage = () => {
 
     try {
       const data = await registerUserService(form);
-      setToken(data.token);
+      console.log("Datos recibidos del registro:", data); // Para debug
+
+      // Validar la estructura de la respuesta
+      if (!data) {
+        throw new Error("No se recibieron datos del servidor");
+      }
+
+      // Verificar que el registro fue exitoso
+      if (data.status !== 'ok' && data.status !== 'success') {
+        throw new Error(data.message || "Error en el registro");
+      }
+
+      // El token se maneja automáticamente por las cookies HTTP
+      // Notificar al contexto que el registro fue exitoso
+      handleLoginSuccess();
+      console.log("Registro exitoso, token manejado por cookies HTTP");
 
       setMessage(t('register.success'));
       setForm({ name: "", lastName: "", password: "" });

@@ -9,7 +9,11 @@ const ServiceFooter = ({ price, orderStatus, handleContactSeller, handleHireServ
   return (
     <div className="flex items-center justify-between pt-6 border-t border-gray-800/50">
       <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-        ${price || '0'}
+        {price?.hourly_rate_formatted
+          ? `$${Number(price.hourly_rate_number ?? price.hourly_rate).toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 2 })}/hr`
+          : price?.price_formatted
+            ? `$${Number(price.price_number ?? price.price).toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 2 })}`
+            : price?.toString?.() || '0'}
       </div>
       <div className="flex gap-3">
         <button

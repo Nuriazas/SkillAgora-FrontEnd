@@ -32,7 +32,7 @@ const ConfirmationModal = ({	// Props del componente
 						<div className="bg-gray-800/50 rounded-xl p-4 mb-4">
 							<h4 className="font-semibold text-white mb-2">{service.title}</h4>
 							<div className="text-xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-								${service.price}
+								{service.price_formatted || `$${service.price}`}
 							</div>
 						</div>
 						<p className="text-sm text-gray-400">

@@ -114,7 +114,7 @@ const ServiceCard = ({ service, onClick }) => {
 
           {/* Precio */}
           <div className="font-bold text-purple-400 text-sm">
-            {t('serviceCard.price', { price: service.price })}
+            {service.price_formatted || t('serviceCard.price', { price: service.price })}
           </div>
         </div>
       </div>

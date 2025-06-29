@@ -35,7 +35,9 @@ const OrderDetailModal = ({ isOpen, onClose, order, onOrderUpdate }) => {
 			if (isClient && order.freelancer_id) {
 				try {
 					setLoadingFreelancer(true);
-					const response = await fetch(`http://localhost:3000/users/freelancers/${order.freelancer_id}`);
+					const response = await fetch(`http://localhost:3000/users/freelancers/${order.freelancer_id}`, {
+						credentials: "include",
+					});
 					if (!response.ok) {
 						throw new Error(`Error ${response.status}: ${response.statusText}`);
 					}
@@ -342,7 +344,7 @@ const OrderDetailModal = ({ isOpen, onClose, order, onOrderUpdate }) => {
 						<div className="flex justify-between items-center">
 							<span className="text-gray-400">Total:</span>
 							<span className="text-2xl font-bold text-green-400">
-								${order.total_amount || order.amount || order.total_price || order.service_price || order.price || "N/A"} USD
+								{order.total_amount_formatted || `$${order.total_amount || order.amount || order.total_price || order.service_price || order.price || "N/A"}`}
 							</span>
 						</div>
 					</div>
