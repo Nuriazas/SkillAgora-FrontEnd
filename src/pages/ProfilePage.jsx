@@ -20,6 +20,7 @@ import {
   FiClock,
 } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
+import AdminStatistics from "../components/admin/AdminStatistics.jsx";
 
 const ProfilePage = () => {
   const { name } = useParams();
@@ -40,6 +41,13 @@ const ProfilePage = () => {
     () => userLogged?.name === name,
     [userLogged, name]
   );
+
+  // Verificar si el usuario actual es admin
+  const isCurrentUserAdmin = React.useMemo(
+    () => userLogged?.is_admin === 1,
+    [userLogged]
+  );
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -64,7 +72,6 @@ const ProfilePage = () => {
     }
   };
   
-
   // Handler para abrir modal de edición de servicio
   const handleEditService = (service) => {
     setSelectedService(service);
@@ -351,6 +358,11 @@ const ProfilePage = () => {
                   </p>
                 </div>
               )}
+
+              {/* Admin Statistics Section - Solo visible para administradores */}
+              <AdminStatistics isVisible={isCurrentUserAdmin} />
+
+
               {profileData?.reviews && profileData.reviews.length > 0 ? (
                 <div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800/50 p-8 max-h-[400px] overflow-y-auto mt-8">
                   <h2 className="text-2xl font-bold text-white mb-6">

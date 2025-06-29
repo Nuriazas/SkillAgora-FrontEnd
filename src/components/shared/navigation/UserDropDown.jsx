@@ -35,16 +35,8 @@ const UserDropdown = ({ user, isOpen, onToggle, onLogout, onNavigate }) => {
     onNavigate(`/users/profile/${profileName}`);
   };
 
-  const handleServicesClick = () => {
-    onNavigate("/services");
-  };
-
   const handleOrdersClick = () => {
     onNavigate("/notifications/contacts");
-  };
-
-  const handleSettingsClick = () => {
-    onNavigate("/settings");
   };
 
   // Determinar el nombre a mostrar
@@ -112,25 +104,11 @@ const UserDropdown = ({ user, isOpen, onToggle, onLogout, onNavigate }) => {
               {t('userDropdown.myProfile')}
             </button>
             <button
-              onClick={handleServicesClick}
-              className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 hover:text-white transition-colors group"
-            >
-              <FiBriefcase className="w-4 h-4 mr-3 text-gray-400 group-hover:text-blue-400" />
-              {t('userDropdown.myServices')}
-            </button>
-            <button
               onClick={handleOrdersClick}
               className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 hover:text-white transition-colors group"
             >
               <FiShoppingBag className="w-4 h-4 mr-3 text-gray-400 group-hover:text-green-400" />
               {t('userDropdown.orders')}
-            </button>
-            <button
-              onClick={handleSettingsClick}
-              className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 hover:text-white transition-colors group"
-            >
-              <FiSettings className="w-4 h-4 mr-3 text-gray-400 group-hover:text-gray-300" />
-              {t('userDropdown.settings')}
             </button>
           </div>
 
